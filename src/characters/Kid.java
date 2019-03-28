@@ -1,3 +1,8 @@
+package src.characters;
+
+import src.places.Place;
+import src.places.School;
+import src.places.Tile;
 
 public abstract class Kid extends Character{
 	

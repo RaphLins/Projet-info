@@ -1,3 +1,4 @@
+package src.items;
 
 public abstract class SellableItem extends Item {
 	

@@ -1,3 +1,4 @@
+package src.items;
 
 public class Wand extends SellableItem {
 	

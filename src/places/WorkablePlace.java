@@ -1,3 +1,4 @@
+package src.places;
 
 public abstract class WorkablePlace extends Place {
 	

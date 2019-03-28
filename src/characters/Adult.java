@@ -1,3 +1,8 @@
+package src.characters;
+
+import src.places.Place;
+import src.places.Tile;
+import src.places.WorkablePlace;
 
 public abstract class Adult extends Character {
 	
