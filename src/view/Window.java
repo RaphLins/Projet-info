@@ -1,25 +1,49 @@
-package src.view;
+package view;
 
+import model.GameObject;
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.io.IOException;
+import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-public class Window {
-    private Map map;
+import Controller.Mouse;
+import model.Map;
+import model.characters.Character;
 
-    public Window() {
-        map = new Map("map.txt");
+public class Window extends JFrame {
+    private JPanel groupPanel = new JPanel(new BorderLayout());
+    private MapView mapView = new MapView(new Map());
+    private StatusView statusView = new StatusView();
 
-        JFrame window = new JFrame("Game");
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setBounds(0, 0, map.WINDOW_PIXEL_WIDTH, Map.WINDOW_PIXEL_HEIGHT+35);
-        window.getContentPane().setBackground(Color.gray);
-        window.getContentPane().add(this.map);
-        window.setVisible(true);
+    public Window(String title) {
+        super(title);
+        // JFrame window = new JFrame("Game");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setBounds(0, 0, 1000, 1020);
+        this.getContentPane().setBackground(Color.gray);
+        groupPanel.add(mapView, BorderLayout.LINE_START);
+        groupPanel.add(statusView, BorderLayout.LINE_END);
+        this.getContentPane().add(this.groupPanel);
+        this.setVisible(true);
     }
 
     public void update() {
-        this.map.redraw();
+        this.mapView.redraw();
+        this.statusView.redraw();
+    }
+
+    public void setKeyListener(KeyListener keyboard) {
+        this.mapView.addKeyListener(keyboard);
+    }
+
+    public void setMouseListener(Mouse m) {
+        this.mapView.addMouse(m);
+    }
+
+    public void setPlayer(Character p) {
+        statusView.setPlayer(p);
     }
 }

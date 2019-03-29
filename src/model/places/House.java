@@ -1,4 +1,4 @@
-import src.places.Place;
+import model.places.Place;
 
 public class House extends Place {
 	

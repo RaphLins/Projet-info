@@ -1,6 +1,6 @@
-package src.places;
+package model.places;
 
-import src.characters.Kid;
+import model.characters.Kid;
 
 public class School extends WorkablePlace {
 	

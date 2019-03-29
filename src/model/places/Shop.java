@@ -1,6 +1,6 @@
-package src.places;
+package model.places;
 
-import src.items.SellableItem;
+import model.items.SellableItem;
 
 import java.util.ArrayList;
 

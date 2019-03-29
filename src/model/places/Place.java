@@ -1,6 +1,6 @@
-package src.places;
+package model.places;
 
-import src.view.Tile;
+import model.Tile;
 
 import java.util.ArrayList;
 

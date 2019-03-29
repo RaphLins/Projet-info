@@ -1,4 +1,4 @@
-package src.places;
+package model.places;
 
 public class MinistryOfMagic extends WorkablePlace {
 	

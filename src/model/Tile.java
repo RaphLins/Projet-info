@@ -1,8 +1,6 @@
-package src.view;
+package model;
 
-import src.items.Drawable;
-import src.items.GameObject;
-import src.items.Obstacle;
+import model.items.Obstacle;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -11,7 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Tile {
+public class Tile{
 	
 	private int x;
 	private int y;
@@ -43,6 +41,11 @@ public class Tile {
 		updateWalkable();
 	}
 
+	public void removeObject(GameObject object){
+		objects.remove(object);
+		updateWalkable();
+	}
+
 	public Image getTexture(){
 		BufferedImage img = null;
 		try {
@@ -59,12 +62,6 @@ public class Tile {
 		} catch (IOException e) {
 		}
 		g.drawImage(img, x,y,HEIGHT,WIDTH,null);
-		for(Object object: objects){
-			if(object instanceof Drawable){
-				g.drawImage(((Drawable) object).getTexture(), x,y,HEIGHT,WIDTH,null);
-			}
-
-		}
 	}
 
 	public int getX() {

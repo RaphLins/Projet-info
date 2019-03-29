@@ -1,4 +1,4 @@
-package src.items;
+package model.items;
 
 public interface Obstacle {
 }
