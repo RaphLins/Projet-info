@@ -1,5 +1,7 @@
 package src.places;
 
+import src.view.Tile;
+
 import java.util.ArrayList;
 
 public abstract class Place {

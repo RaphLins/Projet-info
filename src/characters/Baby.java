@@ -1,7 +1,7 @@
 package src.characters;
 
 import src.places.Place;
-import src.places.Tile;
+import src.view.Tile;
 
 public abstract class Baby extends Character {
 	
