@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import model.Game;
 
@@ -11,7 +11,7 @@ public class Mouse {
 
 	public void mapEvent(int x, int y) {
 		synchronized(game) {
-			//game.sendPlayer(x, y);
+			game.getPlayer().goTo(game.getMap().getTileAt(x,y));
 		}
 	}
 }

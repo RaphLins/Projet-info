@@ -1,15 +1,18 @@
-package Controller;
+package controller;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import model.Game;
+import view.MapView;
 
 public class Keyboard implements KeyListener {
     private Game game;
+    private MapView mapView;
 
-    public Keyboard(Game game) {
+    public Keyboard(Game game, MapView mapView) {
         this.game = game;
+        this.mapView = mapView;
     }
 
     @Override
@@ -18,16 +21,16 @@ public class Keyboard implements KeyListener {
 
         switch (key) {
         case KeyEvent.VK_RIGHT:
-            game.movePlayer(1, 0);
+            mapView.moveView(1, 0);
             break;
         case KeyEvent.VK_LEFT:
-            game.movePlayer(-1, 0);
+            mapView.moveView(-1, 0);
             break;
         case KeyEvent.VK_DOWN:
-            game.movePlayer(0, 1);
+            mapView.moveView(0, 1);
             break;
         case KeyEvent.VK_UP:
-            game.movePlayer(0, -1);
+            mapView.moveView(0, -1);
              break;
          case KeyEvent.VK_Q:
              game.stop();

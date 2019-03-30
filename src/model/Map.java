@@ -1,7 +1,5 @@
 package model;
 
-import view.ObjectFactory;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -16,11 +14,11 @@ public class Map{
     private Tile[][] grid;
 
     public Map() {
-        HEIGHT = 1000;
-        WIDTH = 1000;
-        grid = new Tile[HEIGHT][WIDTH];
-        for(int i = 0; i < HEIGHT; i++){
-            for(int j = 0; j< WIDTH; j++){
+        HEIGHT = 50;
+        WIDTH = 50;
+        grid = new Tile[WIDTH][HEIGHT];
+        for(int i = 0; i < WIDTH; i++){
+            for(int j = 0; j< HEIGHT; j++){
                 grid[i][j] = new Tile(i,j);
             }
         }
@@ -34,22 +32,28 @@ public class Map{
             e.printStackTrace();
         }
         HEIGHT = tempList.size();
-        WIDTH = tempList.get(0).length();
-        grid = new Tile[HEIGHT][WIDTH];
+        WIDTH = tempList.get(0).split(",",-1).length;
+        grid = new Tile[WIDTH][HEIGHT];
+        System.out.println(WIDTH);
 
         ObjectFactory objectFactory = new ObjectFactory();
-        for (int i = 0; i < HEIGHT; i++) {
-            for (int j = 0; j < WIDTH; j++) {
-                grid[i][j] = new Tile(i, j);
-                if(j<tempList.get(i).length()){
-                    char objectChar = tempList.get(i).charAt(j);
-                    grid[i][j].addObject(objectFactory.getInstance(objectChar));
+        for (int j = 0; j < HEIGHT; j++) {
+            String[] row = tempList.get(j).split(",",-1);
+            for (int i = 0; i < WIDTH; i++) {
+                grid[i][j] = new Tile(i,j);
+                if(i<row.length){
+                    String type = row[i];
+                    grid[i][j].addObject(objectFactory.getInstance(type,grid[i][j]));
                 }
             }
         }
     }
 
     public Tile getTileAt(int x, int y){
-        return grid[x][y];
+        return grid[Math.max(Math.min(x,WIDTH-1),0)][Math.max(Math.min(y,HEIGHT-1),0)];
+    }
+
+    public Tile[][] getGrid(){
+        return grid;
     }
 }

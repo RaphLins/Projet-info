@@ -6,6 +6,7 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
+import model.Game;
 import model.characters.Character;
 
 public class StatusView extends JPanel {
@@ -18,6 +19,7 @@ public class StatusView extends JPanel {
         this.setPreferredSize(new Dimension(450, 600));
         this.setBackground(Color.LIGHT_GRAY);
         this.setOpaque(true);
+        p= Game.getInstance().getPlayer();
     }
     
 	public void paint(Graphics g) {

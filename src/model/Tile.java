@@ -1,67 +1,48 @@
 package model;
 
 import model.items.Obstacle;
+import view.MapView;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Tile{
 	
 	private int x;
 	private int y;
-	private ArrayList<GameObject> objects = new ArrayList<>();
 	private boolean isWalkable = true;
-	public static final int WIDTH =  20;
-	public static final int HEIGHT =  20;
-	
-	public Tile(int i, int j) {
-		y = i*WIDTH;
-		x = j*HEIGHT;
-	}
 
+	private ArrayList<GameObject> objects = new ArrayList<>();
+	public Tile(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
 	public boolean isWalkable(){
 		return isWalkable;
 	}
 
-	private void updateWalkable(){
+	public void addObject(GameObject object){
+		objects.add(object);
+		update();
+	}
+
+	public void removeObject(GameObject object){
+		objects.remove(object);
+		update();
+	}
+
+	public void update(){
 		isWalkable = true;
 		for(GameObject object : objects){
 			if(object instanceof Obstacle){
 				isWalkable = false;
 			}
 		}
+		if(Game.isStarted())Game.getInstance().updateTile(x,y);
 	}
 
-	public void addObject(GameObject object){
-		objects.add(object);
-		updateWalkable();
-	}
 
-	public void removeObject(GameObject object){
-		objects.remove(object);
-		updateWalkable();
-	}
-
-	public Image getTexture(){
-		BufferedImage img = null;
-		try {
-			img = ImageIO.read(new File("res/empty.jpg"));
-		} catch (IOException e) {
-		}
-		return img;
-	}
-
-	public void paint(Graphics g){
-		BufferedImage img = null;
-		try {
-			img = ImageIO.read(new File("res/empty.jpg"));
-		} catch (IOException e) {
-		}
-		g.drawImage(img, x,y,HEIGHT,WIDTH,null);
+	public ArrayList<GameObject> getObjects(){
+		return objects;
 	}
 
 	public int getX() {

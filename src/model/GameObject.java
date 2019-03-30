@@ -8,13 +8,13 @@ public abstract class GameObject {
 
     public GameObject(Tile pos) {
         this.pos = pos;
+        pos.addObject(this);
     }
 
-
-    public void move(Tile tile){
+    public void move(Tile target){
         pos.removeObject(this);
-        pos = tile;
-        tile.addObject(this);
+        pos = target;
+        target.addObject(this);
     }
 
     public int getPosX() {
@@ -27,5 +27,9 @@ public abstract class GameObject {
 
     public boolean isAtPosition(int x, int y) {
         return getPosX() == x && getPosY() == y;
+    }
+
+    public Tile getPos(){
+        return pos;
     }
 }

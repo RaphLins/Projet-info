@@ -9,7 +9,8 @@ import java.util.ArrayList;
 
 
 public class Game {
-    public static Game instance = null;
+    private static Game instance = null;
+    private static boolean started = false;
     private ArrayList<GameObject> objects = new ArrayList<GameObject>();
     private ArrayList<Character> characters = new ArrayList<Character>();
     private Character active_player = null;
@@ -17,17 +18,16 @@ public class Game {
     private Window window;
     private Map map;
 
-    public Game(Window window) {
-        this.window = window;
-        instance = this;
-        // Creating one Player at position (1,1)
-        map = new Map();
+    private Game() {
+        map = new Map("map.csv");
         Character p = new AdultWizard(map.getTileAt(0,0));
         objects.add(p);
         characters.add(p);
-        window.setPlayer(p);
         active_player = p;
-        notifyView();
+    }
+
+    public void setWindow(Window window){
+        this.window = window;
     }
 
 
@@ -38,10 +38,10 @@ public class Game {
         if (nextTile.isWalkable()) {
             active_player.move(x, y);
         }
-        notifyView();
     }
-    private void notifyView() {
-        window.update();
+
+    public Character getPlayer(){
+        return active_player;
     }
 
     public ArrayList<GameObject> getGameObjects() {
@@ -54,5 +54,21 @@ public class Game {
 
     public Map getMap(){
         return map;
+    }
+
+    public static Game getInstance(){
+        if(instance == null){
+            instance = new Game();
+            started = true;
+        }
+        return instance;
+    }
+
+    public static boolean isStarted(){
+        return started;
+    }
+
+    public void updateTile(int x, int y) {
+        window.updateTile(x,y);
     }
 }
