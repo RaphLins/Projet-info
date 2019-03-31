@@ -36,10 +36,10 @@ public class TextureHashMap {
 
     private void put4(String id, BufferedImage image, int x, int y, int w, int h){
         put(id+"3",image,x,y,w,h);
-        put(id+"0",image,x+1,y,w,h);
-        put(id+"1",image,x+2,y,w,h);
+        put(id+"1",image,x+1,y,w,h);
+        put(id+"0",image,x+2,y,w,h);
 
-        image = image.getSubimage((x+1)*W,y*H,w*W,h*H);
+        image = image.getSubimage((x+2)*W,y*H,w*W,h*H);
         AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
         tx.translate(-image.getWidth(null), 0);
         AffineTransformOp op = new AffineTransformOp(tx,
