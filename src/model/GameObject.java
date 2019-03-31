@@ -1,10 +1,12 @@
 package model;
 
-import model.Tile;
+import model.tiles.Tile;
 
 public abstract class GameObject {
     private int color;
     private Tile pos;
+    private int x;
+    private int y;
 
     public GameObject(Tile pos) {
         this.pos = pos;
@@ -16,6 +18,7 @@ public abstract class GameObject {
         pos = target;
         target.addObject(this);
     }
+
 
     public int getPosX() {
         return pos.getX();

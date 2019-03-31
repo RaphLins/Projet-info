@@ -1,7 +1,8 @@
-package model;
+package model.tiles;
 
+import model.Game;
+import model.GameObject;
 import model.items.Obstacle;
-import view.MapView;
 
 import java.util.ArrayList;
 
@@ -15,6 +16,13 @@ public class Tile{
 	public Tile(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	public Tile(Tile tile) {
+		x=tile.getX();
+		y=tile.getY();
+		objects = tile.getObjects();
+		update();
 	}
 	public boolean isWalkable(){
 		return isWalkable;

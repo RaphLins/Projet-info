@@ -1,6 +1,6 @@
 package model.items;
 
-import model.Tile;
+import model.tiles.Tile;
 
 public abstract class SellableItem extends Item {
 	

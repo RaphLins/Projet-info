@@ -1,8 +1,7 @@
 package model.characters;
 
-import model.places.Place;
 import model.places.School;
-import model.Tile;
+import model.tiles.Tile;
 
 public abstract class Kid extends Character{
 

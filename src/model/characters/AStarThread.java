@@ -2,7 +2,7 @@ package model.characters;
 
 import model.Game;
 import model.Map;
-import model.Tile;
+import model.tiles.Tile;
 
 public class AStarThread implements Runnable{
 	private Game g;
@@ -16,6 +16,7 @@ public class AStarThread implements Runnable{
 		this.p = p;
 		this.target = target;
 		this.map = map;
+
 	}
 	
 	@Override
@@ -30,6 +31,7 @@ public class AStarThread implements Runnable{
 				case 2 : g.movePlayer(-1,0); break;
 				case 3 : g.movePlayer(0,1); break;
 			}
+
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {

@@ -11,10 +11,8 @@
 package model.characters;
 
 import model.Map;
-import model.Tile;
-import model.items.Obstacle;
+import model.tiles.Tile;
 
-import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class AStar {

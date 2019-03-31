@@ -1,6 +1,7 @@
 package model;
 
 import model.characters.AdultWizard;
+import model.tiles.Tile;
 import view.Window;
 import model.characters.Character;
 
@@ -13,17 +14,17 @@ public class Game {
     private static boolean started = false;
     private ArrayList<GameObject> objects = new ArrayList<GameObject>();
     private ArrayList<Character> characters = new ArrayList<Character>();
-    private Character active_player = null;
+    private Character selected_character = null;
 
     private Window window;
     private Map map;
 
     private Game() {
         map = new Map("map.csv");
-        Character p = new AdultWizard(map.getTileAt(0,0));
+        Character p = new AdultWizard(map.getTileAt(10,10));
         objects.add(p);
         characters.add(p);
-        active_player = p;
+        selected_character = p;
     }
 
     public void setWindow(Window window){
@@ -32,16 +33,15 @@ public class Game {
 
 
     public void movePlayer(int x, int y) {
-        Tile nextTile = map.getTileAt(active_player.getPosX() + x, active_player.getPosY() + y);
+        Tile nextTile = map.getTileAt(selected_character.getPosX() + x, selected_character.getPosY() + y);
 
-        active_player.rotate(x, y);
+        selected_character.rotate(x, y);
         if (nextTile.isWalkable()) {
-            active_player.move(x, y);
+            selected_character.move(x, y);
         }
     }
-
     public Character getPlayer(){
-        return active_player;
+        return selected_character;
     }
 
     public ArrayList<GameObject> getGameObjects() {

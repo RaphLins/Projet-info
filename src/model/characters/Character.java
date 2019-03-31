@@ -3,7 +3,7 @@ package model.characters;
 import model.Game;
 import model.GameObject;
 import model.places.Place;
-import model.Tile;
+import model.tiles.Tile;
 
 public abstract class Character extends GameObject implements Directable {
 	private int hunger = 0;
@@ -24,6 +24,9 @@ public abstract class Character extends GameObject implements Directable {
 			moveThread = new Thread(new AStarThread(Game.getInstance(),this, target, Game.getInstance().getMap()));
 			moveThread.start();
 		}
+		else{
+			rotate(target.getX()-getPosX(),target.getY()-getPosY());
+		}
 	}
 
 	public void move(int x, int y){
@@ -31,14 +34,15 @@ public abstract class Character extends GameObject implements Directable {
 	}
 
 	public void rotate(int x, int y) {
-		if(x == 0 && y == -1)
+		if(y<x && y<-x)
 			direction = NORTH;
-		else if(x == 0 && y == 1)
+		else if(y>x && y>-x)
 			direction = SOUTH;
-		else if(x == 1 && y == 0)
+		else if(y<x && y>-x)
 			direction = EAST;
-		else if(x == -1 && y == 0)
+		else if(y>x && y<-x)
 			direction = WEST;
+		getPos().update();
 	}
 
 	@Override

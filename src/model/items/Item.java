@@ -1,7 +1,7 @@
 package model.items;
 
 import model.GameObject;
-import model.Tile;
+import model.tiles.Tile;
 
 public abstract class Item extends GameObject {
 

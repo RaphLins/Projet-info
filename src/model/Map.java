@@ -1,5 +1,7 @@
 package model;
 
+import model.tiles.Tile;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -36,15 +38,15 @@ public class Map{
         grid = new Tile[WIDTH][HEIGHT];
         System.out.println(WIDTH);
 
-        ObjectFactory objectFactory = new ObjectFactory();
+        TileFactory rileFactory = new TileFactory();
         for (int j = 0; j < HEIGHT; j++) {
             String[] row = tempList.get(j).split(",",-1);
             for (int i = 0; i < WIDTH; i++) {
-                grid[i][j] = new Tile(i,j);
+                String type = "";
                 if(i<row.length){
-                    String type = row[i];
-                    grid[i][j].addObject(objectFactory.getInstance(type,grid[i][j]));
+                    type = row[i];
                 }
+                grid[i][j]=rileFactory.getInstance(type,i,j);
             }
         }
     }

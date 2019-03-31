@@ -9,9 +9,13 @@ public class Mouse {
         this.game = game;
     }
 
-	public void mapEvent(int x, int y) {
+	public void mapEventRightClick(int x, int y) {
 		synchronized(game) {
 			game.getPlayer().goTo(game.getMap().getTileAt(x,y));
+		}
+	}
+	public void mapEventLeftClick(int x, int y) {
+		synchronized(game) {
 		}
 	}
 }

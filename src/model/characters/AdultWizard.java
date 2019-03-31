@@ -1,7 +1,6 @@
 package model.characters;
 
-import model.places.Place;
-import model.Tile;
+import model.tiles.Tile;
 
 public class AdultWizard extends Adult implements Wizard {
 
