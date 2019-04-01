@@ -35,8 +35,7 @@ public class Keyboard implements KeyListener {
             case KeyEvent.VK_W:
             case KeyEvent.VK_UP:
                 mapView.moveView(0, -1);
-                 break;
-             case KeyEvent.VK_Q:
+                 break;case KeyEvent.VK_Q:
                  game.stop();
                  break;
         }

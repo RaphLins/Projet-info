@@ -1,6 +1,12 @@
 package controller;
 
 import model.Game;
+import model.map.Map;
+import view.MapView;
+import view.Window;
+
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
 public class Mouse {
     private Game game;

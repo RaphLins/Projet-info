@@ -11,19 +11,21 @@ public class Tile{
 	private int x;
 	private int y;
 	private boolean isWalkable = true;
+	public String ID;
 
 	private ArrayList<GameObject> objects = new ArrayList<>();
 	public Tile(int x, int y) {
 		this.x = x;
 		this.y = y;
+		ID = "default_tile";
 	}
 
 	public Tile(Tile tile) {
-		x=tile.getX();
-		y=tile.getY();
+		this(tile.getX(),tile.getY());
 		objects = tile.getObjects();
 		update();
 	}
+
 	public boolean isWalkable(){
 		return isWalkable;
 	}
@@ -68,5 +70,4 @@ public class Tile{
 	public void setY(int y) {
 		this.y=y;
 	}
-
 }

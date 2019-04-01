@@ -22,7 +22,6 @@ public class AStarThread implements Runnable{
 	@Override
 	public void run() {
 		int direction = 0;
-		synchronized(p) {
 		while(direction != -1 && running)  {
 			direction = (new AStar(p.getPos(), target, map)).getNextStep();
 			switch (direction) {
@@ -38,7 +37,6 @@ public class AStarThread implements Runnable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
 		}
 	}
 

@@ -25,7 +25,7 @@ public abstract class Character extends GameObject implements Directable {
 			moveThread.start();
 		}
 		else{
-			rotate(target.getX()-getPosX(),target.getY()-getPosY());
+			rotateTo(target);
 		}
 	}
 
@@ -33,7 +33,9 @@ public abstract class Character extends GameObject implements Directable {
 		move(Game.getInstance().getMap().getTileAt(getPosX()+x,getPosY()+y));
 	}
 
-	public void rotate(int x, int y) {
+	public void rotateTo(Tile target) {
+		int x= target.getX()-getPosX();
+		int y= target.getY()-getPosY();
 		if(y<x && y<-x)
 			direction = NORTH;
 		else if(y>x && y>-x)

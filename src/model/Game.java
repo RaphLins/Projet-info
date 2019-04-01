@@ -36,7 +36,7 @@ public class Game {
     public void movePlayer(int x, int y) {
         Tile nextTile = map.getTileAt(selected_character.getPosX() + x, selected_character.getPosY() + y);
 
-        selected_character.rotate(x, y);
+        selected_character.rotateTo(nextTile);
         if (nextTile.isWalkable()) {
             selected_character.move(x, y);
         }

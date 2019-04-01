@@ -8,9 +8,12 @@ public abstract class GameObject {
     private int x;
     private int y;
 
+    public String ID;
+
     public GameObject(Tile pos) {
         this.pos = pos;
         pos.addObject(this);
+        ID = "";
     }
 
     public void move(Tile target){
@@ -18,7 +21,6 @@ public abstract class GameObject {
         pos = target;
         target.addObject(this);
     }
-
 
     public int getPosX() {
         return pos.getX();

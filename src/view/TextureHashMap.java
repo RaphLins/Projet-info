@@ -17,9 +17,10 @@ public class TextureHashMap {
             BufferedImage characters = ImageIO.read(new File("shared/res/characters.png"));
             BufferedImage items = ImageIO.read(new File("shared/res/items.png"));
             put("floor", items,0,0,1,2);
-            put("grass", items,1,0,1,2);
+            put("default_tile", items,1,0,1,2);
             put("wall", items,2,0,1,2);
             put("house_window", items,3,0,1,2);
+            put("white", items,4,0,1,2);
             put4("adult_wizard",characters,0,0,1,2);
 
         } catch (IOException e) {
