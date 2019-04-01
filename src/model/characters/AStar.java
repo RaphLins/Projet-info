@@ -10,8 +10,8 @@
  * */
 package model.characters;
 
-import model.Map;
-import model.tiles.Tile;
+import model.map.Map;
+import model.map.Tile;
 
 import java.util.PriorityQueue;
 

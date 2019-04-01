@@ -1,6 +1,6 @@
 package model.items;
 
-import model.tiles.Tile;
+import model.map.Tile;
 
 public class Wand extends SellableItem {
 	

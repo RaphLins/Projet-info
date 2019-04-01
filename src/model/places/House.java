@@ -1,4 +1,4 @@
-import model.places.Place;
+package model.places;
 
 public class House extends Place {
 	

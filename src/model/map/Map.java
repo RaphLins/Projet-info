@@ -1,6 +1,4 @@
-package model;
-
-import model.tiles.Tile;
+package model.map;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -36,7 +34,6 @@ public class Map{
         HEIGHT = tempList.size();
         WIDTH = tempList.get(0).split(",",-1).length;
         grid = new Tile[WIDTH][HEIGHT];
-        System.out.println(WIDTH);
 
         TileFactory rileFactory = new TileFactory();
         for (int j = 0; j < HEIGHT; j++) {

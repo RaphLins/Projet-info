@@ -1,7 +1,8 @@
 package model;
 
 import model.characters.AdultWizard;
-import model.tiles.Tile;
+import model.map.Map;
+import model.map.Tile;
 import view.Window;
 import model.characters.Character;
 
@@ -20,7 +21,7 @@ public class Game {
     private Map map;
 
     private Game() {
-        map = new Map("map.csv");
+        map = new Map("shared/res/map.csv");
         Character p = new AdultWizard(map.getTileAt(10,10));
         objects.add(p);
         characters.add(p);

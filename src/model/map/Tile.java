@@ -1,4 +1,4 @@
-package model.tiles;
+package model.map;
 
 import model.Game;
 import model.GameObject;

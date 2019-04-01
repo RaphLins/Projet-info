@@ -16,7 +16,7 @@ public class StatusView extends JPanel {
 	private int AVATAR_SIZE = 100;
 
     public StatusView() {
-        this.setPreferredSize(new Dimension(450, 600));
+        this.setPreferredSize(new Dimension(380, 600));
         this.setBackground(Color.LIGHT_GRAY);
         this.setOpaque(true);
         p= Game.getInstance().getPlayer();

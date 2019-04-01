@@ -14,8 +14,8 @@ public class TextureHashMap {
     HashMap<String,BufferedImage> textures= new HashMap<>();
     public TextureHashMap(){
         try {
-            BufferedImage characters = ImageIO.read(new File("res/characters.png"));
-            BufferedImage items = ImageIO.read(new File("res/items.png"));
+            BufferedImage characters = ImageIO.read(new File("shared/res/characters.png"));
+            BufferedImage items = ImageIO.read(new File("shared/res/items.png"));
             put("floor", items,0,0,1,2);
             put("grass", items,1,0,1,2);
             put("wall", items,2,0,1,2);

@@ -1,8 +1,8 @@
 package model.characters;
 
 import model.Game;
-import model.Map;
-import model.tiles.Tile;
+import model.map.Map;
+import model.map.Tile;
 
 public class AStarThread implements Runnable{
 	private Game g;

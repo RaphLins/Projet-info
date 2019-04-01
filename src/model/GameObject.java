@@ -1,6 +1,6 @@
 package model;
 
-import model.tiles.Tile;
+import model.map.Tile;
 
 public abstract class GameObject {
     private int color;

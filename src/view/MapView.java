@@ -2,18 +2,17 @@ package view;
 
 import controller.Mouse;
 import model.GameObject;
-import model.Map;
+import model.map.Map;
 import model.characters.AdultWizard;
 import model.characters.Directable;
-import model.tiles.Floor;
-import model.tiles.HouseWindow;
-import model.tiles.Tile;
-import model.tiles.Wall;
+import model.map.Floor;
+import model.map.HouseWindow;
+import model.map.Tile;
+import model.map.Wall;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
@@ -34,7 +33,7 @@ public class MapView extends JPanel {
 
         this.setFocusable(true);
         this.requestFocusInWindow();
-        this.setPreferredSize(new Dimension(1000, 1020));
+        this.setPreferredSize(new Dimension(1750, 1020));
         addMouseListener(new MouseListener() {
             public void mousePressed(MouseEvent e) {}
             public void mouseClicked(MouseEvent e) {
@@ -56,8 +55,8 @@ public class MapView extends JPanel {
     }
 
     public void paint(Graphics g) {
-        for(int i = 0; i < getBounds().width/TILE_WIDTH; i++){
-            for(int j = 0; j < getBounds().height/TILE_HEIGHT; j++){
+        for(int i = 0; i < getBounds().width/TILE_WIDTH+1; i++){
+            for(int j = 0; j < getBounds().height/TILE_HEIGHT+1; j++){
                 if(i<Map.WIDTH && j<Map.HEIGHT){
                     Tile tile = map.getTileAt(i+viewPosX,j+viewPosY);
                     if(tile instanceof Wall)drawImage("wall",i,j,g);
@@ -72,7 +71,7 @@ public class MapView extends JPanel {
                 }
             }
         }
-        System.out.println("paint");
+        System.out.println("paint all");
     }
 
     private void drawImage(String id, int x, int y,Graphics g){

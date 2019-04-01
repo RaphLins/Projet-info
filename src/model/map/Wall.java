@@ -1,4 +1,4 @@
-package model.tiles;
+package model.map;
 public class Wall extends Tile {
 
     public Wall(Tile tile) {

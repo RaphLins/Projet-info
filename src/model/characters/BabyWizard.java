@@ -1,5 +1,5 @@
 package model.characters;
-import model.tiles.Tile;
+import model.map.Tile;
 
 public class BabyWizard extends Baby implements Wizard {
 

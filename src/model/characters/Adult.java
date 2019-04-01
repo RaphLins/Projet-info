@@ -1,6 +1,6 @@
 package model.characters;
 
-import model.tiles.Tile;
+import model.map.Tile;
 import model.places.WorkablePlace;
 
 public abstract class Adult extends Character {

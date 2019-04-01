@@ -3,7 +3,7 @@ package model.characters;
 import model.Game;
 import model.GameObject;
 import model.places.Place;
-import model.tiles.Tile;
+import model.map.Tile;
 
 public abstract class Character extends GameObject implements Directable {
 	private int hunger = 0;

@@ -1,6 +1,6 @@
 package model.characters;
 
-import model.tiles.Tile;
+import model.map.Tile;
 
 public abstract class Baby extends Character {
 
