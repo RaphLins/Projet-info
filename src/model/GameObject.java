@@ -3,10 +3,7 @@ package model;
 import model.map.Tile;
 
 public abstract class GameObject {
-    private int color;
     private Tile pos;
-    private int x;
-    private int y;
 
     public String ID;
 

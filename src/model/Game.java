@@ -7,15 +7,12 @@ import view.Window;
 import model.characters.Character;
 
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 
 
 public class Game {
     private static Game instance = null;
     private static boolean started = false;
-    private ArrayList<GameObject> objects = new ArrayList<GameObject>();
-    private ArrayList<Character> characters = new ArrayList<Character>();
-    private Character selected_character = null;
+    private Character selectedCharacter = null;
 
     private Window window;
     private Map map;
@@ -23,9 +20,7 @@ public class Game {
     private Game() {
         map = new Map("shared/res/map.csv");
         Character p = new AdultWizard(map.getTileAt(10,10));
-        objects.add(p);
-        characters.add(p);
-        selected_character = p;
+        selectedCharacter = p;
     }
 
     public void setWindow(Window window){
@@ -34,19 +29,15 @@ public class Game {
 
 
     public void movePlayer(int x, int y) {
-        Tile nextTile = map.getTileAt(selected_character.getPosX() + x, selected_character.getPosY() + y);
+        Tile nextTile = map.getTileAt(selectedCharacter.getPosX() + x, selectedCharacter.getPosY() + y);
 
-        selected_character.rotateTo(nextTile);
+        selectedCharacter.rotateTo(nextTile);
         if (nextTile.isWalkable()) {
-            selected_character.move(x, y);
+            selectedCharacter.move(x, y);
         }
     }
     public Character getPlayer(){
-        return selected_character;
-    }
-
-    public ArrayList<GameObject> getGameObjects() {
-        return this.objects;
+        return selectedCharacter;
     }
 
     public void stop() {

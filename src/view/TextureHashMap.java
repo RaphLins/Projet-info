@@ -16,10 +16,12 @@ public class TextureHashMap {
         try {
             BufferedImage characters = ImageIO.read(new File("shared/res/characters.png"));
             BufferedImage items = ImageIO.read(new File("shared/res/items.png"));
-            put("floor", items,0,0,1,2);
-            put("default_tile", items,1,0,1,2);
-            put("wall", items,2,0,1,2);
-            put("house_window", items,3,0,1,2);
+            BufferedImage tileset = ImageIO.read(new File("shared/res/tileset.png"));
+            textures.put("floor",tileset.getSubimage(199,80,20,20));
+            put("grass", items,1,0,1,2);
+            textures.put("wall",tileset.getSubimage(479,418,20,40));
+            textures.put("house_window",tileset.getSubimage(79,526,20,20));
+            textures.put("wardrobe",tileset.getSubimage(359,796,20,40));
             put("white", items,4,0,1,2);
             put4("adult_wizard",characters,0,0,1,2);
 
@@ -29,10 +31,6 @@ public class TextureHashMap {
 
     private void put(String id, BufferedImage image, int x, int y, int w, int h){
         textures.put(id,image.getSubimage(x*W,y*H,w*W,h*H));
-    }
-
-    private void putReversed(String id, BufferedImage image, int x, int y, int w, int h){
-
     }
 
     private void put4(String id, BufferedImage image, int x, int y, int w, int h){

@@ -20,8 +20,9 @@ import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
 public class MapView extends JPanel {
-    public static int TILE_WIDTH =  20;
-    public static int TILE_HEIGHT =  20;
+    public static final int TILE_WIDTH =  20;
+    public static final int TILE_HEIGHT =  20;
+    private float zoom = 1;
     private static int tilesDrawnNbr = 0;
 
     private Map map;
@@ -36,7 +37,7 @@ public class MapView extends JPanel {
 
         this.setFocusable(true);
         this.requestFocusInWindow();
-        this.setPreferredSize(new Dimension(1750, 1020));
+        this.setPreferredSize(new Dimension(1500, 1020));
         addMouseListener(new MouseListener() {
             public void mousePressed(MouseEvent e) {}
             public void mouseClicked(MouseEvent e) {
@@ -57,8 +58,8 @@ public class MapView extends JPanel {
         });
         textures = new TextureHashMap();
         this.addMouseWheelListener(e -> {
-            TILE_HEIGHT-=e.getWheelRotation()<0?-2:2;
-            TILE_WIDTH-=e.getWheelRotation()<0?-2:2;
+            zoom-=e.getWheelRotation()<0?-0.1:0.1;
+            zoom-=e.getWheelRotation()<0?-0.1:0.1;
             centerView(e.getX(),e.getY());
             repaint();
         });
@@ -69,11 +70,13 @@ public class MapView extends JPanel {
             for(int j = 0; j < getBounds().height/TILE_HEIGHT+1; j++){
                 if(i<Map.WIDTH && j<Map.HEIGHT){
                     Tile tile = getTileAtWindowPos(i,j);
-                    g.drawImage(textures.get(tile.ID),i*TILE_WIDTH,(j-1)*TILE_HEIGHT,TILE_WIDTH,2*TILE_HEIGHT,null);
+                    drawTile(tile.ID,i,j,g);
                     for(GameObject object: tile.getObjects()){
                         String id = object.ID;
-                        if(object instanceof Directable)id +=((Directable)object).getDirection();
-                        g.drawImage(textures.get(id),i*TILE_WIDTH,(j-1)*TILE_HEIGHT,TILE_WIDTH,2*TILE_HEIGHT,null);
+                        if(object instanceof Directable){
+                            id +=((Directable)object).getDirection();
+                        }
+                        drawTile(id,i,j,g);
                     }
                     tilesDrawnNbr++;
                     //System.out.println(tilesDrawnNbr);
@@ -84,6 +87,13 @@ public class MapView extends JPanel {
             }
         }
         System.out.println("paint all");
+    }
+
+    private void drawTile(String id, int i, int j,Graphics g){
+        BufferedImage image = textures.get(id);
+        int x = (int)((i*TILE_WIDTH)*zoom);
+        int y = (int)(((j+1)*TILE_HEIGHT-image.getHeight())*zoom);
+        g.drawImage(image,x,y,(int)(image.getWidth()*zoom), (int)(image.getHeight()*zoom),null);
     }
 
     public Tile getTileAtWindowPos(int x, int y){

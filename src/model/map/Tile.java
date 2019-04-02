@@ -17,7 +17,7 @@ public class Tile{
 	public Tile(int x, int y) {
 		this.x = x;
 		this.y = y;
-		ID = "default_tile";
+		ID = "grass";
 	}
 
 	public Tile(Tile tile) {
@@ -58,16 +58,8 @@ public class Tile{
 	public int getX() {
 		return x;
 	}
-	
-	public void setX(int x) {
-		this.x=x;
-	}
-	
+
 	public int getY() {
 		return y;
-	}
-	
-	public void setY(int y) {
-		this.y=y;
 	}
 }
