@@ -37,6 +37,10 @@ public class Window extends JFrame {
         return mapView;
     }
 
+    public StatusView getStatusView(){
+        return statusView;
+    }
+
     public void setKeyListener(KeyListener keyboard) {
         this.mapView.addKeyListener(keyboard);
     }

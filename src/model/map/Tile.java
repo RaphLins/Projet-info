@@ -40,6 +40,11 @@ public class Tile{
 		update();
 	}
 
+	public GameObject getTopObject(){
+		if(objects.size()==0)return null;
+		else return objects.get(objects.size()-1);
+	}
+
 	public void update(){
 		isWalkable = true;
 		for(GameObject object : objects){

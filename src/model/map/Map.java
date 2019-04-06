@@ -55,4 +55,15 @@ public class Map{
     public Tile[][] getGrid(){
         return grid;
     }
+
+    public Tile getTileNextTo(Tile tile, int direction){
+        Tile res = null;
+        switch (direction) {
+            case 0 : res = getTileAt(tile.getX()+1,tile.getY()); break;
+            case 1 : res = getTileAt(tile.getX(),tile.getY()-1); break;
+            case 2 : res = getTileAt(tile.getX()-1,tile.getY()); break;
+            case 3 : res = getTileAt(tile.getX(),tile.getY()+1); break;
+        }
+        return res;
+    }
 }

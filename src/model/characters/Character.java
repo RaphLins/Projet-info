@@ -2,17 +2,21 @@ package model.characters;
 
 import model.Game;
 import model.GameObject;
+import model.ObjectHolder;
 import model.places.Place;
 import model.map.Tile;
 
-public abstract class Character extends GameObject implements Directable {
+import java.util.ArrayList;
+
+public abstract class Character extends GameObject implements Directable, ObjectHolder {
 	private int hunger = 0;
 	private int hygiene = 100;
 	private int bladder = 0;
 	private int energy = 100;
 	private Place location;
 	private int direction = EAST;
-	private Thread moveThread;
+	private MovingThread moveThread;
+	private ArrayList<GameObject> inventory = new ArrayList<>();
 
 	public Character(Tile pos) {
 		super(pos);
@@ -20,17 +24,17 @@ public abstract class Character extends GameObject implements Directable {
 
 	public void goTo(Tile target){
 		if(target.isWalkable()){
-			if(moveThread!=null)moveThread.stop();
-			moveThread = new Thread(new AStarThread(Game.getInstance(),this, target, Game.getInstance().getMap()));
-			moveThread.start();
+			if(moveThread!=null){
+				moveThread.terminate();
+				System.out.println("interrupt sent");
+			}
+			moveThread = new MovingThread(Game.getInstance(),this, target, Game.getInstance().getMap(),5);
+			Thread thread = new Thread(moveThread);
+			thread.start();
 		}
 		else{
 			rotateTo(target);
 		}
-	}
-
-	public void move(int x, int y){
-		move(Game.getInstance().getMap().getTileAt(getPosX()+x,getPosY()+y));
 	}
 
 	public void rotateTo(Tile target) {
@@ -71,8 +75,16 @@ public abstract class Character extends GameObject implements Directable {
 	public void fetchItem() {
 
 	}
-	public double getEnergy() {
-		return energy/100.0;
+
+	public void setDirection(int direction) {
+		this.direction=direction;
 	}
 
+	public int getEnergy() {
+		return energy/100;
+	}
+
+	public ArrayList<GameObject> getInventory() {
+		return inventory;
+	}
 }

@@ -12,32 +12,32 @@ import java.awt.event.WindowEvent;
 public class Game {
     private static Game instance = null;
     private static boolean started = false;
-    private Character selectedCharacter = null;
+    private GameObject selectedObject = null;
 
     private Window window;
     private Map map;
 
     private Game() {
         map = new Map("shared/res/map.csv");
-        Character p = new AdultWizard(map.getTileAt(10,10));
-        selectedCharacter = p;
+        new AdultWizard(map.getTileAt(10,10));
+        new AdultWizard(map.getTileAt(20,10));
+        new AdultWizard(map.getTileAt(30,10));
     }
 
     public void setWindow(Window window){
         this.window = window;
     }
 
-
-    public void movePlayer(int x, int y) {
-        Tile nextTile = map.getTileAt(selectedCharacter.getPosX() + x, selectedCharacter.getPosY() + y);
-
-        selectedCharacter.rotateTo(nextTile);
-        if (nextTile.isWalkable()) {
-            selectedCharacter.move(x, y);
-        }
+    public Window getWindow() {
+        return window;
     }
-    public Character getPlayer(){
-        return selectedCharacter;
+
+    public GameObject getSelectedObject(){
+        return selectedObject;
+    }
+
+    public void selectObject(GameObject object){
+        selectedObject = object;
     }
 
     public void stop() {

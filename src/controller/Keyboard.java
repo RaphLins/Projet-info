@@ -22,19 +22,19 @@ public class Keyboard implements KeyListener {
         switch (key) {
             case KeyEvent.VK_D:
             case KeyEvent.VK_RIGHT:
-                mapView.moveView(1, 0);
+                mapView.moveView(2, 0);
                 break;
             case KeyEvent.VK_A:
             case KeyEvent.VK_LEFT:
-                mapView.moveView(-1, 0);
+                mapView.moveView(-2, 0);
                 break;
             case KeyEvent.VK_DOWN:
             case KeyEvent.VK_S:
-                mapView.moveView(0, 1);
+                mapView.moveView(0, 2);
                 break;
             case KeyEvent.VK_W:
             case KeyEvent.VK_UP:
-                mapView.moveView(0, -1);
+                mapView.moveView(0, -2);
                  break;case KeyEvent.VK_Q:
                  game.stop();
                  break;
