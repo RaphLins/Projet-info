@@ -13,7 +13,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class MapView extends JPanel {
     public static final int TILE_WIDTH =  20;
@@ -26,14 +26,14 @@ public class MapView extends JPanel {
     private int viewPosX = 0;
     private int viewPosY = 0;
     private Mouse mouseController = null;
-    TextureHashMap textures;
+    TextureHashMap textures = new TextureHashMap();;
 
     public MapView(Map map) {
         this.map = map;
 
         this.setFocusable(true);
         this.requestFocusInWindow();
-        this.setPreferredSize(new Dimension(1500, 1020));
+        this.setPreferredSize(new Dimension(1660, 1020));
         addMouseListener(new MouseListener() {
             public void mousePressed(MouseEvent e) {}
             public void mouseClicked(MouseEvent e) {
@@ -50,7 +50,6 @@ public class MapView extends JPanel {
             public void mouseExited(MouseEvent e) {}
             public void mouseReleased(MouseEvent e) {}
         });
-        textures = new TextureHashMap();
         this.addMouseWheelListener(e -> {
             zoom=e.getWheelRotation()<0?2:1;
             centerView(e.getX()/TILE_WIDTH,e.getY()/TILE_HEIGHT);
@@ -72,7 +71,7 @@ public class MapView extends JPanel {
                     g.drawImage(image,x,y,(int)(image.getWidth()*zoom), (int)(image.getHeight()*zoom),null);
                 }
                 else{
-                    g.drawImage(textures.get("white"),i*TILE_WIDTH,(j-1)*TILE_HEIGHT,TILE_WIDTH,2*TILE_HEIGHT,null);
+                    g.drawImage(textures.get("White"),i*TILE_WIDTH,(j-1)*TILE_HEIGHT,TILE_WIDTH,2*TILE_HEIGHT,null);
                 }
             }
 

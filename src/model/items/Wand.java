@@ -2,12 +2,17 @@ package model.items;
 
 import model.map.Tile;
 
-public class Wand extends SellableItem {
+public class Wand extends Item implements CarriableItem, Sellable {
 	
 	private int price;
 
+    public Wand() {
+        super();
+        ID = "Wand";
+    }
 
-    public Wand(int price, Tile pos) {
-        super(price, pos);
+    @Override
+    public int getPrice() {
+        return 0;
     }
 }

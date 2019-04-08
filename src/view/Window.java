@@ -19,11 +19,14 @@ public class Window extends JFrame {
     public Window(String title) {
         super(title);
         // JFrame window = new JFrame("Game");
+        //ProjectileThread thread= new ProjectileThread();
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setBounds(0, 0, 1920, 1020);
         this.getContentPane().setBackground(Color.gray);
         groupPanel.add(mapView, BorderLayout.LINE_START);
         groupPanel.add(statusView, BorderLayout.LINE_END);
+        //groupPanel.add(thread);
         this.getContentPane().add(this.groupPanel);
         this.setVisible(true);
     }

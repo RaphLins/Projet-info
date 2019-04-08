@@ -1,27 +1,38 @@
 package model;
 
 import model.characters.AdultWizard;
+import model.items.Wand;
 import model.map.Map;
 import model.map.Tile;
 import view.Window;
 import model.characters.Character;
 
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 
 public class Game {
     private static Game instance = null;
     private static boolean started = false;
     private GameObject selectedObject = null;
+    private ArrayList<Character> family = new ArrayList<>();
 
     private Window window;
     private Map map;
 
     private Game() {
         map = new Map("shared/res/map.csv");
-        new AdultWizard(map.getTileAt(10,10));
-        new AdultWizard(map.getTileAt(20,10));
-        new AdultWizard(map.getTileAt(30,10));
+        family.add(new AdultWizard(map.getTileAt(10,10)));
+        family.add(new AdultWizard(map.getTileAt(20,10)));
+        family.add(new AdultWizard(map.getTileAt(30,10)));
+
+        family.get(0).carryItem(new Wand());
+        family.get(0).carryItem(new Wand());
+        family.get(0).carryItem(new Wand());
+        family.get(0).carryItem(new Wand());
+        family.get(0).carryItem(new Wand());
+        family.get(0).carryItem(new Wand());
+        family.get(0).carryItem(new Wand());
     }
 
     public void setWindow(Window window){

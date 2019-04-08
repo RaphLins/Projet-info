@@ -5,18 +5,16 @@ import model.map.Map;
 import model.map.Tile;
 
 public class MovingThread implements Runnable{
-	private Game g;
+	private Game game = Game.getInstance();
+	private Map map = game.getMap();
 	private Character p;
 	Tile target;
-	private Map map;
 	private volatile boolean running = true;
 	float speed;
 
-	public MovingThread(Game g, Character p, Tile target, Map map, float speed) {
-		this.g= g;
+	public MovingThread(Character p, Tile target, float speed) {
 		this.p = p;
 		this.target = target;
-		this.map = map;
 		this.speed = speed;
 	}
 	
@@ -27,7 +25,7 @@ public class MovingThread implements Runnable{
 			synchronized (p) {
 				direction = (new AStar(p.getPos(), target, map)).getNextStep();
 				if (direction != -1) {
-					Tile nextTile = Game.getInstance().getMap().getTileNextTo(p.getPos(), direction);
+					Tile nextTile = map.getTileNextTo(p.getPos(), direction);
 					p.rotateTo(nextTile);
 					nextTile.addObject(p);
 					for (int i = 0; i < 20; i++) {
@@ -42,7 +40,6 @@ public class MovingThread implements Runnable{
 					p.setPos(nextTile);
 					p.resetOffset();
 				}
-				if (!running) System.out.println("interrupt received");
 			}
 		}
 	}

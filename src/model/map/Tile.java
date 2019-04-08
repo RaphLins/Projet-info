@@ -17,7 +17,7 @@ public class Tile{
 	public Tile(int x, int y) {
 		this.x = x;
 		this.y = y;
-		ID = "grass";
+		ID = "Grass";
 	}
 
 	public Tile(Tile tile) {

@@ -1,10 +1,22 @@
 package model.items;
 
+import model.GameObject;
+import model.ObjectHolder;
 import model.map.Tile;
 
-public class Wardrobe extends Item implements Obstacle {
+import java.util.ArrayList;
+
+public class Wardrobe extends Item implements Obstacle, ObjectHolder {
+
+    private ArrayList<GameObject> inventory;
     public Wardrobe(Tile pos) {
         super(pos);
-        ID = "wardrobe";
+        ID = "Wardrobe";
+    }
+
+
+    @Override
+    public ArrayList<GameObject> getInventory() {
+        return inventory;
     }
 }

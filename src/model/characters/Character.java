@@ -3,15 +3,16 @@ package model.characters;
 import model.Game;
 import model.GameObject;
 import model.ObjectHolder;
+import model.items.CarriableItem;
 import model.places.Place;
 import model.map.Tile;
 
 import java.util.ArrayList;
 
 public abstract class Character extends GameObject implements Directable, ObjectHolder {
-	private int hunger = 0;
+	private int hunger = 100;
 	private int hygiene = 100;
-	private int bladder = 0;
+	private int bladder = 100;
 	private int energy = 100;
 	private Place location;
 	private int direction = EAST;
@@ -26,9 +27,8 @@ public abstract class Character extends GameObject implements Directable, Object
 		if(target.isWalkable()){
 			if(moveThread!=null){
 				moveThread.terminate();
-				System.out.println("interrupt sent");
 			}
-			moveThread = new MovingThread(Game.getInstance(),this, target, Game.getInstance().getMap(),5);
+			moveThread = new MovingThread(this, target,5);
 			Thread thread = new Thread(moveThread);
 			thread.start();
 		}
@@ -76,12 +76,30 @@ public abstract class Character extends GameObject implements Directable, Object
 
 	}
 
+
+
 	public void setDirection(int direction) {
 		this.direction=direction;
 	}
 
-	public int getEnergy() {
-		return energy/100;
+	public float getEnergy() {
+		return (float)energy/100;
+	}
+
+	public float getHunger() {
+		return (float)hunger/100;
+	}
+
+	public float getBladder() {
+		return (float)bladder/100;
+	}
+
+	public float getHygiene() {
+		return (float)hygiene/100;
+	}
+
+	public void carryItem(CarriableItem item){
+		inventory.add((GameObject) item);
 	}
 
 	public ArrayList<GameObject> getInventory() {

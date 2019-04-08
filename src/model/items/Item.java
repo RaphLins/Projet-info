@@ -8,4 +8,8 @@ public abstract class Item extends GameObject {
 	public Item(Tile pos) {
 		super(pos);
 	}
+
+	public Item(){
+		super();
+	}
 }

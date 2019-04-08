@@ -10,8 +10,12 @@ public abstract class GameObject {
     public String ID;
 
     public GameObject(Tile pos) {
+        this();
         this.pos = pos;
         pos.addObject(this);
+    }
+
+    public GameObject() {
         ID = "";
     }
 

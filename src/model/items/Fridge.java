@@ -10,6 +10,7 @@ public class Fridge extends Item implements Obstacle, ObjectHolder {
     private ArrayList<GameObject> inventory;
     public Fridge(Tile pos) {
         super(pos);
+        ID = "Fridge";
     }
 
     public void addFood(Food food){

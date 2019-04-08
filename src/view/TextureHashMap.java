@@ -17,13 +17,16 @@ public class TextureHashMap {
             BufferedImage characters = ImageIO.read(new File("shared/res/characters.png"));
             BufferedImage items = ImageIO.read(new File("shared/res/items.png"));
             BufferedImage tileset = ImageIO.read(new File("shared/res/tileset.png"));
-            textures.put("floor",tileset.getSubimage(199,80,20,20));
-            put("grass", items,1,0,1,2);
-            textures.put("wall",tileset.getSubimage(479,418,20,40));
-            textures.put("house_window",tileset.getSubimage(79,526,20,20));
-            textures.put("wardrobe",tileset.getSubimage(359,796,20,40));
-            put("white", items,4,0,1,2);
-            put4("adult_wizard",characters,0,0,1,2);
+            textures.put("Floor",tileset.getSubimage(199,80,20,20));
+            put("Grass", items,1,0,1,2);
+            textures.put("Inventory Square",items.getSubimage(0,40,60,60));
+            textures.put("Wand",items.getSubimage(100,20,20,20));
+            textures.put("Wall",tileset.getSubimage(479,418,20,40));
+            textures.put("House Window",tileset.getSubimage(79,526,20,20));
+            textures.put("Wardrobe",tileset.getSubimage(359,796,20,40));
+            textures.put("Bed",tileset.getSubimage(577,756,20,60));
+            put("White", items,4,0,1,2);
+            put4("Adult Wizard",characters,0,0,1,2);
 
         } catch (IOException e) {
         }
