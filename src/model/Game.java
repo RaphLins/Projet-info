@@ -9,6 +9,7 @@ import model.characters.Character;
 
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import model.Time;
 
 
 public class Game {
@@ -19,6 +20,7 @@ public class Game {
 
     private Window window;
     private Map map;
+    private Time time;
 
     private Game() {
         map = new Map("shared/res/map.csv");
@@ -73,5 +75,11 @@ public class Game {
 
     public void updateTile(int x, int y) {
         window.updateTile(x,y);
+    }
+    
+    public void setGameTime(Time time) {
+    	this.time = time;
+    	Thread dailyNeeds = new Thread(new DailyNeeds(time, family, this));
+        dailyNeeds.start();
     }
 }

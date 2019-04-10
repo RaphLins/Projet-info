@@ -57,18 +57,30 @@ public abstract class Character extends GameObject implements Directable, Object
 	}
 
 	public void eat() {
+		if (hunger<100) {
+			hunger+=(100-hunger);
+		}
 
 	}
 
 	public void wash() {
+		if (hygiene<100) {
+			hygiene+=(100-hygiene);
+		}
 
 	}
 
 	public void pee() {
+		if (bladder<100) {
+			bladder+=(100-bladder);
+		}
 
 	}
 
 	public void sleep() {
+		if (energy<100) {
+			energy+=(100-energy);
+		}
 
 	}
 
@@ -105,4 +117,28 @@ public abstract class Character extends GameObject implements Directable, Object
 	public ArrayList<GameObject> getInventory() {
 		return inventory;
 	}
+	
+	
+	public void decrease(float en, float hu, float bl, float hy) {
+		energy-=en;
+		hunger-=hu;
+		bladder-=bl;
+		hygiene-=hy;
+	}
+	
+	public void actions() {
+		if (bladder<=25) {
+			pee();
+		}
+		if (energy<=25) {
+			sleep();
+		}
+		if (hunger<=25) {
+			eat();
+		}
+		if (hygiene<=25) {
+			wash();
+		}
+	}
+	
 }
