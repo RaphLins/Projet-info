@@ -3,24 +3,28 @@ package model.characters;
 import model.Game;
 import model.GameObject;
 import model.ObjectHolder;
+import model.Time;
+import model.TimeObserver;
 import model.items.CarriableItem;
 import model.places.Place;
 import model.map.Tile;
 
 import java.util.ArrayList;
 
-public abstract class Character extends GameObject implements Directable, ObjectHolder {
-	private int hunger = 100;
-	private int hygiene = 100;
-	private int bladder = 100;
-	private int energy = 100;
+public abstract class Character extends GameObject implements Directable, ObjectHolder, TimeObserver {
+	private double hunger = 100;
+	private double hygiene = 100;
+	private double bladder = 100;
+	private double energy = 100;
 	private Place location;
 	private int direction = EAST;
 	private MovingThread moveThread;
 	private ArrayList<GameObject> inventory = new ArrayList<>();
+	private Time time = Time.getInstance();
 
 	public Character(Tile pos) {
 		super(pos);
+		attach();
 	}
 
 	public void goTo(Tile target){
@@ -119,26 +123,57 @@ public abstract class Character extends GameObject implements Directable, Object
 	}
 	
 	
-	public void decrease(float en, float hu, float bl, float hy) {
-		energy-=en;
-		hunger-=hu;
-		bladder-=bl;
-		hygiene-=hy;
+	//public void decrease(float en, float hu, float bl, float hy) {
+	//	energy-=en;
+	//	hunger-=hu;
+	//	bladder-=bl;
+	//	hygiene-=hy;
+	//}
+	
+	public void increaseBladder(double i) {
+		bladder+=i;
 	}
 	
-	public void actions() {
-		if (bladder<=25) {
-			pee();
-		}
-		if (energy<=25) {
-			sleep();
-		}
-		if (hunger<=25) {
-			eat();
-		}
-		if (hygiene<=25) {
-			wash();
+	public void increaseEnergy(double i) {
+		energy+=i;
+	}
+	
+	public void increaseHunger(double i) {
+		hunger+=i;
+	}
+	
+	public void increaseHygiene(double i) {
+		hygiene+=i;
+	}
+	
+	@Override
+	public void timePassed() {
+		increaseBladder(-0.8);
+		increaseEnergy(-0.14);
+		increaseHunger(-0.34);
+		increaseHygiene(-0.07);
+		if (this == Game.getInstance().getSelectedObject()) {
+			Game.getInstance().getWindow().getStatusView().redraw();
 		}
 	}
+	
+	public void attach() {
+		time.getList().add(this);
+	}
+	
+	//public void actions() {
+	//	if (bladder<=25) {
+	//		pee();
+	//	}
+	//	if (energy<=25) {
+	//		sleep();
+	//	}
+	//	if (hunger<=25) {
+	//		eat();
+	//	}
+	//	if (hygiene<=25) {
+	//		wash();
+	//	}
+	//}
 	
 }

@@ -17,7 +17,7 @@ public class Window extends JFrame {
     private JPanel groupPanel = new JPanel(new BorderLayout());
     private MapView mapView = new MapView(Game.getInstance().getMap());
     private StatusView statusView = new StatusView();
-    //private Clock clock = new Clock(time);
+    private Clock clock = new Clock();
 
     public Window(String title) {
         super(title);
@@ -29,7 +29,7 @@ public class Window extends JFrame {
         this.getContentPane().setBackground(Color.gray);
         groupPanel.add(mapView, BorderLayout.LINE_START);
         groupPanel.add(statusView, BorderLayout.LINE_END);
-        //groupPanel.add(clock, BorderLayout.PAGE_START);
+        groupPanel.add(clock, BorderLayout.PAGE_START);
         //groupPanel.add(thread);
         this.getContentPane().add(this.groupPanel);
         this.setVisible(true);

@@ -77,9 +77,9 @@ public class Game {
         window.updateTile(x,y);
     }
     
-    public void setGameTime(Time time) {
-    	this.time = time;
-    	Thread dailyNeeds = new Thread(new DailyNeeds(time, family, this));
-        dailyNeeds.start();
-    }
+    //public void setGameTime(Time time) {
+    //	this.time = time;
+    //	Thread dailyNeeds = new Thread(new DailyNeeds(time, family, this));
+    //  dailyNeeds.start();
+    //}
 }
