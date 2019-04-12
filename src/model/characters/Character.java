@@ -12,6 +12,14 @@ import model.map.Tile;
 import java.util.ArrayList;
 
 public abstract class Character extends GameObject implements Directable, ObjectHolder, TimeObserver {
+
+	private final int DOING_NOTHING = 0;
+	private final int MOVING = 1;
+	private final int SLEEPING = 2;
+	private final int EATING = 3;
+	private final int PEEING = 4;
+	private final int WASHING = 5;
+
 	private double hunger = 100;
 	private double hygiene = 100;
 	private double bladder = 100;
@@ -21,6 +29,7 @@ public abstract class Character extends GameObject implements Directable, Object
 	private MovingThread moveThread;
 	private ArrayList<GameObject> inventory = new ArrayList<>();
 	private Time time = Time.getInstance();
+	private int state = DOING_NOTHING;
 
 	public Character(Tile pos) {
 		super(pos);
@@ -61,31 +70,20 @@ public abstract class Character extends GameObject implements Directable, Object
 	}
 
 	public void eat() {
-		if (hunger<100) {
-			hunger+=(100-hunger);
-		}
-
+		state = EATING;
 	}
 
 	public void wash() {
-		if (hygiene<100) {
-			hygiene+=(100-hygiene);
-		}
-
+		state = WASHING;
 	}
 
 	public void pee() {
-		if (bladder<100) {
-			bladder+=(100-bladder);
-		}
+		state = PEEING;
 
 	}
 
 	public void sleep() {
-		if (energy<100) {
-			energy+=(100-energy);
-		}
-
+		state = SLEEPING;
 	}
 
 	public void fetchItem() {
@@ -98,20 +96,20 @@ public abstract class Character extends GameObject implements Directable, Object
 		this.direction=direction;
 	}
 
-	public float getEnergy() {
-		return (float)energy/100;
+	public double getEnergy() {
+		return energy;
 	}
 
-	public float getHunger() {
-		return (float)hunger/100;
+	public double getHunger() {
+		return hunger;
 	}
 
-	public float getBladder() {
-		return (float)bladder/100;
+	public double getBladder() {
+		return bladder;
 	}
 
-	public float getHygiene() {
-		return (float)hygiene/100;
+	public double getHygiene() {
+		return hygiene;
 	}
 
 	public void carryItem(CarriableItem item){
@@ -121,38 +119,30 @@ public abstract class Character extends GameObject implements Directable, Object
 	public ArrayList<GameObject> getInventory() {
 		return inventory;
 	}
-	
-	
-	//public void decrease(float en, float hu, float bl, float hy) {
-	//	energy-=en;
-	//	hunger-=hu;
-	//	bladder-=bl;
-	//	hygiene-=hy;
-	//}
-	
-	public void increaseBladder(double i) {
-		bladder+=i;
+
+	public void incrementBladder(double i) {
+		bladder = Math.max(Math.min(bladder+i,100),0);
 		if (bladder<=25) {
 			pee();
 		}
 	}
 	
-	public void increaseEnergy(double i) {
-		energy+=i;
+	public void incrementEnergy(double i) {
+		energy = Math.max(Math.min(energy+i,100),0);
 		if (energy<=25) {
 			sleep();
 		}
 	}
 	
-	public void increaseHunger(double i) {
-		hunger+=i;
+	public void incrementHunger(double i) {
+		hunger = Math.max(Math.min(hunger+i,100),0);
 		if (hunger<=25) {
 			eat();
 		}
 	}
 	
-	public void increaseHygiene(double i) {
-		hygiene+=i;
+	public void incrementHygiene(double i) {
+		hygiene = Math.max(Math.min(hygiene+i,100),0);
 		if (hygiene<=25) {
 			wash();
 		}
@@ -160,12 +150,42 @@ public abstract class Character extends GameObject implements Directable, Object
 	
 	@Override
 	public void timePassed() {
-		increaseBladder(-0.8);
-		increaseEnergy(-0.14);
-		increaseHunger(-0.34);
-		increaseHygiene(-0.07);
+		incrementBladder(-0.8);
+		incrementEnergy(-0.14);
+		incrementHunger(-0.34);
+		incrementHygiene(-0.07);
 		if (this == Game.getInstance().getSelectedObject()) {
 			Game.getInstance().getWindow().getStatusView().redraw();
 		}
+
+		switch (state){
+			case DOING_NOTHING:
+				break;
+			case EATING:
+				incrementHunger(5.24);
+				if(getHunger()==100){
+					state = DOING_NOTHING;
+				}
+				break;
+			case WASHING:
+				incrementHygiene(10.07);
+				if(getHygiene()==100){
+					state = DOING_NOTHING;
+				}
+				break;
+			case PEEING:
+				incrementBladder(50.8);
+				if(getBladder()==100){
+					state = DOING_NOTHING;
+				}
+				break;
+			case SLEEPING:
+				incrementEnergy(0.35);
+				if(getEnergy()==100){
+					state = DOING_NOTHING;
+				}
+				break;
+		}
 	}
+
 }

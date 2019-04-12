@@ -69,14 +69,14 @@ public class StatusView extends JPanel {
 
     }
 
-    private void drawBar(String name, float value, int x, int y, Graphics g){
+    private void drawBar(String name, double value, int x, int y, Graphics g){
         g.setColor(Color.BLACK);
         g.setFont(new Font("default", Font.BOLD, 16));
         g.drawString(name, x+3, y);
         g.setColor(new Color( 148, 49, 38 ));
         g.fillRect(x+20, y+10, BAR_LENGTH, BAR_WIDTH);
         g.setColor(new Color(40, 180, 99));
-        int length_ok = Math.round(BAR_LENGTH*value);
+        int length_ok = (int) Math.round(BAR_LENGTH*value/100);
         g.fillRect(x+20, y+10, length_ok, BAR_WIDTH);
     }
 
