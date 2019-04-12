@@ -24,6 +24,7 @@ public class Game {
 
     private Game() {
         map = new Map("shared/res/map.csv");
+        //Time.getInstance().run();
         family.add(new AdultWizard(map.getTileAt(10,10)));
         family.add(new AdultWizard(map.getTileAt(20,10)));
         family.add(new AdultWizard(map.getTileAt(30,10)));
@@ -35,6 +36,9 @@ public class Game {
         family.get(0).carryItem(new Wand());
         family.get(0).carryItem(new Wand());
         family.get(0).carryItem(new Wand());
+
+        Thread gameTime = new Thread(Time.getInstance());
+        gameTime.start();
     }
 
     public void setWindow(Window window){
@@ -76,10 +80,5 @@ public class Game {
     public void updateTile(int x, int y) {
         window.updateTile(x,y);
     }
-    
-    //public void setGameTime(Time time) {
-    //	this.time = time;
-    //	Thread dailyNeeds = new Thread(new DailyNeeds(time, family, this));
-    //  dailyNeeds.start();
-    //}
+
 }

@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Map{
@@ -35,15 +36,15 @@ public class Map{
         WIDTH = tempList.get(0).split(",",-1).length;
         grid = new Tile[WIDTH][HEIGHT];
 
-        TileFactory rileFactory = new TileFactory();
+        TileFactory tileFactory = new TileFactory();
         for (int j = 0; j < HEIGHT; j++) {
             String[] row = tempList.get(j).split(",",-1);
             for (int i = 0; i < WIDTH; i++) {
-                String type = "";
+                ArrayList<String> types = new ArrayList();
                 if(i<row.length){
-                    type = row[i];
+                    types = new ArrayList(Arrays.asList(row[i].split(" ")));
                 }
-                grid[i][j]=rileFactory.getInstance(type,i,j);
+                grid[i][j]=tileFactory.getInstance(types,i,j);
             }
         }
     }

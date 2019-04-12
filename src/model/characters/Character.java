@@ -24,7 +24,7 @@ public abstract class Character extends GameObject implements Directable, Object
 
 	public Character(Tile pos) {
 		super(pos);
-		attach();
+		Time.getInstance().attach(this);
 	}
 
 	public void goTo(Tile target){
@@ -132,18 +132,30 @@ public abstract class Character extends GameObject implements Directable, Object
 	
 	public void increaseBladder(double i) {
 		bladder+=i;
+		if (bladder<=25) {
+			pee();
+		}
 	}
 	
 	public void increaseEnergy(double i) {
 		energy+=i;
+		if (energy<=25) {
+			sleep();
+		}
 	}
 	
 	public void increaseHunger(double i) {
 		hunger+=i;
+		if (hunger<=25) {
+			eat();
+		}
 	}
 	
 	public void increaseHygiene(double i) {
 		hygiene+=i;
+		if (hygiene<=25) {
+			wash();
+		}
 	}
 	
 	@Override
@@ -156,24 +168,4 @@ public abstract class Character extends GameObject implements Directable, Object
 			Game.getInstance().getWindow().getStatusView().redraw();
 		}
 	}
-	
-	public void attach() {
-		time.getList().add(this);
-	}
-	
-	//public void actions() {
-	//	if (bladder<=25) {
-	//		pee();
-	//	}
-	//	if (energy<=25) {
-	//		sleep();
-	//	}
-	//	if (hunger<=25) {
-	//		eat();
-	//	}
-	//	if (hygiene<=25) {
-	//		wash();
-	//	}
-	//}
-	
 }

@@ -11,32 +11,30 @@ import model.TimeObserver;
 public class Clock extends JPanel implements TimeObserver{
 	
 	private Time time = Time.getInstance();
+	JLabel label = new JLabel();
 	
 	
 	public Clock() {
-		//Thread clockTime = new Thread (new ClockTime(time, this));
-		//clockTime.start();
-		attach();
+		Time.getInstance().attach(this);
 		this.setPreferredSize(new Dimension(260, 100));
         this.setBackground(new Color( 253, 135, 208 ));
         this.setOpaque(true);
+		add(label);
         
 	}
 	@Override
 	public void timePassed() {
-		removeAll();
-		JLabel label = new JLabel(convert(time.getMinutes()));
-		//System.out.println("Nouveau label créé."+Integer.toString(time.getMinutes()));
-		add(label);
-		updateUI();
+		repaint();
 	}
-	
+
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		label.setText("Time: "+convert(time.getMinutes()));
+	}
+
 	public String convert(int i) {
-		return (Integer.toString(i/60)+":"+Integer.toString(i%60));
-	}
-	
-	public void attach() {
-		time.getList().add(this);
+		return ((i/60)+":"+(i%60));
 	}
 
 }
