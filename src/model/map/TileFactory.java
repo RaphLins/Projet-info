@@ -2,6 +2,7 @@ package model.map;
 
 import model.items.Broom;
 import model.items.Wardrobe;
+//import model.items.Bed;
 
 import java.util.ArrayList;
 
@@ -15,6 +16,7 @@ public class TileFactory {
                 case "F": res = new HouseWindow(res); break;
                 case "Br": res.addObject(new Broom(40,res));
                 case "M": res.addObject(new Wardrobe(res));
+                //case "B" : res.addObject(new Bed(res));
             }
         }
         return res;

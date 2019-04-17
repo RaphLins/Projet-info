@@ -1,10 +1,6 @@
-import java.awt.BorderLayout;
-
 import controller.Keyboard;
 import controller.Mouse;
 import model.Game;
-import view.Clock;
-import model.Time;
 import view.Window;
 
 

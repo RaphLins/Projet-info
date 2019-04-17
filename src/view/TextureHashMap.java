@@ -21,7 +21,7 @@ public class TextureHashMap {
             put("Grass", items,1,0,1,2);
             textures.put("Inventory Square",items.getSubimage(0,40,60,60));
             textures.put("Wand",items.getSubimage(100,20,20,20));
-            textures.put("Wall",tileset.getSubimage(479,418,20,40));
+            textures.put("Wall",tileset.getSubimage(559,415,20,40));
             textures.put("House Window",tileset.getSubimage(79,526,20,20));
             textures.put("Wardrobe",tileset.getSubimage(359,796,20,40));
             textures.put("Bed",tileset.getSubimage(577,756,20,60));

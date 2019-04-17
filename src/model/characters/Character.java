@@ -122,28 +122,28 @@ public abstract class Character extends GameObject implements Directable, Object
 
 	public void incrementBladder(double i) {
 		bladder = Math.max(Math.min(bladder+i,100),0);
-		if (bladder<=25) {
+		if (bladder<=25 && state == DOING_NOTHING) {
 			pee();
 		}
 	}
 	
 	public void incrementEnergy(double i) {
 		energy = Math.max(Math.min(energy+i,100),0);
-		if (energy<=25) {
+		if (energy<=25 && state == DOING_NOTHING) {
 			sleep();
 		}
 	}
 	
 	public void incrementHunger(double i) {
 		hunger = Math.max(Math.min(hunger+i,100),0);
-		if (hunger<=25) {
+		if (hunger<=25 && state == DOING_NOTHING) {
 			eat();
 		}
 	}
 	
 	public void incrementHygiene(double i) {
 		hygiene = Math.max(Math.min(hygiene+i,100),0);
-		if (hygiene<=25) {
+		if (hygiene<=25 && state == DOING_NOTHING) {
 			wash();
 		}
 	}
@@ -181,6 +181,8 @@ public abstract class Character extends GameObject implements Directable, Object
 				break;
 			case SLEEPING:
 				incrementEnergy(0.35);
+				incrementBladder(0.65);
+				incrementHunger(0.17);
 				if(getEnergy()==100){
 					state = DOING_NOTHING;
 				}
