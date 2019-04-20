@@ -1,6 +1,8 @@
 package model.map;
 
+import model.Game;
 import model.GameObject;
+import model.characters.Character;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -79,6 +81,50 @@ public class Map{
             case 1 : res = getTileAt(tile.getX(),tile.getY()-1); break;
             case 2 : res = getTileAt(tile.getX()-1,tile.getY()); break;
             case 3 : res = getTileAt(tile.getX(),tile.getY()+1); break;
+        }
+        return res;
+    }
+
+    public ArrayList<Tile> getNearbyTiles(Tile tile, int distanceMax) {
+        ArrayList<Tile> tilesAround = new ArrayList<>();
+        int x = tile.getX();
+        int y = tile.getY();
+        for(int i=0;i<distanceMax;i++) {
+            for(int j =0; j<distanceMax ; j++) {
+                tilesAround.add(getTileAt(x+i,x+j));
+                tilesAround.add(getTileAt(x-i,x+j));
+                tilesAround.add(getTileAt(x+i,x-j));
+                tilesAround.add(getTileAt(x-i,x-j));
+            }
+        }
+        return tilesAround;
+    }
+
+    public Tile getClosestTile(Tile position, String type, int distanceMax) {
+        Map map = Game.getInstance().getMap();
+        ArrayList<Tile> tilesAround = getNearbyTiles(position,distanceMax);
+        ArrayList<Tile> possibleTargets =  new ArrayList<>();
+        for(Tile tile : tilesAround) {
+            ArrayList<GameObject> objects = tile.getObjects();
+            for(GameObject o : objects) {
+                if (o.ID == type) {
+                    possibleTargets.add(o.getPos());
+                }
+            }
+        }
+        //on a cr�� une liste contenant les cases autour du personnage contenant l'objet n�cessaire pour l'action
+        Tile target = getClosestTile(position, possibleTargets); //choisit celle qui est la plus proche � vol d'oiseau
+        return target;
+    }
+
+    public Tile getClosestTile(Tile position, ArrayList<Tile> possibleTargets) { //utilise les coordonn�es des cases contenant l'objet qu'on cherche pour d�terminer celle qui est la plus proche � vol d'oiseau
+        Tile res = possibleTargets.get(0);
+        for (Tile tile : possibleTargets) {
+            float currentDistance = (float) Math.pow(Math.pow(res.getX()-position.getX(),2) + Math.pow(res.getY()-position.getY(),2),0.5);
+            float distance = (float) Math.pow(Math.pow(tile.getX()-position.getX(),2) + Math.pow(tile.getY()-position.getY(),2),0.5);
+            if(distance<currentDistance) {
+                res = tile;
+            }
         }
         return res;
     }

@@ -8,11 +8,10 @@ public class Time implements Runnable {
 	private static Time instance = null;
 
 	private static int minutes = 0;
-	private static int waitTime = 250;
+	private static int waitTime = 100;
 	private ArrayList<TimeObserver> timeObservers = new ArrayList<>();
 	
 	private Time() {
-		
 	}
 	
 	@Override
@@ -29,7 +28,7 @@ public class Time implements Runnable {
 					//System.out.println(minutes);
 				}
 				for (TimeObserver o : timeObservers) {
-					o.timePassed();					
+					o.timePassed();
 				}
 				}
 		}catch(Exception e){};

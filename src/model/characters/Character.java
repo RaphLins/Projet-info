@@ -5,13 +5,15 @@ import model.GameObject;
 import model.ObjectHolder;
 import model.Time;
 import model.TimeObserver;
+import model.characters.actions.*;
 import model.items.CarriableItem;
 import model.places.Place;
 import model.map.Tile;
-import model.map.Map;
+
 import java.lang.Math;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public abstract class Character extends GameObject implements Directable, ObjectHolder, TimeObserver {
 
@@ -30,32 +32,22 @@ public abstract class Character extends GameObject implements Directable, Object
 	private int direction = EAST;
 	private MovingThread moveThread;
 	private ArrayList<GameObject> inventory = new ArrayList<>();
-	private int state = DOING_NOTHING;
-	private boolean isArrived = false; //permet de ne pas relancer la m�thode goToClosest(...) � chaque fois que le personnage essaie de faire une action (en fait le personnage relan�ait la m�thode � chaque boucle faite par le temps et ne d�marrait jamais son action vu qu'il �tait constamment en state = moving)
+
+	private LinkedList<Action> actionList = new LinkedList<>();
 
 	public Character() {
 		Time.getInstance().attach(this);
 	}
 
 	public void goTo(Tile target){
+		stopEverything();
 		if(target.isWalkable()){
-			if(moveThread!=null){
-				moveThread.terminate();
-			}
-			moveThread = new MovingThread(this, target,5);
-			Thread thread = new Thread(moveThread);
-			thread.start();			
+			actionList.add(new Move(this, target));
 		}
 		else{
 			rotateTo(target);
 		}
 	}
-	
-	public void setState(int state) {
-		this.state = state;
-	}
-	//permet de modifier state dans le movingthread
-	
 
 	public void rotateTo(Tile target) {
 		int x= target.getX()-getPosX();
@@ -71,103 +63,33 @@ public abstract class Character extends GameObject implements Directable, Object
 		getPos().update();
 	}
 	
-	public void goToClosest(String s) {
-		state = MOVING; //du coup le personnage ne peut pas encore d�marrer son action car pour �a il faut que state = doingnothing
-		Map map = Game.getInstance().getMap();
-		ArrayList<Tile> tilesAround = Game.getInstance().getTilesAround(this);
-		ArrayList<Tile> possibleTargets =  new ArrayList<Tile>();
-		for(Tile tile : tilesAround) {
-			ArrayList<GameObject> objects = tile.getObjects();
-			for(GameObject o : objects) {
-				if (o.ID.equals(s)) {
-					possibleTargets.add(o.getPos());
-				}
-			}
-		}
-		//on a cr�� une liste contenant les cases autour du personnage contenant l'objet n�cessaire pour l'action
-		Tile target = getClosestTile(possibleTargets); //choisit celle qui est la plus proche � vol d'oiseau
-		if(target.isWalkable()) {
-			goTo(target);
-		}
-		else {
-			for(int i=0 ; i<4; i++) {
-				Tile target2 = map.getTileNextTo(target,i);
-				if(target2.isWalkable()) {
-					goTo(target2);
-					break;
-				} //si le personnage ne peut pas aller sur la case, il va chercher � aller sur celles � c�t� de l'objet
-			}			
-		}
-	}
-	
-	public Tile getClosestTile(ArrayList<Tile> possibleTargets) { //utilise les coordonn�es des cases contenant l'objet qu'on cherche pour d�terminer celle qui est la plus proche � vol d'oiseau
-		Tile res = possibleTargets.get(0);
-		for (Tile tile : possibleTargets) {
-			float currentDistance = (float) Math.pow(Math.pow(res.getX()-getPos().getX(),2) + Math.pow(res.getY()-getPos().getY(),2),0.5);
-			float distance = (float) Math.pow(Math.pow(tile.getX()-getPos().getX(),2) + Math.pow(tile.getY()-getPos().getY(),2),0.5);
-			if(distance<currentDistance) {
-				res = tile;
-			}
-		}
-		return res;
-	}
-
-	
-	public boolean isArrived(Tile target) {
-		if((getPos().getX() == target.getX() && getPos().getY() == target.getY())) {
-			isArrived = true;
-		}
-		return isArrived; //isArrived est utilis� dans movingThread pour modifier state quand le personnage est bien arriv�
-		//isArrived permet aussi de ne pas lancer goToClosest en boucle (cf les if dans pee, eat,...)
-	}
-	
-	
 	@Override
 	public int getDirection() {
 		return direction;
 	}
 
 	public void eat() {
-		if(state == DOING_NOTHING && isArrived == false) {
-			goToClosest("Bed");			//la m�thode ne se red�clenche pas � chaque boucle si le personnage est d�j� arriv�. Le personnage doit aussi �tre en train de ne rien faire
-		}
-		if(state == DOING_NOTHING) {	//state passe de moving � doingnothing quand le personnage est arriv�. goToClosest ne se red�clenche pas car isArrived = true
-			System.out.println("je peux manger");
-			state = EATING;
-			isArrived = false; // permet au personnage de r�utiliser goToClosest pour une autre action
-		}
-//		}
+		System.out.println("started eating");
+		actionList.add(new Move(this, "Bed"));
+		actionList.add(new Eat(this));
 	}
 
 	public void wash() {
-		state = WASHING;
+		System.out.println("started washing");
+		actionList.add(new Move(this, "Wardrobe"));
+		actionList.add(new Wash(this));
 	}
 
 	public void pee() {
-		if(state == DOING_NOTHING && isArrived == false) {
-			System.out.println("OK");
-			goToClosest("Wardrobe");
-		}
-		if(state == DOING_NOTHING) {
-			System.out.println("je peux faire pipi");
-			state = PEEING;
-			isArrived = false;
-		}
+		System.out.println("started peeing");
+		actionList.add(new Move(this, "Wardrobe"));
+		actionList.add(new Pee(this));
 	}
 
 	public void sleep() {
-		if(state == DOING_NOTHING && isArrived == false) {
-			goToClosest("Bed");
-		}
-		if(state == DOING_NOTHING) {
-			System.out.println("je peux dormir");
-			state = SLEEPING;
-			isArrived = false;
-		}
-	}
-
-	public void fetchItem() {
-
+		System.out.println("started sleeping");
+		actionList.add(new Move(this, "Bed"));
+		actionList.add(new Sleep(this));
 	}
 
 	public void setDirection(int direction) {
@@ -200,28 +122,28 @@ public abstract class Character extends GameObject implements Directable, Object
 
 	public void incrementBladder(double i) {
 		bladder = Math.max(Math.min(bladder+i,100),0);
-		if (bladder<=25) {
+		if (bladder<=25 && isDoingNothing()) {
 			pee();
 		}
 	}
 	
 	public void incrementEnergy(double i) {
 		energy = Math.max(Math.min(energy+i,100),0);
-		if (energy<=25) {
+		if (energy<=25 && isDoingNothing()) {
 			sleep();
 		}
 	}
 	
 	public void incrementHunger(double i) {
 		hunger = Math.max(Math.min(hunger+i,100),0);
-		if (hunger<=25) {
+		if (hunger<=25 && isDoingNothing()) {
 			eat();
 		}
 	}
 	
 	public void incrementHygiene(double i) {
 		hygiene = Math.max(Math.min(hygiene+i,100),0);
-		if (hygiene<=25) {
+		if (hygiene<=25 && isDoingNothing()) {
 			wash();
 		}
 	}
@@ -232,40 +154,26 @@ public abstract class Character extends GameObject implements Directable, Object
 		incrementEnergy(-0.14);
 		incrementHunger(-0.34);
 		incrementHygiene(-0.07);
-			switch (state){
-				case DOING_NOTHING:
-					break;
-				case EATING:
-					incrementHunger(5.24);
-					if(getHunger()==100){
-						state = DOING_NOTHING;
-					}
-					break;
-				case WASHING:
-					incrementHygiene(10.07);
-					if(getHygiene()==100){
-						state = DOING_NOTHING;
-					}
-					break;
-				case PEEING:
-					incrementBladder(50.8);
-					if(getBladder()==100){
-						state = DOING_NOTHING;
-					}
-					break;
-				case SLEEPING:
-					incrementEnergy(0.35);
-					if(getEnergy()==100){
-						state = DOING_NOTHING;
-					}
-					break;
-			}
 
-
+		Action currentAction = actionList.peek();
+		if(currentAction !=null){
+			currentAction.performAction();
+		}
 
 		if (this == Game.getInstance().getSelectedObject()) {
 			Game.getInstance().getWindow().getStatusView().redraw();
 		}
 	}
 
+	public void nextAction() {
+		actionList.remove();
+	}
+
+	public boolean isDoingNothing(){
+		return actionList.peek() == null;
+	}
+
+	public void stopEverything(){
+		actionList.clear();
+	}
 }

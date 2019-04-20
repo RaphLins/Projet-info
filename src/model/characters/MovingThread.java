@@ -41,10 +41,6 @@ public class MovingThread implements Runnable{
 					p.setPos(nextTile);
 					p.resetOffset();
 				}
-				if(p.isArrived(target)) {
-					System.out.println("Arrive a destination");
-					p.setState(0);
-				}
 			}
 		}
 	}
