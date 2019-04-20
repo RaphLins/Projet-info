@@ -94,7 +94,7 @@ public class MapView extends JPanel {
             g.setColor(new Color(255,204,153,120));
             g.fillOval(x,y,TILE_WIDTH*(int)zoom,TILE_HEIGHT*(int)zoom);
         }
-        System.out.println("painted map");
+        //System.out.println("painted map");
     }
     public Tile getTileAtWindowPos(int x, int y){
         return map.getTileAt(x+viewPosX,y+viewPosY);

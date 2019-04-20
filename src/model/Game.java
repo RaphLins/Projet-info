@@ -20,18 +20,16 @@ public class Game {
 
     private Window window;
     private Map map;
-    private Time time;
 
     private Game() {
         map = new Map("shared/res/map.csv");
-        //Time.getInstance().run();
-        family.add(new AdultWizard(map.getTileAt(10,10)));
-        family.add(new AdultWizard(map.getTileAt(20,10)));
-        family.add(new AdultWizard(map.getTileAt(30,10)));
+        family.add(new AdultWizard(map.getTileAt(35,20)));
+        family.add(new AdultWizard(map.getTileAt(41,32)));
+        family.add(new AdultWizard(map.getTileAt(45,17)));
 
         family.get(0).carryItem(new Wand());
-        family.get(0).carryItem(new Wand());
-        family.get(0).carryItem(new Wand());
+        family.get(1).carryItem(new Wand());
+        family.get(2).carryItem(new Wand());
         family.get(0).carryItem(new Wand());
         family.get(0).carryItem(new Wand());
         family.get(0).carryItem(new Wand());
@@ -63,6 +61,19 @@ public class Game {
 
     public Map getMap(){
         return map;
+    }
+    
+    public ArrayList<Tile> getTilesAround(Character c) {
+    	ArrayList<Tile> tilesAround = new ArrayList<Tile>();
+    	for(int i=0;i<20;i++) {
+    		for(int j =0; j<20 ; j++) {
+    			tilesAround.add(map.getTileAt(c.getPos().getX()+i, c.getPos().getY()+j));
+    			tilesAround.add(map.getTileAt(c.getPos().getX()-i, c.getPos().getY()+j));
+    			tilesAround.add(map.getTileAt(c.getPos().getX()+i, c.getPos().getY()-j));
+    			tilesAround.add(map.getTileAt(c.getPos().getX()-i, c.getPos().getY()-j));    			
+    		}
+    	}
+    	return tilesAround;
     }
 
     public static Game getInstance(){

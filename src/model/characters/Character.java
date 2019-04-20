@@ -8,6 +8,8 @@ import model.TimeObserver;
 import model.items.CarriableItem;
 import model.places.Place;
 import model.map.Tile;
+import model.map.Map;
+import java.lang.Math;
 
 import java.util.ArrayList;
 
@@ -28,8 +30,8 @@ public abstract class Character extends GameObject implements Directable, Object
 	private int direction = EAST;
 	private MovingThread moveThread;
 	private ArrayList<GameObject> inventory = new ArrayList<>();
-	private Time time = Time.getInstance();
 	private int state = DOING_NOTHING;
+	private boolean isArrived = false; //permet de ne pas relancer la méthode goToClosest(...) à chaque fois que le personnage essaie de faire une action (en fait le personnage relançait la méthode à chaque boucle faite par le temps et ne démarrait jamais son action vu qu'il était constamment en state = moving)
 
 	public Character(Tile pos) {
 		super(pos);
@@ -43,12 +45,18 @@ public abstract class Character extends GameObject implements Directable, Object
 			}
 			moveThread = new MovingThread(this, target,5);
 			Thread thread = new Thread(moveThread);
-			thread.start();
+			thread.start();			
 		}
 		else{
 			rotateTo(target);
 		}
 	}
+	
+	public void setState(int state) {
+		this.state = state;
+	}
+	//permet de modifier state dans le movingthread
+	
 
 	public void rotateTo(Tile target) {
 		int x= target.getX()-getPosX();
@@ -63,14 +71,73 @@ public abstract class Character extends GameObject implements Directable, Object
 			direction = WEST;
 		getPos().update();
 	}
+	
+	public void goToClosest(String s) {
+		state = MOVING; //du coup le personnage ne peut pas encore démarrer son action car pour ça il faut que state = doingnothing
+		Map map = Game.getInstance().getMap();
+		ArrayList<Tile> tilesAround = Game.getInstance().getTilesAround(this);
+		ArrayList<Tile> possibleTargets =  new ArrayList<Tile>();
+		for(Tile tile : tilesAround) {
+			ArrayList<GameObject> objects = tile.getObjects();
+			for(GameObject o : objects) {
+				if (o.ID.equals(s)) {
+					possibleTargets.add(o.getPos());
+				}
+			}
+		}
+		//on a créé une liste contenant les cases autour du personnage contenant l'objet nécessaire pour l'action
+		Tile target = getClosestTile(possibleTargets); //choisit celle qui est la plus proche à vol d'oiseau
+		if(target.isWalkable()) {
+			goTo(target);
+		}
+		else {
+			for(int i=0 ; i<4; i++) {
+				Tile target2 = map.getTileNextTo(target,i);
+				if(target2.isWalkable()) {
+					goTo(target2);
+					break;
+				} //si le personnage ne peut pas aller sur la case, il va chercher à aller sur celles à côté de l'objet
+			}			
+		}
+	}
+	
+	public Tile getClosestTile(ArrayList<Tile> possibleTargets) { //utilise les coordonnées des cases contenant l'objet qu'on cherche pour déterminer celle qui est la plus proche à vol d'oiseau
+		Tile res = possibleTargets.get(0);
+		for (Tile tile : possibleTargets) {
+			float currentDistance = (float) Math.pow(Math.pow(res.getX()-getPos().getX(),2) + Math.pow(res.getY()-getPos().getY(),2),0.5);
+			float distance = (float) Math.pow(Math.pow(tile.getX()-getPos().getX(),2) + Math.pow(tile.getY()-getPos().getY(),2),0.5);
+			if(distance<currentDistance) {
+				res = tile;
+			}
+		}
+		return res;
+	}
 
+	
+	public boolean isArrived(Tile target) {
+		if((getPos().getX() == target.getX() && getPos().getY() == target.getY())) {
+			isArrived = true;
+		}
+		return isArrived; //isArrived est utilisé dans movingThread pour modifier state quand le personnage est bien arrivé
+		//isArrived permet aussi de ne pas lancer goToClosest en boucle (cf les if dans pee, eat,...)
+	}
+	
+	
 	@Override
 	public int getDirection() {
 		return direction;
 	}
 
 	public void eat() {
-		state = EATING;
+		if(state == DOING_NOTHING && isArrived == false) {
+			goToClosest("Bed");			//la méthode ne se redéclenche pas à chaque boucle si le personnage est déjà arrivé. Le personnage doit aussi être en train de ne rien faire
+		}
+		if(state == DOING_NOTHING) {	//state passe de moving à doingnothing quand le personnage est arrivé. goToClosest ne se redéclenche pas car isArrived = true
+			System.out.println("je peux manger");
+			state = EATING;
+			isArrived = false; // permet au personnage de réutiliser goToClosest pour une autre action
+		}
+//		}
 	}
 
 	public void wash() {
@@ -78,12 +145,26 @@ public abstract class Character extends GameObject implements Directable, Object
 	}
 
 	public void pee() {
-		state = PEEING;
-
+		if(state == DOING_NOTHING && isArrived == false) {
+			System.out.println("OK");
+			goToClosest("Wardrobe");
+		}
+		if(state == DOING_NOTHING) {
+			System.out.println("je peux faire pipi");
+			state = PEEING;
+			isArrived = false;
+		}
 	}
 
 	public void sleep() {
-		state = SLEEPING;
+		if(state == DOING_NOTHING && isArrived == false) {
+			goToClosest("Bed");
+		}
+		if(state == DOING_NOTHING) {
+			System.out.println("je peux dormir");
+			state = SLEEPING;
+			isArrived = false;
+		}
 	}
 
 	public void fetchItem() {
@@ -122,28 +203,28 @@ public abstract class Character extends GameObject implements Directable, Object
 
 	public void incrementBladder(double i) {
 		bladder = Math.max(Math.min(bladder+i,100),0);
-		if (bladder<=25 && state == DOING_NOTHING) {
+		if (bladder<=25) {
 			pee();
 		}
 	}
 	
 	public void incrementEnergy(double i) {
 		energy = Math.max(Math.min(energy+i,100),0);
-		if (energy<=25 && state == DOING_NOTHING) {
+		if (energy<=25) {
 			sleep();
 		}
 	}
 	
 	public void incrementHunger(double i) {
 		hunger = Math.max(Math.min(hunger+i,100),0);
-		if (hunger<=25 && state == DOING_NOTHING) {
+		if (hunger<=25) {
 			eat();
 		}
 	}
 	
 	public void incrementHygiene(double i) {
 		hygiene = Math.max(Math.min(hygiene+i,100),0);
-		if (hygiene<=25 && state == DOING_NOTHING) {
+		if (hygiene<=25) {
 			wash();
 		}
 	}

@@ -8,7 +8,7 @@ public class Time implements Runnable {
 	private static Time instance = null;
 
 	private static int minutes = 0;
-	private static int waitTime = 50;
+	private static int waitTime = 250;
 	private ArrayList<TimeObserver> timeObservers = new ArrayList<>();
 	
 	private Time() {
@@ -20,6 +20,7 @@ public class Time implements Runnable {
 		try{
 			while(true){
 				if(minutes != 1440){
+					//System.out.println(minutes);
 					minutes+=1;
 					Thread.sleep(waitTime);
 				}

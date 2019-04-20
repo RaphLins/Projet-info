@@ -23,6 +23,7 @@ public class MovingThread implements Runnable{
 		int direction = 0;
 		while(direction != -1 && running)  {
 			synchronized (p) {
+				//p.setState(1);
 				direction = (new AStar(p.getPos(), target, map)).getNextStep();
 				if (direction != -1) {
 					Tile nextTile = map.getTileNextTo(p.getPos(), direction);
@@ -39,6 +40,10 @@ public class MovingThread implements Runnable{
 					p.getPos().removeObject(p);
 					p.setPos(nextTile);
 					p.resetOffset();
+				}
+				if(p.isArrived(target)) {
+					System.out.println("Arrivé à destination");
+					p.setState(0);
 				}
 			}
 		}
