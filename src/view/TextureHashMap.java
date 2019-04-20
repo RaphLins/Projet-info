@@ -22,6 +22,7 @@ public class TextureHashMap {
             textures.put("Inventory Square",items.getSubimage(0,40,60,60));
             textures.put("Wand",items.getSubimage(100,20,20,20));
             textures.put("Wall",tileset.getSubimage(559,415,20,40));
+            textures.put("Cut Wall",tileset.getSubimage(199,80,20,20));
             textures.put("House Window",tileset.getSubimage(79,526,20,20));
             textures.put("Wardrobe",tileset.getSubimage(359,796,20,40));
             textures.put("Bed",tileset.getSubimage(577,756,20,60));
@@ -37,6 +38,7 @@ public class TextureHashMap {
     }
 
     private void put4(String id, BufferedImage image, int x, int y, int w, int h){
+        put(id,image,x,y,w,h);
         put(id+"3",image,x,y,w,h);
         put(id+"1",image,x+1,y,w,h);
         put(id+"0",image,x+2,y,w,h);

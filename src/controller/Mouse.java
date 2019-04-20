@@ -13,8 +13,8 @@ import java.awt.event.MouseWheelListener;
 public class Mouse {
     private Game game;
 
-    public Mouse(Game game) {
-        this.game = game;
+    public Mouse() {
+        this.game = Game.getInstance();
     }
 
 	public void mapEventRightClick(int x, int y) {

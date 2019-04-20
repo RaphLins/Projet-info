@@ -1,4 +1,4 @@
-package model.items;
+package model.map;
 
 public interface Obstacle {
 }

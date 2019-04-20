@@ -31,10 +31,9 @@ public abstract class Character extends GameObject implements Directable, Object
 	private MovingThread moveThread;
 	private ArrayList<GameObject> inventory = new ArrayList<>();
 	private int state = DOING_NOTHING;
-	private boolean isArrived = false; //permet de ne pas relancer la méthode goToClosest(...) à chaque fois que le personnage essaie de faire une action (en fait le personnage relançait la méthode à chaque boucle faite par le temps et ne démarrait jamais son action vu qu'il était constamment en state = moving)
+	private boolean isArrived = false; //permet de ne pas relancer la mï¿½thode goToClosest(...) ï¿½ chaque fois que le personnage essaie de faire une action (en fait le personnage relanï¿½ait la mï¿½thode ï¿½ chaque boucle faite par le temps et ne dï¿½marrait jamais son action vu qu'il ï¿½tait constamment en state = moving)
 
-	public Character(Tile pos) {
-		super(pos);
+	public Character() {
 		Time.getInstance().attach(this);
 	}
 
@@ -73,7 +72,7 @@ public abstract class Character extends GameObject implements Directable, Object
 	}
 	
 	public void goToClosest(String s) {
-		state = MOVING; //du coup le personnage ne peut pas encore démarrer son action car pour ça il faut que state = doingnothing
+		state = MOVING; //du coup le personnage ne peut pas encore dï¿½marrer son action car pour ï¿½a il faut que state = doingnothing
 		Map map = Game.getInstance().getMap();
 		ArrayList<Tile> tilesAround = Game.getInstance().getTilesAround(this);
 		ArrayList<Tile> possibleTargets =  new ArrayList<Tile>();
@@ -85,8 +84,8 @@ public abstract class Character extends GameObject implements Directable, Object
 				}
 			}
 		}
-		//on a créé une liste contenant les cases autour du personnage contenant l'objet nécessaire pour l'action
-		Tile target = getClosestTile(possibleTargets); //choisit celle qui est la plus proche à vol d'oiseau
+		//on a crï¿½ï¿½ une liste contenant les cases autour du personnage contenant l'objet nï¿½cessaire pour l'action
+		Tile target = getClosestTile(possibleTargets); //choisit celle qui est la plus proche ï¿½ vol d'oiseau
 		if(target.isWalkable()) {
 			goTo(target);
 		}
@@ -96,12 +95,12 @@ public abstract class Character extends GameObject implements Directable, Object
 				if(target2.isWalkable()) {
 					goTo(target2);
 					break;
-				} //si le personnage ne peut pas aller sur la case, il va chercher à aller sur celles à côté de l'objet
+				} //si le personnage ne peut pas aller sur la case, il va chercher ï¿½ aller sur celles ï¿½ cï¿½tï¿½ de l'objet
 			}			
 		}
 	}
 	
-	public Tile getClosestTile(ArrayList<Tile> possibleTargets) { //utilise les coordonnées des cases contenant l'objet qu'on cherche pour déterminer celle qui est la plus proche à vol d'oiseau
+	public Tile getClosestTile(ArrayList<Tile> possibleTargets) { //utilise les coordonnï¿½es des cases contenant l'objet qu'on cherche pour dï¿½terminer celle qui est la plus proche ï¿½ vol d'oiseau
 		Tile res = possibleTargets.get(0);
 		for (Tile tile : possibleTargets) {
 			float currentDistance = (float) Math.pow(Math.pow(res.getX()-getPos().getX(),2) + Math.pow(res.getY()-getPos().getY(),2),0.5);
@@ -118,7 +117,7 @@ public abstract class Character extends GameObject implements Directable, Object
 		if((getPos().getX() == target.getX() && getPos().getY() == target.getY())) {
 			isArrived = true;
 		}
-		return isArrived; //isArrived est utilisé dans movingThread pour modifier state quand le personnage est bien arrivé
+		return isArrived; //isArrived est utilisï¿½ dans movingThread pour modifier state quand le personnage est bien arrivï¿½
 		//isArrived permet aussi de ne pas lancer goToClosest en boucle (cf les if dans pee, eat,...)
 	}
 	
@@ -130,12 +129,12 @@ public abstract class Character extends GameObject implements Directable, Object
 
 	public void eat() {
 		if(state == DOING_NOTHING && isArrived == false) {
-			goToClosest("Bed");			//la méthode ne se redéclenche pas à chaque boucle si le personnage est déjà arrivé. Le personnage doit aussi être en train de ne rien faire
+			goToClosest("Bed");			//la mï¿½thode ne se redï¿½clenche pas ï¿½ chaque boucle si le personnage est dï¿½jï¿½ arrivï¿½. Le personnage doit aussi ï¿½tre en train de ne rien faire
 		}
-		if(state == DOING_NOTHING) {	//state passe de moving à doingnothing quand le personnage est arrivé. goToClosest ne se redéclenche pas car isArrived = true
+		if(state == DOING_NOTHING) {	//state passe de moving ï¿½ doingnothing quand le personnage est arrivï¿½. goToClosest ne se redï¿½clenche pas car isArrived = true
 			System.out.println("je peux manger");
 			state = EATING;
-			isArrived = false; // permet au personnage de réutiliser goToClosest pour une autre action
+			isArrived = false; // permet au personnage de rï¿½utiliser goToClosest pour une autre action
 		}
 //		}
 	}
@@ -170,8 +169,6 @@ public abstract class Character extends GameObject implements Directable, Object
 	public void fetchItem() {
 
 	}
-
-
 
 	public void setDirection(int direction) {
 		this.direction=direction;
@@ -235,39 +232,39 @@ public abstract class Character extends GameObject implements Directable, Object
 		incrementEnergy(-0.14);
 		incrementHunger(-0.34);
 		incrementHygiene(-0.07);
+			switch (state){
+				case DOING_NOTHING:
+					break;
+				case EATING:
+					incrementHunger(5.24);
+					if(getHunger()==100){
+						state = DOING_NOTHING;
+					}
+					break;
+				case WASHING:
+					incrementHygiene(10.07);
+					if(getHygiene()==100){
+						state = DOING_NOTHING;
+					}
+					break;
+				case PEEING:
+					incrementBladder(50.8);
+					if(getBladder()==100){
+						state = DOING_NOTHING;
+					}
+					break;
+				case SLEEPING:
+					incrementEnergy(0.35);
+					if(getEnergy()==100){
+						state = DOING_NOTHING;
+					}
+					break;
+			}
+
+
+
 		if (this == Game.getInstance().getSelectedObject()) {
 			Game.getInstance().getWindow().getStatusView().redraw();
-		}
-
-		switch (state){
-			case DOING_NOTHING:
-				break;
-			case EATING:
-				incrementHunger(5.24);
-				if(getHunger()==100){
-					state = DOING_NOTHING;
-				}
-				break;
-			case WASHING:
-				incrementHygiene(10.07);
-				if(getHygiene()==100){
-					state = DOING_NOTHING;
-				}
-				break;
-			case PEEING:
-				incrementBladder(50.8);
-				if(getBladder()==100){
-					state = DOING_NOTHING;
-				}
-				break;
-			case SLEEPING:
-				incrementEnergy(0.35);
-				incrementBladder(0.65);
-				incrementHunger(0.17);
-				if(getEnergy()==100){
-					state = DOING_NOTHING;
-				}
-				break;
 		}
 	}
 

@@ -16,16 +16,22 @@ public class Game {
     private static Game instance = null;
     private static boolean started = false;
     private GameObject selectedObject = null;
+    GameObject draggedObject = null;
     private ArrayList<Character> family = new ArrayList<>();
+    private int familyGold = 100;
 
     private Window window;
     private Map map;
 
     private Game() {
         map = new Map("shared/res/map.csv");
-        family.add(new AdultWizard(map.getTileAt(35,20)));
-        family.add(new AdultWizard(map.getTileAt(41,32)));
-        family.add(new AdultWizard(map.getTileAt(45,17)));
+        //Time.getInstance().run();
+        family.add(new AdultWizard());
+        family.get(0).setPos(map.getTileAt(10,10),map);
+        family.add(new AdultWizard());
+        family.get(1).setPos(map.getTileAt(10,20),map);
+        family.add(new AdultWizard());
+        family.get(2).setPos(map.getTileAt(10,30),map);
 
         family.get(0).carryItem(new Wand());
         family.get(1).carryItem(new Wand());
@@ -55,6 +61,15 @@ public class Game {
         selectedObject = object;
     }
 
+    public GameObject getDraggedObject(){
+        return draggedObject;
+    }
+
+    public void setDraggedObject(GameObject object){
+        draggedObject = object;
+        window.getMapView().repaint();
+    }
+
     public void stop() {
         window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
     }
@@ -77,7 +92,7 @@ public class Game {
     }
 
     public static Game getInstance(){
-        if(instance == null){
+        if(instance == null && !started){
             instance = new Game();
             started = true;
         }
@@ -90,6 +105,18 @@ public class Game {
 
     public void updateTile(int x, int y) {
         window.updateTile(x,y);
+    }
+
+    public int getGold(){
+        return familyGold;
+    }
+
+    public boolean spendGold(int val){
+        if(familyGold-val>0){
+            familyGold-=val;
+            return true;
+        }
+        else return false;
     }
 
 }

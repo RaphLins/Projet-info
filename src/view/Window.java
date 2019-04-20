@@ -15,9 +15,11 @@ import controller.Mouse;
 public class Window extends JFrame {
 	//private Time time = new Time(1550);
     private JPanel groupPanel = new JPanel(new BorderLayout());
+    private JPanel bottomPanel = new JPanel(new BorderLayout());
     private MapView mapView = new MapView(Game.getInstance().getMap());
     private StatusView statusView = new StatusView();
     private Clock clock = new Clock();
+    private ShopView shopView = new ShopView();
 
     public Window(String title) {
         super(title);
@@ -29,7 +31,10 @@ public class Window extends JFrame {
         this.getContentPane().setBackground(Color.gray);
         groupPanel.add(mapView, BorderLayout.LINE_START);
         groupPanel.add(statusView, BorderLayout.LINE_END);
-        groupPanel.add(clock, BorderLayout.PAGE_START);
+        groupPanel.add(bottomPanel, BorderLayout.PAGE_END);
+        bottomPanel.add(clock, BorderLayout.LINE_END);
+        bottomPanel.add(shopView, BorderLayout.LINE_START);
+
         //groupPanel.add(thread);
         this.getContentPane().add(this.groupPanel);
         this.setVisible(true);

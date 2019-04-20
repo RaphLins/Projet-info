@@ -6,8 +6,8 @@ public class KidWizard extends Kid implements Wizard {
 
 	int magicPower = 50;
 
-	public KidWizard(Tile pos) {
-		super(pos);
+	public KidWizard() {
+		super();
 	}
 	@Override
 	public float getMagicPower() {

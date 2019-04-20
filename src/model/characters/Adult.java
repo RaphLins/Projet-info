@@ -6,8 +6,8 @@ import model.places.WorkablePlace;
 public abstract class Adult extends Character {
 
 
-    public Adult(Tile pos) {
-        super(pos);
+    public Adult() {
+        super();
     }
 
     public void work(WorkablePlace place) {

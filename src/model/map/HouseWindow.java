@@ -1,13 +1,10 @@
 package model.map;
 
-public class HouseWindow extends Tile {
+import model.GameObject;
 
-    public HouseWindow(Tile tile) {
-        super(tile);
+public class HouseWindow extends GameObject implements Obstacle {
+
+    public HouseWindow() {
         ID = "House Window";
-    }
-    @Override
-    public boolean isWalkable() {
-        return false;
     }
 }

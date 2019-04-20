@@ -1,28 +1,30 @@
 package model;
 
+import model.map.Bed;
+import model.map.Map;
 import model.map.Tile;
+
+import java.util.ArrayList;
 
 public abstract class GameObject {
     private Tile pos;
+    private ArrayList<Tile> allTiles = new ArrayList<>();
     private float xOffset = 0;
     private float yOffset = 0;
 
+    public int width;
+    public int height;
     public String ID;
-
-    public GameObject(Tile pos) {
-        this();
-        this.pos = pos;
-        pos.addObject(this);
-    }
 
     public GameObject() {
         ID = "";
+        width = 1;
+        height = 1;
     }
-
-    public void move(Tile target){
-        pos.removeObject(this);
-        pos = target;
-        target.addObject(this);
+    public GameObject(Tile pos, Map map) {
+        ID = "";
+        width = 1;
+        height = 1;
     }
     public void offSetInDirection(float d, int direction){
         switch (direction) {
@@ -35,7 +37,7 @@ public abstract class GameObject {
     }
 
     public void moveInDirection(int direction){
-        move(Game.getInstance().getMap().getTileNextTo(pos,direction));
+        setPos(Game.getInstance().getMap().getTileNextTo(pos,direction));
     }
 
     public int getXOffset(){
@@ -73,8 +75,31 @@ public abstract class GameObject {
     public Tile getPos(){
         return pos;
     }
-    public void setPos(Tile pos) {
-        this.pos = pos;
+
+    public void removeFromMap(){
+        for(Tile tile:allTiles){
+            tile.removeObject(this);
+        }
+        allTiles.clear();
+        pos=null;
     }
 
+    public void setPos(Tile target){
+        setPos(target,Game.getInstance().getMap());
+    }
+
+    public void setPos(Tile target, Map map) {
+        for(Tile tile:allTiles){
+            tile.removeObject(this);
+        }
+        allTiles.clear();
+        pos = target;
+        for(int i = 0;i<width;i++){
+            for(int j = 0;j<height;j++){
+                Tile tile = map.getTileAt(pos.getX()+i,pos.getY()-j);
+                tile.addObject(this);
+                allTiles.add(tile);
+            }
+        }
+    }
 }

@@ -2,7 +2,6 @@ package model.map;
 
 import model.Game;
 import model.GameObject;
-import model.items.Obstacle;
 
 import java.util.ArrayList;
 
@@ -31,8 +30,10 @@ public class Tile{
 	}
 
 	public void addObject(GameObject object){
-		objects.add(object);
-		update();
+		if(object!=null){
+			objects.add(object);
+			update();
+		}
 	}
 
 	public void removeObject(GameObject object){

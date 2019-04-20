@@ -1,8 +1,11 @@
 package model.map;
-public class Floor extends Tile{
 
-    public Floor(Tile tile) {
-        super(tile);
+import model.GameObject;
+
+public class Floor extends GameObject {
+
+    public Floor() {
+        super();
         ID = "Floor";
     }
 

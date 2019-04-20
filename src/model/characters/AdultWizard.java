@@ -4,8 +4,8 @@ import model.map.Tile;
 
 public class AdultWizard extends Adult implements Wizard {
     int magicPower = 50;
-    public AdultWizard(Tile pos) {
-        super(pos);
+    public AdultWizard() {
+        super();
         ID = "Adult Wizard";
     }
 

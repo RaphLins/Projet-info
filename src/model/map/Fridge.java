@@ -1,16 +1,18 @@
-package model.items;
+package model.map;
 
 import model.GameObject;
 import model.ObjectHolder;
-import model.map.Tile;
+import model.items.Food;
+import model.items.Item;
 
 import java.util.ArrayList;
 
 public class Fridge extends Item implements Obstacle, ObjectHolder {
     private ArrayList<GameObject> inventory;
-    public Fridge(Tile pos) {
-        super(pos);
+    public Fridge() {
+        super();
         ID = "Fridge";
+        height = 2;
     }
 
     public void addFood(Food food){

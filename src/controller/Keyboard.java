@@ -10,34 +10,33 @@ public class Keyboard implements KeyListener {
     private Game game;
     private MapView mapView;
 
-    public Keyboard(Game game, MapView mapView) {
-        this.game = game;
+    public Keyboard(MapView mapView) {
+        this.game = Game.getInstance();
         this.mapView = mapView;
     }
 
     @Override
     public void keyPressed(KeyEvent event) {
         int key = event.getKeyCode();
-
-        switch (key) {
-            case KeyEvent.VK_D:
-            case KeyEvent.VK_RIGHT:
+        switch (key){
+            case KeyEvent.VK_D: case KeyEvent.VK_RIGHT:
                 mapView.moveView(2, 0);
                 break;
-            case KeyEvent.VK_A:
-            case KeyEvent.VK_LEFT:
+            case KeyEvent.VK_A: case KeyEvent.VK_LEFT:
                 mapView.moveView(-2, 0);
                 break;
-            case KeyEvent.VK_DOWN:
-            case KeyEvent.VK_S:
+            case KeyEvent.VK_DOWN: case KeyEvent.VK_S:
                 mapView.moveView(0, 2);
                 break;
-            case KeyEvent.VK_W:
-            case KeyEvent.VK_UP:
+            case KeyEvent.VK_W: case KeyEvent.VK_UP:
                 mapView.moveView(0, -2);
-                 break;case KeyEvent.VK_Q:
-                 game.stop();
-                 break;
+                break;
+            case KeyEvent.VK_Q:
+                game.stop();
+                break;
+            case KeyEvent.VK_M:
+                game.setDraggedObject(game.getSelectedObject());
+                break;
         }
     }
 

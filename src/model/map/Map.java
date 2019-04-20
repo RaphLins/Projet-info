@@ -1,5 +1,7 @@
 package model.map;
 
+import model.GameObject;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -14,12 +16,10 @@ public class Map{
 
     private Tile[][] grid;
 
-    public Map() {
-        HEIGHT = 50;
-        WIDTH = 50;
-        grid = new Tile[WIDTH][HEIGHT];
-        for(int i = 0; i < WIDTH; i++){
-            for(int j = 0; j< HEIGHT; j++){
+    public Map(int width, int height) {
+        grid = new Tile[width][height];
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j< height; j++){
                 grid[i][j] = new Tile(i,j);
             }
         }
@@ -35,18 +35,33 @@ public class Map{
         HEIGHT = tempList.size();
         WIDTH = tempList.get(0).split(",",-1).length;
         grid = new Tile[WIDTH][HEIGHT];
+        for(int i = 0; i < WIDTH; i++){
+            for(int j = 0; j< HEIGHT; j++){
+                grid[i][j] = new Tile(i,j);
+            }
+        }//create array
 
-        TileFactory tileFactory = new TileFactory();
+        ObjectFactory tileFactory = new ObjectFactory();
         for (int j = 0; j < HEIGHT; j++) {
             String[] row = tempList.get(j).split(",",-1);
             for (int i = 0; i < WIDTH; i++) {
                 ArrayList<String> types = new ArrayList();
                 if(i<row.length){
                     types = new ArrayList(Arrays.asList(row[i].split(" ")));
+                    for(String type: types){
+                        GameObject object = tileFactory.getInstance(type,i,j);
+                        if(object!=null){
+                            grid[i][j].addObject(object);
+                            object.setPos(grid[i][j],this);
+                        }
+                        if(type.equals(".")){
+                            grid[i][j].ID = "Floor";
+                        }
+                    }
                 }
-                grid[i][j]=tileFactory.getInstance(types,i,j);
+
             }
-        }
+        }//add objects
     }
 
     public Tile getTileAt(int x, int y){

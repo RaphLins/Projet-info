@@ -42,7 +42,7 @@ public class MovingThread implements Runnable{
 					p.resetOffset();
 				}
 				if(p.isArrived(target)) {
-					System.out.println("Arrivé à destination");
+					System.out.println("Arrive a destination");
 					p.setState(0);
 				}
 			}

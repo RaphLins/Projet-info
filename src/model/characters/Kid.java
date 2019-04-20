@@ -5,8 +5,7 @@ import model.map.Tile;
 
 public abstract class Kid extends Character{
 
-	public Kid(Tile pos) {
-		super(pos);
+	public Kid() {
 	}
 
 	public void goToSchool(School school) {

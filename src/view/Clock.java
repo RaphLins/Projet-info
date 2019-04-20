@@ -16,8 +16,8 @@ public class Clock extends JPanel implements TimeObserver{
 	
 	public Clock() {
 		Time.getInstance().attach(this);
-		this.setPreferredSize(new Dimension(260, 100));
-        this.setBackground(new Color( 253, 135, 208 ));
+		this.setPreferredSize(new Dimension(260, 30));
+        this.setBackground(new Color(182, 160, 132));
         this.setOpaque(true);
 		add(label);
         

@@ -25,33 +25,46 @@ public class StatusView extends JPanel {
     
 	public void paint(Graphics g) {
 		super.paintComponent(g);
-		// draw avatar
         GameObject selected = Game.getInstance().getSelectedObject();
+        if(selected==null){
+            return;
+        }
+        int y = 20;
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("default", Font.BOLD, 19));
+        g.drawString(selected.ID, 3, y);
+        y+=20;
         if(selected instanceof Character){
             Character character = (Character)selected;
             g.setColor(Color.BLUE);
-            g.fillRect(80, 25, AVATAR_SIZE, AVATAR_SIZE);
+            y+=10;
+            g.fillRect(80, y, AVATAR_SIZE, AVATAR_SIZE);
 
             // bars
-            drawBar("Energy",character.getEnergy(),0,200,g);
-            drawBar("Hunger",character.getHunger(),0,250,g);
-            drawBar("Hygiene",character.getHygiene(),0,300,g);
-            drawBar("Bladder",character.getBladder(),0,350,g);
+            y+=175;
+            drawBar("Energy",character.getEnergy(),0,y,g);
+            y+=50;
+            drawBar("Hunger",character.getHunger(),0,y,g);
+            y+=50;
+            drawBar("Hygiene",character.getHygiene(),0,y,g);
+            y+=50;
+            drawBar("Bladder",character.getBladder(),0,y,g);
             if(character instanceof Wizard){
-                drawBar("Magic Power",((Wizard)character).getMagicPower(),0,400,g);
+                y+=50;
+                drawBar("Magic Power",((Wizard)character).getMagicPower(),0,y,g);
             }
+            y+=50;
 
         }
 
         if(selected instanceof ObjectHolder){
             ArrayList<GameObject> inventory = ((ObjectHolder)selected).getInventory();
             int x = 3;
-            int y = 485;
             int n = 0;
             g.setColor(Color.BLACK);
             g.setFont(new Font("default", Font.BOLD, 16));
             g.drawString("Inventory", x, y);
-            y=500;
+            y+=15;
             x=20;
             for(int j = 0;j<3;j++){
                 for(int i = 0;i<3;i++){

@@ -1,11 +1,10 @@
 package model.map;
-public class Wall extends Tile {
-    public Wall(Tile tile) {
-        super(tile);
+
+import model.GameObject;
+
+public class Wall extends GameObject implements Obstacle {
+    public Wall() {
+        super();
         ID = "Wall";
-    }
-    @Override
-    public boolean isWalkable() {
-        return false;
     }
 }
