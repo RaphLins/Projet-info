@@ -42,7 +42,7 @@ public abstract class Character extends GameObject implements Directable, Object
 	public void goTo(Tile target){
 		stopEverything();
 		if(target.isWalkable()){
-			actionList.add(new Move(this, target));
+			actionList.add(new MoveTo(this, target));
 		}
 		else{
 			rotateTo(target);
@@ -70,25 +70,25 @@ public abstract class Character extends GameObject implements Directable, Object
 
 	public void eat() {
 		System.out.println("started eating");
-		actionList.add(new Move(this, "Bed"));
+		actionList.add(new MoveTo(this, "Fridge"));
 		actionList.add(new Eat(this));
 	}
 
 	public void wash() {
 		System.out.println("started washing");
-		actionList.add(new Move(this, "Wardrobe"));
+		actionList.add(new MoveTo(this, "Bath"));
 		actionList.add(new Wash(this));
 	}
 
 	public void pee() {
 		System.out.println("started peeing");
-		actionList.add(new Move(this, "Wardrobe"));
+		actionList.add(new MoveTo(this, "Toilet"));
 		actionList.add(new Pee(this));
 	}
 
 	public void sleep() {
 		System.out.println("started sleeping");
-		actionList.add(new Move(this, "Bed"));
+		actionList.add(new MoveTo(this, "Bed"));
 		actionList.add(new Sleep(this));
 	}
 

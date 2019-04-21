@@ -68,4 +68,8 @@ public class Tile{
 	public int getY() {
 		return y;
 	}
+
+	float distanceTo(Tile tile){
+		return (float) Math.pow(Math.pow(tile.getX()-getX(),2) + Math.pow(tile.getY()-getY(),2),0.5);
+	}
 }

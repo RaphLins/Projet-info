@@ -10,10 +10,12 @@ public class ObjectFactory {
         GameObject res = null;
         switch(type) {
                 case "X": res= new Wall(); break;
-                case "F": res = new HouseWindow(); break;
+                case "FR": res = new Fridge(); break;
                 case "Br": res = new Broom(40); break;
-                case "B" : res = new Bed(); break;
-                case "M": res = new Wardrobe(); break;
+                case "BE" : res = new Bed(); break;
+                case "WA": res = new Wardrobe(); break;
+                case "WC": res = new Toilet(); break;
+                case "BA": res = new Bath(); break;
             }
         return res;
     }

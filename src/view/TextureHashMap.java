@@ -16,16 +16,23 @@ public class TextureHashMap {
         try {
             BufferedImage characters = ImageIO.read(new File("shared/res/characters.png"));
             BufferedImage items = ImageIO.read(new File("shared/res/items.png"));
-            BufferedImage tileset = ImageIO.read(new File("shared/res/tileset.png"));
-            textures.put("Floor",tileset.getSubimage(199,80,20,20));
+            BufferedImage tileset1 = ImageIO.read(new File("shared/res/tileset1.png"));
+            BufferedImage tileset2 = ImageIO.read(new File("shared/res/tileset2.png"));
+            BufferedImage tileset3 = ImageIO.read(new File("shared/res/tileset3.png"));
+            BufferedImage tileset4 = ImageIO.read(new File("shared/res/tileset4.png"));
+            BufferedImage tileset5 = ImageIO.read(new File("shared/res/tileset5.png"));
+            textures.put("Floor",tileset1.getSubimage(199,80,20,20));
             put("Grass", items,1,0,1,2);
             textures.put("Inventory Square",items.getSubimage(0,40,60,60));
             textures.put("Wand",items.getSubimage(100,20,20,20));
-            textures.put("Wall",tileset.getSubimage(559,415,20,40));
-            textures.put("Cut Wall",tileset.getSubimage(199,80,20,20));
-            textures.put("House Window",tileset.getSubimage(79,526,20,20));
-            textures.put("Wardrobe",tileset.getSubimage(359,796,20,40));
-            textures.put("Bed",tileset.getSubimage(577,756,20,60));
+            textures.put("Wall",tileset1.getSubimage(559,415,20,40));
+            textures.put("Cut Wall",tileset1.getSubimage(559,415,20,25));
+            textures.put("House Window",tileset1.getSubimage(79,526,20,20));
+            textures.put("Wardrobe",tileset1.getSubimage(359,796,20,40));
+            textures.put("Bed",tileset1.getSubimage(577,756,20,60));
+            textures.put("Toilet",tileset4.getSubimage(160,220,20,40));
+            textures.put("Fridge",tileset4.getSubimage(200,160,20,40));
+            textures.put("Bath",tileset4.getSubimage(240,93,20,40));
             put("White", items,4,0,1,2);
             put4("Adult Wizard",characters,0,0,1,2);
 

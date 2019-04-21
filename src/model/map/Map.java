@@ -13,6 +13,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Map{
+    public static int EAST = 0;
+    public static int NORTH = 1;
+    public static int WEST = 2;
+    public static int SOUTH = 3;
     public static int WIDTH;
     public static int HEIGHT;
 
@@ -108,22 +112,26 @@ public class Map{
             ArrayList<GameObject> objects = tile.getObjects();
             for(GameObject o : objects) {
                 if (o.ID == type) {
-                    possibleTargets.add(o.getPos());
+                    possibleTargets.addAll(o.getAccessTiles());
                 }
             }
         }
-        //on a cr�� une liste contenant les cases autour du personnage contenant l'objet n�cessaire pour l'action
-        Tile target = getClosestTile(position, possibleTargets); //choisit celle qui est la plus proche � vol d'oiseau
-        return target;
+        if(possibleTargets.isEmpty()){
+            return null;
+        }
+        else{
+            return getClosestTile(position, possibleTargets);
+        }
     }
 
     public Tile getClosestTile(Tile position, ArrayList<Tile> possibleTargets) { //utilise les coordonn�es des cases contenant l'objet qu'on cherche pour d�terminer celle qui est la plus proche � vol d'oiseau
         Tile res = possibleTargets.get(0);
+        float currentDistance = res.distanceTo(position);
         for (Tile tile : possibleTargets) {
-            float currentDistance = (float) Math.pow(Math.pow(res.getX()-position.getX(),2) + Math.pow(res.getY()-position.getY(),2),0.5);
-            float distance = (float) Math.pow(Math.pow(tile.getX()-position.getX(),2) + Math.pow(tile.getY()-position.getY(),2),0.5);
+            float distance = tile.distanceTo(position);
             if(distance<currentDistance) {
                 res = tile;
+                currentDistance = distance;
             }
         }
         return res;

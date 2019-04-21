@@ -12,7 +12,6 @@ public class Fridge extends Item implements Obstacle, ObjectHolder {
     public Fridge() {
         super();
         ID = "Fridge";
-        height = 2;
     }
 
     public void addFood(Food food){

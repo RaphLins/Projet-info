@@ -61,7 +61,7 @@ public class Game {
     public void selectObject(GameObject object){
         selectedObject = object;
         if(object instanceof Character){
-            ((Character)object).stopEverything();
+            //((Character)object).stopEverything();
         }
     }
 
