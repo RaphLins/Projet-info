@@ -44,7 +44,11 @@ public class MoveTo extends Action{
         else {
             direction= (new AStar(getCharacter().getPos(), target, map)).getNextStep();
         }
-        if (direction != -1) {
+        if(direction==-100){
+            System.out.println("No possible path");
+            getCharacter().stopEverything();
+        }
+        else if (direction != -1) {
             Tile nextTile = map.getTileNextTo(getCharacter().getPos(), direction);
             getCharacter().rotateTo(nextTile);
             nextTile.addObject(getCharacter());

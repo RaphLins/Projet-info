@@ -153,7 +153,9 @@ public class AStar {
 				}
 				current = current.parent;
 			} 
-	   }else System.out.println("No possible path");
+	   }else {
+			direction = -100;
+		}
 		return direction;
 	}
 }
