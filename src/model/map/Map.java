@@ -57,7 +57,6 @@ public class Map{
                     for(String type: types){
                         GameObject object = tileFactory.getInstance(type,i,j);
                         if(object!=null){
-                            grid[i][j].addObject(object);
                             object.setPos(grid[i][j],this);
                         }
                         if(type.equals(".")){

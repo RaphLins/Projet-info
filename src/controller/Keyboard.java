@@ -4,6 +4,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import model.Game;
+import model.GameObject;
+import model.characters.Character;
+import model.items.Sellable;
 import view.MapView;
 
 public class Keyboard implements KeyListener {
@@ -35,7 +38,19 @@ public class Keyboard implements KeyListener {
                 game.stop();
                 break;
             case KeyEvent.VK_M:
-                game.setDraggedObject(game.getSelectedObject());
+                GameObject selected = game.getSelectedObject();
+                if(selected !=null){
+                    if(!(selected instanceof Character)){
+                        selected.removeFromMap();
+                        game.setDraggedObject(selected);
+                    }
+                    else {
+                        System.out.println("Can't move that");
+                    }
+                }
+                else {
+                    System.out.println("Select an object to move it");
+                }
                 break;
         }
     }

@@ -92,7 +92,7 @@ public class MapView extends JPanel {
             }
         }
 
-        if(selected!=null){
+        if(selected!=null && selected.getPos() != null){
             int x = (int)((selected.getExactX()-viewPosX)*TILE_WIDTH*zoom);
             int y = (int)((selected.getExactY()-viewPosY)*TILE_HEIGHT*zoom);
             g.setColor(new Color(255,204,153,120));
