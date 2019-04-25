@@ -8,7 +8,7 @@ public class Time implements Runnable {
 	private static Time instance = null;
 
 	private static int minutes = 0;
-	private static int waitTime = 100;
+	private static int waitTime = 260;
 	private ArrayList<TimeObserver> timeObservers = new ArrayList<>();
 	
 	private Time() {

@@ -34,10 +34,12 @@ public abstract class Character extends GameObject implements Directable, Object
 	private ArrayList<GameObject> inventory = new ArrayList<>();
 
 	private LinkedList<Action> actionList = new LinkedList<>();
+	//allows to easily have action sequences.
 
 	public Character() {
-		Time.getInstance().attach(this);
-	}
+		Time.getInstance().attach(this);	
+	}	
+	//the character will be affected for every time's loop.
 
 	public void goTo(Tile target){
 		stopEverything();
@@ -46,13 +48,14 @@ public abstract class Character extends GameObject implements Directable, Object
 		}
 		else{
 			rotateTo(target);
-		}
+		}	
 	}
+	//if the player commands a character to go somewhere, then the character as to stop what he's doing.
 
 	public void rotateTo(Tile target) {
 		int x= target.getX()-getPosX();
 		int y= target.getY()-getPosY();
-		if(y<x && y<-x)
+		if(y<x && y<-x)		//it means that the *delta* y is negative AND the vertical distance (absolute value of y) is longer than the horizontal distance .
 			direction = NORTH;
 		else if(y>x && y>-x)
 			direction = SOUTH;
@@ -60,7 +63,7 @@ public abstract class Character extends GameObject implements Directable, Object
 			direction = EAST;
 		else if(y>x && y<-x)
 			direction = WEST;
-		getPos().update();
+		getPos().update();	//the method rotateTo may be used several times for long motions (in which the character's tile is constantly changing).
 	}
 	
 	@Override
@@ -73,6 +76,7 @@ public abstract class Character extends GameObject implements Directable, Object
 		actionList.add(new MoveTo(this, "Fridge"));
 		actionList.add(new Eat(this));
 	}
+	//the character has to go to a fridge first, he won't start eating until he's arrived there.
 
 	public void wash() {
 		System.out.println("started washing");
@@ -114,15 +118,17 @@ public abstract class Character extends GameObject implements Directable, Object
 
 	public void carryItem(CarriableItem item){
 		inventory.add((GameObject) item);
-	}
+	}	
 
 	public ArrayList<GameObject> getInventory() {
 		return inventory;
 	}
 
 	public void incrementBladder(double i) {
-		bladder = Math.max(Math.min(bladder+i,100),0);
+		bladder = Math.max(Math.min(bladder+i,100),0);	//changes the bladder's value by i (i can be positive if for example the character is peeing, or negative in other cases).
+		//the value can't exceed 100 (because of the min) and can't be lower than 0 (because of the max).
 		if (bladder<=25 && isDoingNothing()) {
+			//even if the character has to pee, the action can't be done automatically if he's doing something else.
 			pee();
 		}
 	}
@@ -149,7 +155,8 @@ public abstract class Character extends GameObject implements Directable, Object
 	}
 	
 	@Override
-	public void timePassed() {
+	public void timePassed() {	//the method timePassed (polymorphism) is used in the run method in the thead time. 
+		//Everything here is done automatically as the time passes.
 		incrementBladder(-0.8);
 		incrementEnergy(-0.14);
 		incrementHunger(-0.34);
@@ -157,23 +164,24 @@ public abstract class Character extends GameObject implements Directable, Object
 
 		Action currentAction = actionList.peek();
 		if(currentAction !=null){
-			currentAction.performAction();
+			currentAction.performAction();	//polymorphism
 		}
 
 		if (this == Game.getInstance().getSelectedObject()) {
 			Game.getInstance().getWindow().getStatusView().redraw();
+			//the StatusView has to evolve as the time passes if a character is selected, because the evolution of his daily needs has to be shown.
 		}
 	}
 
 	public void nextAction() {
 		actionList.remove();
-	}
+	}	//the currentAction is changed in timePassed, because the first element in actionList has changed because of the remove.
 
 	public boolean isDoingNothing(){
 		return actionList.peek() == null;
-	}
+	}	//returns true if the actionList is empty, which also means that the character is doing nothing.
 
 	public void stopEverything(){
 		actionList.clear();
-	}
+	}	//removes every elements from the actionList : the character is now doing nothing.
 }

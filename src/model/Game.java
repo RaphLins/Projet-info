@@ -33,7 +33,6 @@ public class Game {
         //family.get(1).setPos(map.getTileAt(10,20),map);
         //family.add(new AdultWizard());
         //family.get(2).setPos(map.getTileAt(10,30),map);
-
         family.get(0).carryItem(new Wand());
         //family.get(1).carryItem(new Wand());
         //family.get(2).carryItem(new Wand());
