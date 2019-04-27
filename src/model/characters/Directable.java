@@ -1,6 +1,6 @@
 package model.characters;
 
-public interface Directable {
+public interface Directable {	//game objects that can be oriented in different directions.
     
     public static int EAST = 0;
     public static int NORTH = 1;

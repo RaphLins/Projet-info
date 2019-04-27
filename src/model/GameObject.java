@@ -1,6 +1,5 @@
 package model;
 
-import model.map.Bed;
 import model.map.Map;
 import model.map.Tile;
 
@@ -8,13 +7,13 @@ import java.util.ArrayList;
 
 public abstract class GameObject {
     private Tile pos;
-    private ArrayList<Tile> allTiles = new ArrayList<>();
+    private ArrayList<Tile> allTiles = new ArrayList<>(); //an object can be on several tiles.
     private float xOffset = 0;
     private float yOffset = 0;
 
     public int width;
     public int height;
-    public String ID;
+    public String ID; 
 
     public GameObject() {
         ID = "";
