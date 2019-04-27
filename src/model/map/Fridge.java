@@ -8,12 +8,14 @@ import model.items.Item;
 import java.util.ArrayList;
 
 public class Fridge extends Item implements Obstacle, ObjectHolder {
-    private ArrayList<GameObject> inventory;
+    private ArrayList<GameObject> inventory = new ArrayList<>();
     public Fridge() {
         super();
         ID = "Fridge";
     }
-
+    public void removeItem(GameObject item){
+        inventory.remove(item);
+    }
     public void addFood(Food food){
         inventory.add(food);
     }

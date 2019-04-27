@@ -6,6 +6,9 @@ import model.items.Broom;
 import java.util.ArrayList;
 
 public class ObjectFactory {
+
+
+
     public GameObject getInstance(String type, int x, int y){
         GameObject res = null;
         switch(type) {

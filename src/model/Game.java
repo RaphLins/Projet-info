@@ -63,6 +63,8 @@ public class Game {
         if(object instanceof Character){
             //((Character)object).stopEverything();
         }
+        getWindow().getStatusView().redraw();
+        getWindow().updateInventory();
     }
 
     public GameObject getDraggedObject(){
@@ -105,11 +107,15 @@ public class Game {
     }
 
     public boolean spendGold(int val){
-        if(familyGold-val>0){
+        if(familyGold-val>=0){
             familyGold-=val;
+            getWindow().updateGold();
             return true;
         }
         else return false;
     }
 
+    public ArrayList<Character> getFamily() {
+        return family;
+    }
 }

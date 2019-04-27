@@ -16,21 +16,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public abstract class Character extends GameObject implements Directable, ObjectHolder, TimeObserver {
-
-	private final int DOING_NOTHING = 0;
-	private final int MOVING = 1;
-	private final int SLEEPING = 2;
-	private final int EATING = 3;
-	private final int PEEING = 4;
-	private final int WASHING = 5;
-
 	private double hunger = 100;
 	private double hygiene = 100;
 	private double bladder = 100;
 	private double energy = 100;
 	private Place location;
 	private int direction = EAST;
-	private MovingThread moveThread;
 	private ArrayList<GameObject> inventory = new ArrayList<>();
 
 	private LinkedList<Action> actionList = new LinkedList<>();
@@ -94,6 +85,7 @@ public abstract class Character extends GameObject implements Directable, Object
 
 	public void setDirection(int direction) {
 		this.direction=direction;
+		getPos().update();
 	}
 
 	public double getEnergy() {
@@ -116,46 +108,56 @@ public abstract class Character extends GameObject implements Directable, Object
 		inventory.add((GameObject) item);
 	}
 
+	public void removeItem(GameObject item){
+		inventory.remove(item);
+	}
+
 	public ArrayList<GameObject> getInventory() {
 		return inventory;
 	}
 
 	public void incrementBladder(double i) {
 		bladder = Math.max(Math.min(bladder+i,100),0);
-		if (bladder<=25 && isDoingNothing()) {
+		if (bladder<=30 && isDoingNothing()) {
 			pee();
 		}
 	}
 	
 	public void incrementEnergy(double i) {
 		energy = Math.max(Math.min(energy+i,100),0);
-		if (energy<=25 && isDoingNothing()) {
+		if (energy<=30 && isDoingNothing()) {
 			sleep();
 		}
 	}
 	
 	public void incrementHunger(double i) {
 		hunger = Math.max(Math.min(hunger+i,100),0);
-		if (hunger<=25 && isDoingNothing()) {
+		if (hunger<=60 && isDoingNothing()) {
 			eat();
 		}
 	}
 	
 	public void incrementHygiene(double i) {
 		hygiene = Math.max(Math.min(hygiene+i,100),0);
-		if (hygiene<=25 && isDoingNothing()) {
+		if (hygiene<=30 && isDoingNothing()) {
 			wash();
 		}
 	}
 	
 	@Override
 	public void timePassed() {
-		incrementBladder(-0.8);
+		Action currentAction = actionList.peek();
+
+		if(currentAction instanceof Sleep){
+			incrementBladder(-0.2);
+		}
+		else {
+			incrementBladder(-0.4);
+		}
 		incrementEnergy(-0.14);
-		incrementHunger(-0.34);
+		incrementHunger(-0.26);
 		incrementHygiene(-0.07);
 
-		Action currentAction = actionList.peek();
 		if(currentAction !=null){
 			currentAction.performAction();
 		}
@@ -166,10 +168,17 @@ public abstract class Character extends GameObject implements Directable, Object
 	}
 
 	public void nextAction() {
-		actionList.remove();
+		Action previousAction = actionList.poll();
+		Action currentAction = actionList.peek();
+		if(currentAction!=null){
+			currentAction.setPreviousAction(previousAction);
+		}
 	}
 
 	public boolean isDoingNothing(){
+		//if(Game.getInstance().getSelectedObject() == this){
+		//	return false;
+		//}
 		return actionList.peek() == null;
 	}
 

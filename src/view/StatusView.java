@@ -3,7 +3,7 @@ package view;
 import java.awt.*;
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import model.Game;
 import model.GameObject;
@@ -19,8 +19,7 @@ public class StatusView extends JPanel {
 
     public StatusView() {
         this.setPreferredSize(new Dimension(260, 600));
-        this.setBackground(new Color(  253, 235, 208 ));
-        this.setOpaque(true);
+        this.setOpaque(false);
     }
     
 	public void paint(Graphics g) {
@@ -58,27 +57,12 @@ public class StatusView extends JPanel {
         }
 
         if(selected instanceof ObjectHolder){
-            ArrayList<GameObject> inventory = ((ObjectHolder)selected).getInventory();
             int x = 3;
-            int n = 0;
             g.setColor(Color.BLACK);
             g.setFont(new Font("default", Font.BOLD, 16));
             g.drawString("Inventory", x, y);
-            y+=15;
-            x=20;
-            for(int j = 0;j<3;j++){
-                for(int i = 0;i<3;i++){
-                    g.drawImage(textures.get("Inventory Square"),x+i*80,y+j*80,60,60,null);
-                    if(inventory!= null && n<inventory.size()){
-                        String id = inventory.get(n).ID;
-                        g.drawImage(textures.get(id),x+i*80,y+j*80,60,60,null);
-                        g.setColor(Color.BLACK);
-                        g.drawString(id,x+i*80,y+j*80+75);
-                    }
-                   n++;
-                }
-            }
         }
+        setPreferredSize(new Dimension(260, y+20));
 
     }
 

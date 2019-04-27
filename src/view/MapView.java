@@ -31,7 +31,7 @@ public class MapView extends JPanel {
     private int mouseX = 0;
     private int mouseY = 0;
     private Mouse mouseController = null;
-    TextureHashMap textures = new TextureHashMap();;
+    TextureHashMap textures = new TextureHashMap();
 
     public MapView(Map map) {
         this.map = map;

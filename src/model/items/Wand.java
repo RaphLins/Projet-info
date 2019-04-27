@@ -4,7 +4,7 @@ import model.map.Tile;
 
 public class Wand extends Item implements CarriableItem, Sellable {
 	
-	private int price;
+	private int price = 50;
 
     public Wand() {
         super();
@@ -13,6 +13,6 @@ public class Wand extends Item implements CarriableItem, Sellable {
 
     @Override
     public int getPrice() {
-        return 0;
+        return price;
     }
 }
