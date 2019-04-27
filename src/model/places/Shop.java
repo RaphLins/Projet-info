@@ -1,12 +1,12 @@
 package model.places;
 
-import model.items.Sellable;
+import model.items.Item;
 
 import java.util.ArrayList;
 
 public class Shop extends WorkablePlace {
 	
-	private ArrayList<Sellable> items = new ArrayList<Sellable>();
+	private ArrayList<Item> items = new ArrayList<Item>();
 	
 	public Shop() {
 		

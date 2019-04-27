@@ -16,7 +16,7 @@ public class Window extends JFrame {
     private JPanel groupPanel = new JPanel(new BorderLayout());
     private JPanel bottomPanel = new JPanel(new BorderLayout());
     private JPanel bottomRightPanel = new JPanel(new BorderLayout());
-    private JPanel rightPanel = new JPanel(new BorderLayout());
+    private JPanel rightPanel = new JPanel();
     private JPanel viewSelector = new JPanel(new GridLayout(2,1));
     private MapView mapView = new MapView(Game.getInstance().getMap());
     private StatusView statusView = new StatusView();
@@ -32,8 +32,6 @@ public class Window extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setBounds(0, 0, 1920, 1020);
         this.getContentPane().setBackground(Color.gray);
-        bottomPanel.setBackground(new Color(182, 160, 132));
-        bottomRightPanel.setOpaque(false);
 
         JButton selectFamily = new JButton("Family");
         selectFamily.setOpaque(false);
@@ -55,43 +53,40 @@ public class Window extends JFrame {
             bottomPanel.add(shopView);
             repaint();
         });
-        viewSelector.add(selectShop,BorderLayout.PAGE_END);
-        viewSelector.setOpaque(false);
-        rightPanel.setBackground(new Color(  253, 235, 208 ));
+
 
         groupPanel.add(mapView, BorderLayout.LINE_START);
         groupPanel.add(rightPanel, BorderLayout.LINE_END);
         groupPanel.add(bottomPanel, BorderLayout.PAGE_END);
 
-        rightPanel.add(statusView,BorderLayout.PAGE_START);
+        rightPanel.setLayout(new BoxLayout(rightPanel,BoxLayout.Y_AXIS));
+        rightPanel.add(statusView);
         rightPanel.add(inventoryDisplay);
-        rightPanel.add(actionView,BorderLayout.PAGE_END);
+        rightPanel.add(Box.createVerticalGlue());
+        rightPanel.add(actionView);
+        rightPanel.setBackground(new Color(  253, 235, 208 ));
 
         bottomPanel.add(clock, BorderLayout.LINE_END);
         bottomPanel.add(viewSelector, BorderLayout.LINE_START);
         bottomPanel.add(bottomRightPanel, BorderLayout.LINE_END);
         bottomPanel.add(shopView);
         bottomPanel.add(bottomRightPanel, BorderLayout.LINE_END);
+        bottomPanel.setBackground(new Color(182, 160, 132));
 
         bottomRightPanel.add(goldDisplay, BorderLayout.LINE_START);
         bottomRightPanel.add(clock, BorderLayout.LINE_END);
+        bottomRightPanel.setOpaque(false);
+
+        viewSelector.add(selectShop,BorderLayout.PAGE_END);
+        viewSelector.setOpaque(false);
 
         this.getContentPane().add(this.groupPanel);
-        this.setVisible(true);
         updateGold();
-    }
-
-    public void update() {
-        this.mapView.redraw();
-        this.statusView.redraw();
+        this.setVisible(true);
     }
 
     public MapView getMapView(){
         return mapView;
-    }
-
-    public StatusView getStatusView(){
-        return statusView;
     }
 
     public void setKeyListener(KeyListener keyboard) {
@@ -108,8 +103,13 @@ public class Window extends JFrame {
 
     public void updateInventory(){
         inventoryDisplay.update();
-        inventoryDisplay.setVisible(true);
     }
+
+    public void updateStatus(){
+        statusView.repaint();
+    }
+
+
 
     public void updateGold() {
         goldDisplay.setText("Gold: " + Game.getInstance().getGold() + "g");

@@ -50,7 +50,6 @@ public class Mouse {
 					}
 				}
 				game.selectObject(selected);
-				game.getWindow().getMapView().repaint();
 			}
 		}
 	}

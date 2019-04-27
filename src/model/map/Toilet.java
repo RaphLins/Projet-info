@@ -2,13 +2,14 @@ package model.map;
 
 import model.Game;
 import model.GameObject;
+import model.items.Item;
 import model.map.Obstacle;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Toilet extends GameObject implements Obstacle {
+public class Toilet extends Item implements Obstacle {
     public Toilet() {
         super();
         ID = "Toilet";

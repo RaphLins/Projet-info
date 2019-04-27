@@ -2,14 +2,12 @@ package model.items;
 
 import model.map.Tile;
 
-public class Broom extends Item implements Sellable {
-	
-	private int price;
-
+public class Broom extends Item {
 
 	public Broom(int price) {
 		super();
 		ID = "Broom";
+		price = 50;
 	}
 
 	@Override

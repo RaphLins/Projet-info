@@ -1,53 +1,51 @@
 package view;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.*;
-import javax.swing.text.View;
 
 import model.Game;
 import model.GameObject;
-import model.Time;
-import model.TimeObserver;
 import model.items.Item;
-import model.items.Sellable;
 import model.items.Wand;
-import model.map.Wall;
+import model.map.*;
 
 
 public class ShopView extends JPanel{
-    ArrayList<GameObject> shopObjects = new ArrayList<>();
+    ArrayList<Item> shopItems = new ArrayList<>();
     TextureHashMap textures = new TextureHashMap();
 
     public ShopView() {
-        setPreferredSize(new Dimension(1660, 80));
+        setPreferredSize(new Dimension(1660, 100));
         setOpaque(false);
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        shopObjects.add(new Wand());
-        shopObjects.add(new Wand());
+        shopItems.add(new Wall());
+        shopItems.add(new Fridge());
+        shopItems.add(new Toilet());
+        shopItems.add(new Bath());
+        shopItems.add(new Bed());
+        shopItems.add(new Wand());
 
-        for(GameObject object:shopObjects){
-            Image image = textures.get(object.ID).getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-            int price = ((Sellable)object).getPrice();
-            JButton button = new JButton(object.ID+" ("+price+")",new ImageIcon(image));
+        for(Item item: shopItems){
+            Image image = textures.get(item.ID);
+            int price = item.getPrice();
+            JButton button = new JButton( "<html><center>"+item.ID+"<br>"+price+"g"+"</center></html>",new ImageIcon(image));
             button.setOpaque(false);
             button.setContentAreaFilled(false);
             //button.setBorderPainted(false);
             button.setFocusable(false);
             button.setVerticalTextPosition(SwingConstants.BOTTOM);
             button.setHorizontalTextPosition(SwingConstants.CENTER);
+            button.setPreferredSize(new Dimension(80,95));
 
             button.addActionListener(e -> {
                 Game game = Game.getInstance();
                         if(game.getDraggedObject()==null){
                             if(game.spendGold(price)){
                                 try {
-                                    game.setDraggedObject(((GameObject)object).getClass().newInstance());//create object of same class
+                                    game.setDraggedObject(((GameObject)item).getClass().newInstance());//create item of same class
                                 } catch (InstantiationException e1) {
                                     e1.printStackTrace();
                                 } catch (IllegalAccessException e1) {
@@ -56,7 +54,7 @@ public class ShopView extends JPanel{
                             }
                             else System.out.println("Not enough gold");
                         }
-                        else System.out.println("Place current object first");
+                        else System.out.println("Place current item first");
             });
 
             add(button);

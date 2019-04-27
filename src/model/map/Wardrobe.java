@@ -14,6 +14,7 @@ public class Wardrobe extends Item implements Obstacle, ObjectHolder {
     public Wardrobe() {
         super();
         ID = "Wardrobe";
+        price = 50;
     }
     public void removeItem(GameObject item){
         inventory.remove(item);

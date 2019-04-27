@@ -12,6 +12,7 @@ public class Fridge extends Item implements Obstacle, ObjectHolder {
     public Fridge() {
         super();
         ID = "Fridge";
+        price = 50;
     }
     public void removeItem(GameObject item){
         inventory.remove(item);

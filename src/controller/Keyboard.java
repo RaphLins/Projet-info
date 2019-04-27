@@ -6,7 +6,6 @@ import java.awt.event.KeyListener;
 import model.Game;
 import model.GameObject;
 import model.characters.Character;
-import model.items.Sellable;
 import view.MapView;
 
 public class Keyboard implements KeyListener {

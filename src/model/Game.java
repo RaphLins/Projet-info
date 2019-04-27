@@ -18,7 +18,7 @@ public class Game {
     private GameObject selectedObject = null;
     GameObject draggedObject = null;
     private ArrayList<Character> family = new ArrayList<>();
-    private int familyGold = 100;
+    private int familyGold = 1000;
 
     private Window window;
     private Map map;
@@ -62,7 +62,8 @@ public class Game {
         if(object instanceof Character){
             //((Character)object).stopEverything();
         }
-        getWindow().getStatusView().redraw();
+        getWindow().updateStatus();
+        getWindow().getMapView().repaint();
         getWindow().updateInventory();
     }
 

@@ -170,7 +170,7 @@ public abstract class Character extends GameObject implements Directable, Object
 		}
 
 		if (this == Game.getInstance().getSelectedObject()) {
-			Game.getInstance().getWindow().getStatusView().redraw();
+			Game.getInstance().getWindow().updateStatus();
 			//the StatusView has to evolve as the time passes if a character is selected, because the evolution of his daily needs has to be shown.
 		}
 	}
