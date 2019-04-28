@@ -55,12 +55,15 @@ public class Map{
                 if(i<row.length){
                     types = new ArrayList(Arrays.asList(row[i].split(" ")));
                     for(String type: types){
-                        GameObject object = tileFactory.getInstance(type,i,j);
+                        GameObject object = tileFactory.getInstance(type);
                         if(object!=null){
                             object.setPos(grid[i][j],this);
                         }
                         if(type.equals(".")){
                             grid[i][j].ID = "Floor";
+                        }
+                        else if(type.equals("*")){
+                            grid[i][j].ID = "Road";
                         }
                     }
                 }
@@ -92,19 +95,32 @@ public class Map{
         ArrayList<Tile> tilesAround = new ArrayList<>();
         int x = tile.getX();
         int y = tile.getY();
-        for(int i=0;i<distanceMax;i++) {
-            for(int j =0; j<distanceMax ; j++) {
-                tilesAround.add(getTileAt(x+i,x+j));
-                tilesAround.add(getTileAt(x-i,x+j));
-                tilesAround.add(getTileAt(x+i,x-j));
-                tilesAround.add(getTileAt(x-i,x-j));
+        for(int i=1;i<=distanceMax;i++) {
+            for(int j =1; j<=distanceMax ; j++) {
+                tilesAround.add(getTileAt(x+i,y+j));
+                tilesAround.add(getTileAt(x-i,y+j));
+                tilesAround.add(getTileAt(x+i,y-j));
+                tilesAround.add(getTileAt(x-i,y-j));
             }
         }
         return tilesAround;
     }
 
+    public GameObject getNearbyObject(Tile position, String type, int distanceMax){
+        ArrayList<Tile> tilesAround = getNearbyTiles(position,distanceMax);
+        GameObject res = null;
+        for(Tile tile : tilesAround) {
+            ArrayList<GameObject> objects = tile.getObjects();
+            for(GameObject o : objects) {
+                if (o.ID == type) {
+                    res = o;
+                }
+            }
+        }
+        return res;
+    }
+
     public Tile getClosestTile(Tile position, String type, int distanceMax) {
-        Map map = Game.getInstance().getMap();
         ArrayList<Tile> tilesAround = getNearbyTiles(position,distanceMax);
         ArrayList<Tile> possibleTargets =  new ArrayList<>();
         for(Tile tile : tilesAround) {

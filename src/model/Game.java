@@ -115,6 +115,11 @@ public class Game {
         else return false;
     }
 
+    public void earnGold(int val){
+        familyGold+=val;
+        getWindow().updateGold();
+    }
+
     public ArrayList<Character> getFamily() {
         return family;
     }

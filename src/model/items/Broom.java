@@ -4,7 +4,7 @@ import model.map.Tile;
 
 public class Broom extends Item {
 
-	public Broom(int price) {
+	public Broom() {
 		super();
 		ID = "Broom";
 		price = 50;

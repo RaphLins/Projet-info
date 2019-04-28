@@ -2,7 +2,7 @@ package model.map;
 
 import model.GameObject;
 
-public class Decoration extends GameObject {
+public class Decoration extends GameObject implements Obstacle {
     public Decoration(String id, int width, int height){
         super();
         this.ID = id;

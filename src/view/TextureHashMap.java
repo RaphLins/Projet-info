@@ -33,6 +33,13 @@ public class TextureHashMap {
             textures.put("Toilet",tileset4.getSubimage(160,220,20,40));
             textures.put("Fridge",tileset4.getSubimage(200,160,20,40));
             textures.put("Bath",tileset4.getSubimage(240,93,20,40));
+            textures.put("Road",tileset1.getSubimage(10,390,20,20));
+            textures.put("GroceryStore",tileset1.getSubimage(398,895,80,60));
+            textures.put("Bookshelf",tileset1.getSubimage(339,756,20,40));
+            textures.put("Board",tileset1.getSubimage(338,1084,60,20));
+            textures.put("Stool",tileset1.getSubimage(219,836,20,20));
+            textures.put("Table",tileset4.getSubimage(0,159,60,60));
+            textures.put("Bench",tileset4.getSubimage(220,104,20,28));
             put("White", items,4,0,1,2);
             put4("Adult Wizard",characters,0,0,1,2);
 

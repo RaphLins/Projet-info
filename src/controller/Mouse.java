@@ -3,6 +3,7 @@ package controller;
 import model.Game;
 import model.GameObject;
 import model.characters.Character;
+import model.map.Decoration;
 import model.map.Map;
 import model.map.Tile;
 import view.MapView;
@@ -44,12 +45,15 @@ public class Mouse {
 				for(int i =-1; i<=1;i++){
 					for(int j =-1; j<=1;j++){
 						GameObject object = game.getMap().getTileAt(x+i,y+j).getTopObject();
-						if(object!=null && selected==null){
+						if(object!=null && selected==null && object instanceof Character){
 							selected=object;
 						}
 					}
 				}
-				game.selectObject(selected);
+				if(!(selected instanceof Decoration)){
+					game.selectObject(selected);
+				}
+
 			}
 		}
 	}

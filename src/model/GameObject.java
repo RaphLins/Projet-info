@@ -105,15 +105,17 @@ public abstract class GameObject {
     public ArrayList<Tile> getAccessTiles(){
         Map map = Game.getInstance().getMap();
         ArrayList<Tile> tiles = new ArrayList<>();
-        if(getPos().isWalkable()){
-            tiles.add(getPos());
-        }
-        else{
-            for(int i=0 ; i<4; i++) {
-                Tile target2 = map.getTileNextTo(getPos(),i);
-                if(target2.isWalkable()) {
-                    tiles.add(target2);
-                } //si le personnage ne peut pas aller sur la case, il va chercher � aller sur celles � c�t� de l'objet
+        for(Tile tile: allTiles){
+            if(tile.isWalkable() && !tiles.contains(tile)){
+                tiles.add(getPos());
+            }
+            else{
+                for(int i=0 ; i<4; i++) {
+                    Tile target2 = map.getTileNextTo(getPos(),i);
+                    if(target2.isWalkable() && !tiles.contains(target2)) {
+                        tiles.add(target2);
+                    } //si le personnage ne peut pas aller sur la case, il va chercher � aller sur celles � c�t� de l'objet
+                }
             }
         }
         return tiles;

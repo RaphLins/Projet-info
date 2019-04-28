@@ -8,30 +8,30 @@ public class Time implements Runnable {
 	private static Time instance = null;
 
 	private static int minutes = 0;
-	private static int waitTime = 210;
+	private static int waitTime = 120;
 	private ArrayList<TimeObserver> timeObservers = new ArrayList<>();
+	long lastUpdate = 0;
 	
 	private Time() {
 	}
 	
 	@Override
 	public void run() {
-		try{
-			while(true){
+		while(true){
+			long currentTime = System.currentTimeMillis();
+			if(currentTime-lastUpdate>=waitTime){
 				if(minutes != 1440){
-					//System.out.println(minutes);
 					minutes+=1;
-					Thread.sleep(waitTime);
 				}
 				else{
 					minutes = 0;
-					//System.out.println(minutes);
 				}
 				for (TimeObserver o : timeObservers) {
 					o.timePassed();
 				}
-				}
-		}catch(Exception e){};
+				lastUpdate = currentTime;
+			}
+		}
 		
 	}
 	

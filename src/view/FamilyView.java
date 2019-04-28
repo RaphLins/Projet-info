@@ -27,7 +27,7 @@ public class FamilyView extends JPanel{
             button.setHorizontalTextPosition(SwingConstants.CENTER);
 
             button.addActionListener(e -> {
-                //center view on character
+                Game.getInstance().selectObject(character);
             });
 
             add(button);

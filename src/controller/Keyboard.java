@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 import model.Game;
 import model.GameObject;
 import model.characters.Character;
+import model.items.Item;
 import view.MapView;
 
 public class Keyboard implements KeyListener {
@@ -49,6 +50,16 @@ public class Keyboard implements KeyListener {
                 }
                 else {
                     System.out.println("Select an object to move it");
+                }
+                break;
+            case KeyEvent.VK_R:
+                GameObject selected2 = game.getSelectedObject();
+                if(selected2 instanceof Item){
+                    game.earnGold((int)(((Item)selected2).getPrice()*0.8));
+                    selected2.removeFromMap();
+                }
+                else {
+                    System.out.println("Can't sell that");
                 }
                 break;
         }

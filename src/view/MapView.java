@@ -111,7 +111,10 @@ public class MapView extends JPanel {
             if(id=="Wall" && Math.hypot(mouseX-viewPosX-i,mouseY-viewPosY-j)<=2.5){//hide walls around mouse
                 id="Cut Wall";
             }
-            drawImage(textures.get(id), object.getExactX() - viewPosX,object.getExactY() - viewPosY,g);
+            BufferedImage image = textures.get(id);
+            if(image!=null){
+                drawImage(image, object.getExactX() - viewPosX,object.getExactY() - viewPosY,g);
+            }
         }
 
         GameObject draggedObject = Game.getInstance().getDraggedObject();

@@ -26,7 +26,10 @@ public class ShopView extends JPanel{
         shopItems.add(new Toilet());
         shopItems.add(new Bath());
         shopItems.add(new Bed());
+        shopItems.add(new Bookshelf());
+        shopItems.add(new Stool());
         shopItems.add(new Wand());
+        shopItems.add(new Table());
 
         for(Item item: shopItems){
             Image image = textures.get(item.ID);
