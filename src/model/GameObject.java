@@ -107,11 +107,11 @@ public abstract class GameObject {
         ArrayList<Tile> tiles = new ArrayList<>();
         for(Tile tile: allTiles){
             if(tile.isWalkable() && !tiles.contains(tile)){
-                tiles.add(getPos());
+                tiles.add(tile);
             }
             else{
                 for(int i=0 ; i<4; i++) {
-                    Tile target2 = map.getTileNextTo(getPos(),i);
+                    Tile target2 = map.getTileNextTo(tile,i);
                     if(target2.isWalkable() && !tiles.contains(target2)) {
                         tiles.add(target2);
                     } //si le personnage ne peut pas aller sur la case, il va chercher � aller sur celles � c�t� de l'objet
