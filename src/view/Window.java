@@ -10,6 +10,7 @@ import javax.swing.*;
 
 import controller.Mouse;
 import model.GameObject;
+import model.ObjectWithActions;
 
 public class Window extends JFrame {
 	//private Time time = new Time(1550);
@@ -23,9 +24,11 @@ public class Window extends JFrame {
     private Clock clock = new Clock();
     private ShopView shopView = new ShopView();
     private FamilyView familyView = new FamilyView();
-    private ActionView actionView = new ActionView();
+    //private ActionView actionView = new ActionView();
     private InventoryDisplay inventoryDisplay = new InventoryDisplay();
     JLabel goldDisplay = new JLabel();
+    ActionView currentActionView;
+    JButton selectAction;
 
     public Window(String title) {
         super(title);
@@ -53,7 +56,7 @@ public class Window extends JFrame {
             bottomPanel.add(shopView);
             repaint();
         });
-
+        
 
         groupPanel.add(mapView, BorderLayout.LINE_START);
         groupPanel.add(rightPanel, BorderLayout.LINE_END);
@@ -63,7 +66,7 @@ public class Window extends JFrame {
         rightPanel.add(statusView);
         rightPanel.add(inventoryDisplay);
         rightPanel.add(Box.createVerticalGlue());
-        rightPanel.add(actionView);
+        //rightPanel.add(actionView);
         rightPanel.setBackground(new Color(  253, 235, 208 ));
 
         bottomPanel.add(clock, BorderLayout.LINE_END);
@@ -76,7 +79,8 @@ public class Window extends JFrame {
         bottomRightPanel.add(goldDisplay, BorderLayout.LINE_START);
         bottomRightPanel.add(clock, BorderLayout.LINE_END);
         bottomRightPanel.setOpaque(false);
-
+        
+        //rightPanel.add(selectAction,BorderLayout.LINE_END);
         viewSelector.add(selectShop,BorderLayout.PAGE_END);
         viewSelector.setOpaque(false);
 
@@ -107,6 +111,32 @@ public class Window extends JFrame {
 
     public void updateStatus(){
         statusView.repaint();
+    }
+    
+    public void updateActionView() {
+    	if (selectAction!=null) {
+    		rightPanel.remove(selectAction);
+    	}
+    	if (currentActionView != null) {
+    		rightPanel.remove(currentActionView);
+    	}
+    	if (Game.getInstance().getSelectedObject() instanceof ObjectWithActions) {
+    		selectAction = new JButton("Actions");
+        	selectAction.setOpaque(false);
+            selectAction.setContentAreaFilled(false);
+            selectAction.setFocusable(false);
+            selectAction.addActionListener(e->{
+            	ActionView previousActionView = currentActionView;
+            	if (!rightPanel.isAncestorOf(previousActionView)) {
+            		currentActionView = new ActionView();
+            		rightPanel.add(currentActionView);
+            		rightPanel.remove(selectAction);
+                	repaint();
+            	}
+            });
+        	rightPanel.add(selectAction);    		
+    	}
+    	
     }
 
 

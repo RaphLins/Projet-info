@@ -30,7 +30,10 @@ public class Bath extends Item implements Obstacle {
     }
 
     public void stopWashing() {
-        ArrayList<Tile> tiles = getAccessTiles();
-        character.setPos(tiles.get(new Random().nextInt(tiles.size()))); //return random access tile
+        ArrayList<Tile> tiles = super.getAccessTiles();
+        if(tiles.size()!=0) {
+        	character.setPos(tiles.get(new Random().nextInt(tiles.size()))); //return random access tile
+        	character = null;
+        }
     }
 }

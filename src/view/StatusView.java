@@ -18,7 +18,7 @@ public class StatusView extends JPanel {
 	private TextureHashMap textures = new TextureHashMap();
 
     public StatusView() {
-        this.setPreferredSize(new Dimension(260, 100));
+        this.setPreferredSize(new Dimension(260, 600));
         this.setOpaque(false);
     }
     
@@ -32,8 +32,8 @@ public class StatusView extends JPanel {
         g.setColor(Color.BLACK);
         g.setFont(new Font("default", Font.BOLD, 19));
         g.drawString(selected.ID, 3, y);
+        y+=20;
         if(selected instanceof Character){
-            y+=20;
             Character character = (Character)selected;
             g.setColor(Color.BLUE);
             y+=10;
@@ -52,17 +52,17 @@ public class StatusView extends JPanel {
                 y+=50;
                 drawBar("Magic Power",((Wizard)character).getMagicPower(),0,y,g);
             }
+            y+=50;
+
         }
 
         if(selected instanceof ObjectHolder){
-            y+=50;
             int x = 3;
             g.setColor(Color.BLACK);
             g.setFont(new Font("default", Font.BOLD, 16));
             g.drawString("Inventory", x, y);
         }
         setPreferredSize(new Dimension(260, y+20));
-        setMaximumSize(new Dimension(260, y+20));
 
     }
 
@@ -75,5 +75,9 @@ public class StatusView extends JPanel {
         g.setColor(new Color(40, 180, 99));
         int length_ok = (int) Math.round(BAR_LENGTH*value/100);
         g.fillRect(x+20, y+10, length_ok, BAR_WIDTH);
+    }
+
+    public void redraw() {
+        this.repaint();
     }
 }

@@ -1,6 +1,7 @@
 package model;
 
 import model.characters.AdultWizard;
+import model.items.CarriableItem;
 import model.items.Wand;
 import model.map.Map;
 import model.map.Tile;
@@ -23,6 +24,8 @@ public class Game {
     private Window window;
     private Map map;
     private Thread gameTime;
+    ObjectHolder selectedOH;
+    private boolean itemToAdd = false;
 
     private Game() {
         map = new Map("shared/res/map.csv");
@@ -48,6 +51,10 @@ public class Game {
     public void setWindow(Window window){
         this.window = window;
     }
+    
+    public void itemToAdd() {
+    	itemToAdd = true;
+    }
 
     public Window getWindow() {
         return window;
@@ -59,12 +66,20 @@ public class Game {
 
     public void selectObject(GameObject object){
         selectedObject = object;
+        if(object instanceof ObjectHolder) {
+        	selectedOH = (ObjectHolder)object;
+        }
         if(object instanceof Character){
             //((Character)object).stopEverything();
+        }
+        if(itemToAdd && object instanceof CarriableItem) {
+        	selectedOH.addItem(object);
+        	itemToAdd =false;
         }
         getWindow().updateStatus();
         getWindow().getMapView().repaint();
         getWindow().updateInventory();
+        getWindow().updateActionView();
     }
 
     public GameObject getDraggedObject(){

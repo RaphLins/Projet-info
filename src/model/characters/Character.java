@@ -3,6 +3,7 @@ package model.characters;
 import model.Game;
 import model.GameObject;
 import model.ObjectHolder;
+import model.ObjectWithActions;
 import model.Time;
 import model.TimeObserver;
 import model.characters.actions.*;
@@ -15,7 +16,7 @@ import java.lang.Math;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public abstract class Character extends GameObject implements Directable, ObjectHolder, TimeObserver {
+public abstract class Character extends GameObject implements Directable, ObjectHolder, TimeObserver, ObjectWithActions {
 	private double hunger = 100;
 	private double hygiene = 100;
 	private double bladder = 100;
@@ -115,6 +116,12 @@ public abstract class Character extends GameObject implements Directable, Object
 	public void removeItem(GameObject item){
 		inventory.remove(item);
 	}
+	
+	@Override
+	public void addItem(GameObject item) {
+		inventory.add(item);
+		item.removeFromMap();
+	}
 
 	public ArrayList<GameObject> getInventory() {
 		return inventory;
@@ -122,7 +129,7 @@ public abstract class Character extends GameObject implements Directable, Object
 
 	public void incrementBladder(double i) {
 		bladder = Math.max(Math.min(bladder+i,100),0);	//changes the bladder's value by i (i can be positive if for example the character is peeing, or negative in other cases).
-			//even if the character has to pee, the action can't be done automatically if he's doing something else.
+		//even if the character has to pee, the action can't be done automatically if he's doing something else.
 		//the value can't exceed 100 (because of the min) and can't be lower than 0 (because of the max).
 		if (bladder<=30 && isDoingNothing()) {
 			pee();

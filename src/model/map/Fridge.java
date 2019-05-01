@@ -25,4 +25,9 @@ public class Fridge extends Item implements Obstacle, ObjectHolder {
     public ArrayList<GameObject> getInventory() {
         return inventory;
     }
+    @Override
+    public void addItem(GameObject item) {
+    	inventory.add(item);
+    	item.removeFromMap();
+    }
 }

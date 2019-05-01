@@ -33,6 +33,7 @@ public class Bed extends Item implements Obstacle{
         ArrayList<Tile> tiles = super.getAccessTiles();
         if(tiles.size()!=0){
             character.setPos(tiles.get(new Random().nextInt(tiles.size()))); //return random access tile
+            character = null;
         }
     }
 }

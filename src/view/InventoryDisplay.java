@@ -10,6 +10,7 @@ import model.*;
 
 
 public class InventoryDisplay extends JPanel{
+	Game game = Game.getInstance();
     TextureHashMap textures = new TextureHashMap();
     JButton buttons[] = new JButton[9];
     public InventoryDisplay() {
@@ -44,11 +45,11 @@ public class InventoryDisplay extends JPanel{
                     buttons[i].setIcon(new ImageIcon(image));
                     buttons[i].setText(object.ID);
                     buttons[i].addActionListener(e -> {
-                        Game game = Game.getInstance();
                         if(game.getDraggedObject()==null){
-                            game.setDraggedObject(object);
-                            ((ObjectHolder)selected).removeItem(object);
-                            update();
+                        	game.setDraggedObject(object);
+                        	((ObjectHolder)selected).removeItem(object);
+                        	update();
+                        	System.out.println("updated");
                         }
                         else System.out.println("Place current object first");
                     });
@@ -56,9 +57,14 @@ public class InventoryDisplay extends JPanel{
                 else{
                     buttons[i].setText("");
                     buttons[i].setIcon(null);
-                    for( ActionListener al : buttons[i].getActionListeners() ) {
-                        buttons[i].removeActionListener( al );
-                    }
+                    buttons[i].addActionListener(e -> {
+                    	if(game.getDraggedObject()==null) {
+                    		Game.getInstance().itemToAdd();
+                    	}
+                    });
+                    //for( ActionListener al : buttons[i].getActionListeners() ) {
+                    //    buttons[i].removeActionListener( al );
+                    //}
                 }
             }
             EventQueue.invokeLater(() -> {
@@ -69,6 +75,5 @@ public class InventoryDisplay extends JPanel{
         else{
             setVisible(false);
         }
-
     }
 }
