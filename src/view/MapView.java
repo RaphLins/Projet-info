@@ -22,7 +22,7 @@ public class MapView extends JPanel {
     public static final int TILE_WIDTH =  20;
     public static final int TILE_HEIGHT =  20;
     private float zoom = 2;
-    private static int tilesDrawnNbr = 0;
+    private static int paintCount = 0;
 
     private Map map;
 
@@ -98,11 +98,13 @@ public class MapView extends JPanel {
             g.setColor(new Color(255,204,153,120));
             g.fillOval(x,y,TILE_WIDTH*(int)zoom,TILE_HEIGHT*(int)zoom);
         }
+        //System.out.println("painted "+paintCount);
+        //paintCount++;
     }
 
     private void drawTile(Tile tile, int i,int j, Graphics g){
         drawImage(textures.get(tile.ID),i,j,g);//draw background
-        ArrayList<GameObject> objects = tile.getObjects();
+        ArrayList<GameObject> objects = (ArrayList<GameObject>)tile.getObjects().clone();//clone to avoid concurrent modification exception
         for(GameObject object: objects){//draw items
             String id = object.ID;
             if (object instanceof Directable) {
@@ -144,7 +146,9 @@ public class MapView extends JPanel {
     }
 
     public void updateTile(int x, int y) {
-        this.repaint();
+        if(viewPosX <x && x < viewPosX+getWindowWidth() && viewPosY <y && y < viewPosY+getWindowHeight()){
+            this.repaint();
+        }
         //System.out.println("painted "+x+" "+y);
     }
 

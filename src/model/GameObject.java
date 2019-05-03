@@ -1,5 +1,6 @@
 package model;
 
+import model.characters.Directable;
 import model.map.Map;
 import model.map.Tile;
 
@@ -10,10 +11,15 @@ public abstract class GameObject {
     private ArrayList<Tile> allTiles = new ArrayList<>(); //an object can be on several tiles.
     private float xOffset = 0;
     private float yOffset = 0;
+    public static int EAST = 0;
+    public static int NORTH = 1;
+    public static int WEST = 2;
+    public static int SOUTH = 3;
 
     public int width;
     public int height;
-    public String ID; 
+    public String ID;
+    public int[] accessDirections = new int[]{EAST,WEST,SOUTH,NORTH};
 
     public GameObject() {
         ID = "";
@@ -88,10 +94,7 @@ public abstract class GameObject {
     }
 
     public void setPos(Tile target, Map map) {
-        for(Tile tile:allTiles){
-            tile.removeObject(this);
-        }
-        allTiles.clear();
+        removeFromMap();
         pos = target;
         for(int i = 0;i<width;i++){
             for(int j = 0;j<height;j++){
@@ -110,7 +113,7 @@ public abstract class GameObject {
                 tiles.add(tile);
             }
             else{
-                for(int i=0 ; i<4; i++) {
+                for(int i:accessDirections){
                     Tile target2 = map.getTileNextTo(tile,i);
                     if(target2.isWalkable() && !tiles.contains(target2)) {
                         tiles.add(target2);

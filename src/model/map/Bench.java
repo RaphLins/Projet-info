@@ -7,5 +7,6 @@ public class Bench extends Item implements Obstacle {
         super();
         ID = "Bench";
         price = 50;
+        accessDirections = new int[]{SOUTH};
     }
 }

@@ -40,8 +40,12 @@ public class TextureHashMap {
             textures.put("Stool",tileset1.getSubimage(219,836,20,20));
             textures.put("Table",tileset4.getSubimage(0,159,60,60));
             textures.put("Bench",tileset4.getSubimage(220,104,20,28));
+            textures.put("Plate",tileset1.getSubimage(197,798,20,20));
             put("White", items,4,0,1,2);
-            put4("Adult Wizard",characters,0,0,1,2);
+            put4("Adult Wizard (M)",characters,0,0,1,2);
+            put4("Adult Wizard (F)",characters,0,2,1,2);
+            put4("Child Wizard (M)",characters,0,4,1,2);
+            put4("Child Wizard (F)",characters,0,6,1,2);
 
         } catch (IOException e) {
         }
@@ -70,5 +74,8 @@ public class TextureHashMap {
         return textures.get(id);
     }
 
+    public BufferedImage getAvatar(String id){
+        return get(id).getSubimage(5,9,10,10);
+    }
 
 }

@@ -37,7 +37,7 @@ public class StatusView extends JPanel {
             Character character = (Character)selected;
             g.setColor(Color.BLUE);
             y+=10;
-            g.fillRect(80, y, AVATAR_SIZE, AVATAR_SIZE);
+            g.drawImage(textures.getAvatar(character.ID),80,y, AVATAR_SIZE, AVATAR_SIZE,null);
 
             // bars
             y+=175;
@@ -48,6 +48,8 @@ public class StatusView extends JPanel {
             drawBar("Hygiene",character.getHygiene(),0,y,g);
             y+=50;
             drawBar("Bladder",character.getBladder(),0,y,g);
+            y+=50;
+            drawBar("Happiness",character.getHappiness(),0,y,g);
             if(character instanceof Wizard){
                 y+=50;
                 drawBar("Magic Power",((Wizard)character).getMagicPower(),0,y,g);

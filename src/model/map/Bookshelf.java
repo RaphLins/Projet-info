@@ -10,5 +10,6 @@ public class Bookshelf extends Item  implements Obstacle{
         super();
         ID = "Bookshelf";
         price = 50;
+        accessDirections = new int[]{SOUTH};
     }
 }

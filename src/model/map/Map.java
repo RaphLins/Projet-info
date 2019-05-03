@@ -2,7 +2,9 @@ package model.map;
 
 import model.Game;
 import model.GameObject;
+import model.ObjectHolder;
 import model.characters.Character;
+import model.items.HoldableItem;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -95,25 +97,37 @@ public class Map{
         ArrayList<Tile> tilesAround = new ArrayList<>();
         int x = tile.getX();
         int y = tile.getY();
-        for(int i=1;i<=distanceMax;i++) {
-            for(int j =1; j<=distanceMax ; j++) {
+        for(int i=-distanceMax;i<=distanceMax;i++) {
+            for(int j =-distanceMax; j<=distanceMax; j++) {
                 tilesAround.add(getTileAt(x+i,y+j));
-                tilesAround.add(getTileAt(x-i,y+j));
-                tilesAround.add(getTileAt(x+i,y-j));
-                tilesAround.add(getTileAt(x-i,y-j));
             }
         }
         return tilesAround;
     }
 
-    public GameObject getNearbyObject(Tile position, String type, int distanceMax){
+    public ArrayList<GameObject> getNearbyObjects(Tile position, String type, int distanceMax){
         ArrayList<Tile> tilesAround = getNearbyTiles(position,distanceMax);
-        GameObject res = null;
+        ArrayList<GameObject> res = new ArrayList<>();
         for(Tile tile : tilesAround) {
             ArrayList<GameObject> objects = tile.getObjects();
             for(GameObject o : objects) {
+                if((!(o instanceof Character) && o instanceof ObjectHolder)){
+                    ArrayList<HoldableItem> objects2 = ((ObjectHolder)o).getInventory();
+                    for(GameObject o2 : objects2) {
+                        if (o2.ID == type) {
+                            res.add(o2);
+                        }
+                    }
+                }
                 if (o.ID == type) {
-                    res = o;
+                    if(o instanceof Obstacle){
+                        res.add(o);
+                    }
+                    else {
+                        if(tile.isWalkable()){
+                            res.add(o);
+                        }
+                    }
                 }
             }
         }
@@ -121,15 +135,9 @@ public class Map{
     }
 
     public Tile getClosestTile(Tile position, String type, int distanceMax) {
-        ArrayList<Tile> tilesAround = getNearbyTiles(position,distanceMax);
         ArrayList<Tile> possibleTargets =  new ArrayList<>();
-        for(Tile tile : tilesAround) {
-            ArrayList<GameObject> objects = tile.getObjects();
-            for(GameObject o : objects) {
-                if (o.ID == type) {
-                    possibleTargets.addAll(o.getAccessTiles());
-                }
-            }
+        for(GameObject object:getNearbyObjects(position,type,distanceMax)){
+            possibleTargets.addAll(object.getAccessTiles());
         }
         if(possibleTargets.isEmpty()){
             return null;

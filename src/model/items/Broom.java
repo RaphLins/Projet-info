@@ -2,7 +2,7 @@ package model.items;
 
 import model.map.Tile;
 
-public class Broom extends Item {
+public class Broom extends HoldableItem {
 
 	public Broom() {
 		super();

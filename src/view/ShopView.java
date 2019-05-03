@@ -8,6 +8,7 @@ import javax.swing.*;
 import model.Game;
 import model.GameObject;
 import model.items.Item;
+import model.items.Plate;
 import model.items.Wand;
 import model.map.*;
 
@@ -30,6 +31,7 @@ public class ShopView extends JPanel{
         shopItems.add(new Stool());
         shopItems.add(new Wand());
         shopItems.add(new Table());
+        shopItems.add(new Plate());
 
         for(Item item: shopItems){
             Image image = textures.get(item.ID);
@@ -41,7 +43,7 @@ public class ShopView extends JPanel{
             button.setFocusable(false);
             button.setVerticalTextPosition(SwingConstants.BOTTOM);
             button.setHorizontalTextPosition(SwingConstants.CENTER);
-            button.setPreferredSize(new Dimension(80,95));
+            button.setPreferredSize(new Dimension(95,95));
 
             button.addActionListener(e -> {
                 Game game = Game.getInstance();

@@ -11,9 +11,4 @@ public abstract class Place {
 	public Place() {
 		
 	}
-	
-	public void getTo(Character cha) {
-		
-	}
-
 }

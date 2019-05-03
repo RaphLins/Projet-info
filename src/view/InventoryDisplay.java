@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import model.*;
+import model.items.HoldableItem;
 
 
 public class InventoryDisplay extends JPanel{
@@ -37,19 +38,21 @@ public class InventoryDisplay extends JPanel{
         GameObject selected = Game.getInstance().getSelectedObject();
 
         if(selected != null && selected instanceof ObjectHolder){
-            ArrayList<GameObject> inventory = ((ObjectHolder)selected).getInventory();
+            ArrayList<HoldableItem> inventory = ((ObjectHolder)selected).getInventory();
             for(int i = 0;i<9;i++){
+                for( ActionListener al : buttons[i].getActionListeners() ) {//remove all actions on the button
+                    buttons[i].removeActionListener( al );
+                }
                 if(i<inventory.size()){
-                    GameObject object = inventory.get(i);
-                    Image image = textures.get(object.ID).getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+                    HoldableItem item = inventory.get(i);
+                    Image image = textures.get(item.ID).getScaledInstance(40, 40, Image.SCALE_SMOOTH);
                     buttons[i].setIcon(new ImageIcon(image));
-                    buttons[i].setText(object.ID);
-                    buttons[i].addActionListener(e -> {
+                    buttons[i].setText(item.ID);
+                    buttons[i].addActionListener(e -> {//allows to move an item from inventory onto the map
                         if(game.getDraggedObject()==null){
-                        	game.setDraggedObject(object);
-                        	((ObjectHolder)selected).removeItem(object);
-                        	update();
-                        	System.out.println("updated");
+                            game.setDraggedObject(item);
+                            ((ObjectHolder)selected).getInventory().remove(item);
+                            update();
                         }
                         else System.out.println("Place current object first");
                     });
@@ -59,12 +62,10 @@ public class InventoryDisplay extends JPanel{
                     buttons[i].setIcon(null);
                     buttons[i].addActionListener(e -> {
                     	if(game.getDraggedObject()==null) {
-                    		Game.getInstance().itemToAdd();
+                    		Game.getInstance().itemToAdd(); //tell the Game that the next item clicked should be added to iventory
                     	}
                     });
-                    //for( ActionListener al : buttons[i].getActionListeners() ) {
-                    //    buttons[i].removeActionListener( al );
-                    //}
+
                 }
             }
             EventQueue.invokeLater(() -> {

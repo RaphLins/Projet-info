@@ -1,8 +1,6 @@
 package model.items;
 
-import model.map.Tile;
-
-public class Wand extends Item implements CarriableItem {
+public class Wand extends HoldableItem {
 
     public Wand() {
         super();

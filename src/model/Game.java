@@ -1,7 +1,8 @@
 package model;
 
 import model.characters.AdultWizard;
-import model.items.CarriableItem;
+import model.characters.ChildWizard;
+import model.items.HoldableItem;
 import model.items.Wand;
 import model.map.Map;
 import model.map.Tile;
@@ -30,17 +31,14 @@ public class Game {
     private Game() {
         map = new Map("shared/res/map.csv");
         //Time.getInstance().run();
-        family.add(new AdultWizard());
+        family.add(new AdultWizard("M"));
         family.get(0).setPos(map.getTileAt(10,10),map);
-        //family.add(new AdultWizard());
-        //family.get(1).setPos(map.getTileAt(10,20),map);
-        //family.add(new AdultWizard());
-        //family.get(2).setPos(map.getTileAt(10,30),map);
-        family.get(0).carryItem(new Wand());
-        //family.get(1).carryItem(new Wand());
-        //family.get(2).carryItem(new Wand());
-        family.get(0).carryItem(new Wand());
-        family.get(0).carryItem(new Wand());
+        family.add(new AdultWizard("F"));
+        family.get(1).setPos(map.getTileAt(19,10),map);
+        family.add(new ChildWizard("M"));
+        family.get(2).setPos(map.getTileAt(15,30),map);
+        family.add(new ChildWizard("F"));
+        family.get(3).setPos(map.getTileAt(17,20),map);
         family.get(0).carryItem(new Wand());
         family.get(0).carryItem(new Wand());
 
@@ -72,8 +70,8 @@ public class Game {
         if(object instanceof Character){
             //((Character)object).stopEverything();
         }
-        if(itemToAdd && object instanceof CarriableItem) {
-        	selectedOH.addItem(object);
+        if(itemToAdd && object instanceof HoldableItem) {
+            ((HoldableItem) object).storeIn(selectedOH);
         	itemToAdd =false;
         }
         getWindow().updateStatus();

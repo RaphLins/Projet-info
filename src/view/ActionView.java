@@ -18,22 +18,22 @@ public class ActionView extends JPanel{
     	GameObject selected = Game.getInstance().getSelectedObject();
     	if(selected instanceof Character) {
     		Character c = (Character)selected;
-    		JButton eatButton = new JButton("Eat");
+    		JButton eatButton = new JButton("Eating");
     		eatButton.addActionListener(e -> {
     			c.stopEverything();
     			c.eat();          
     		});
-    		JButton peeButton = new JButton("Pee");
+    		JButton peeButton = new JButton("Peeing");
     		peeButton.addActionListener(e -> {
     			c.stopEverything();
     			c.pee();          
     		});
-    		JButton washButton = new JButton("Wash");
+    		JButton washButton = new JButton("Washing");
     		washButton.addActionListener(e -> {
     			c.stopEverything();
     			c.wash();          
     		});
-    		JButton sleepButton = new JButton("Sleep");
+    		JButton sleepButton = new JButton("Sleeping");
     		sleepButton.addActionListener(e -> {
     			c.stopEverything();
     			c.sleep();          

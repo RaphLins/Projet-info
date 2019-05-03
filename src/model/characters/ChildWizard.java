@@ -1,16 +1,18 @@
 package model.characters;
+
 import model.map.Tile;
 
-public class BabyWizard extends Baby implements Wizard {
+public class ChildWizard extends Kid implements Wizard {
 
 	double magicPower = 50;
-	public BabyWizard() {
-		super();
-	}
 
+	public ChildWizard(String gender) {
+		super();
+		ID = "Child Wizard ("+gender+")";
+	}
 	@Override
 	public double getMagicPower() {
-		return (float)magicPower;
+		return magicPower;
 	}
 
 	@Override

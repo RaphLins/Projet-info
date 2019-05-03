@@ -45,7 +45,6 @@ public class Window extends JFrame {
             bottomPanel.add(familyView);
             repaint();
         });
-        viewSelector.add(selectFamily);
 
         JButton selectShop = new JButton("Shop");
         selectShop.setOpaque(false);
@@ -72,15 +71,15 @@ public class Window extends JFrame {
         bottomPanel.add(clock, BorderLayout.LINE_END);
         bottomPanel.add(viewSelector, BorderLayout.LINE_START);
         bottomPanel.add(bottomRightPanel, BorderLayout.LINE_END);
-        bottomPanel.add(shopView);
+        bottomPanel.add(familyView);
         bottomPanel.add(bottomRightPanel, BorderLayout.LINE_END);
         bottomPanel.setBackground(new Color(182, 160, 132));
 
         bottomRightPanel.add(goldDisplay, BorderLayout.LINE_START);
         bottomRightPanel.add(clock, BorderLayout.LINE_END);
         bottomRightPanel.setOpaque(false);
-        
-        //rightPanel.add(selectAction,BorderLayout.LINE_END);
+
+        viewSelector.add(selectFamily);
         viewSelector.add(selectShop,BorderLayout.PAGE_END);
         viewSelector.setOpaque(false);
 
@@ -125,16 +124,18 @@ public class Window extends JFrame {
         	selectAction.setOpaque(false);
             selectAction.setContentAreaFilled(false);
             selectAction.setFocusable(false);
+
             selectAction.addActionListener(e->{
             	ActionView previousActionView = currentActionView;
             	if (!rightPanel.isAncestorOf(previousActionView)) {
             		currentActionView = new ActionView();
             		rightPanel.add(currentActionView);
             		rightPanel.remove(selectAction);
-                	repaint();
+            		rightPanel.updateUI();
             	}
             });
-        	rightPanel.add(selectAction);    		
+            selectAction.setAlignmentX(Component.CENTER_ALIGNMENT);
+        	rightPanel.add(selectAction);
     	}
     	
     }

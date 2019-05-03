@@ -23,6 +23,7 @@ public class Mouse {
 		synchronized(game) {
 			GameObject selected = game.getSelectedObject();
 			if(selected instanceof Character){
+				((Character)selected).stopEverything();
 				((Character)selected).goTo(game.getMap().getTileAt(x,y));
 			}
 		}
