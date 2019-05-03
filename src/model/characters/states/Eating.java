@@ -3,12 +3,14 @@ package model.characters.states;
 import model.Game;
 import model.GameObject;
 import model.characters.Character;
+import model.items.Plate;
+import model.map.Stool;
 import model.map.Table;
 import model.map.Tile;
 
 public class Eating extends UsingItem {
     public Eating(Character character, int groupID) {
-        super(character, groupID,"Stool");
+        super(character, groupID, Stool.class);
     }
 
     @Override
@@ -19,10 +21,10 @@ public class Eating extends UsingItem {
             Tile tile = Game.getInstance().getMap().getTileNextTo(getCharacter().getPos(),i);
             for(GameObject object:tile.getObjects()){
                 System.out.println(object);
-                if(object.ID=="Table"){
+                if(Table.class.isInstance(object)){
                     table = (Table) object;
                     getCharacter().rotateTo(tile);
-                    getCharacter().placeItem(getCharacter().getItem("Plate"));
+                    getCharacter().placeItem(getCharacter().getItem(Plate.class));
                     return;
                 }
             }
@@ -43,7 +45,7 @@ public class Eating extends UsingItem {
 
     @Override
     public void finish() {
-        getCharacter().pickUpItemInFront("Plate");
+        getCharacter().pickUpItemInFront(Plate.class);
         super.finish();
     }
 }

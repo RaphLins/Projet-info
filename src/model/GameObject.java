@@ -4,9 +4,10 @@ import model.characters.Directable;
 import model.map.Map;
 import model.map.Tile;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class GameObject {
+public abstract class GameObject implements Serializable {
     private Tile pos;
     private ArrayList<Tile> allTiles = new ArrayList<>(); //an object can be on several tiles.
     private float xOffset = 0;

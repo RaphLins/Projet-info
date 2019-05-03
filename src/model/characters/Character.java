@@ -8,8 +8,9 @@ import model.Time;
 import model.TimeObserver;
 import model.characters.states.*;
 import model.items.HoldableItem;
+import model.items.Plate;
+import model.map.*;
 import model.places.Place;
-import model.map.Tile;
 
 import java.lang.Math;
 
@@ -63,24 +64,24 @@ public abstract class Character extends GameObject implements Directable, Object
 	}
 
 	public void eat() {
-        stateQueue.add(new FetchingItem(this,1, "Plate"));
-        stateQueue.add(new MovingToObject(this,1, "Stool"));
+        stateQueue.add(new FetchingItem(this,1, Plate.class));
+        stateQueue.add(new MovingToObject(this,1, Stool.class));
         stateQueue.add(new Eating(this,1));
-        stateQueue.add(new StoringItem(this,1,"Plate","Wardrobe"));
+        stateQueue.add(new StoringItem(this,1,Plate.class, Wardrobe.class));
 	}
 
 	public void wash() {
-        stateQueue.add(new MovingToObject(this,2, "Bath"));
+        stateQueue.add(new MovingToObject(this,2, Bath.class));
         stateQueue.add(new Washing(this,2));
 	}
 
 	public void pee() {
-        stateQueue.add(new MovingToObject(this,3, "Toilet"));
+        stateQueue.add(new MovingToObject(this,3, Toilet.class));
         stateQueue.add(new Peeing(this,3));
 	}
 
 	public void sleep() {
-        stateQueue.add(new MovingToObject(this,4, "Bed"));
+        stateQueue.add(new MovingToObject(this,4, Bed.class));
         stateQueue.add(new Sleeping(this,4));
 	}
 
@@ -246,28 +247,28 @@ public abstract class Character extends GameObject implements Directable, Object
 		}
 	}
 
-	public HoldableItem getItem(String type){//return item of given type from the inventory
+	public HoldableItem getItem(Class type){//return item of given type from the inventory
 		HoldableItem res = null;
 		for(HoldableItem item:inventory){
-			if(item.ID == type){
+			if(type.isInstance(item)){
 				res = item;
 			}
 		}
 		return res;
 	}
 
-	public void pickUpItem(String type, Tile tile){//store item of given type on given tile in the inventory
+	public void pickUpItem(Class type, Tile tile){//store item of given type on given tile in the inventory
 		HoldableItem item = null;
 
 		for(GameObject object:tile.getObjects()){
 			if(object instanceof ObjectHolder && !(object instanceof Character)){
 				for(GameObject storedObject : ((ObjectHolder)object).getInventory()) {
-					if (storedObject.ID == type) {
+					if (type.isInstance(storedObject)) {
 						item = (HoldableItem) storedObject;
 					}
 				}
 			}
-			if(object.ID == type){
+			if(type.isInstance(object)){
 				item = (HoldableItem) object;
 			}
 		}
@@ -276,7 +277,7 @@ public abstract class Character extends GameObject implements Directable, Object
 		}
 	}
 
-	public void pickUpItemInFront(String type) {
+	public void pickUpItemInFront(Class type) {
 		pickUpItem(type,getTileInFront());
 	}
 

@@ -1,10 +1,11 @@
 package model.characters.states;
 
 import model.characters.Character;
+import model.map.Bath;
 
 public class Washing extends UsingItem {
     public Washing(Character character, int groupID) {
-        super(character,groupID,"Bath");
+        super(character,groupID, Bath.class);
     }
 
     @Override

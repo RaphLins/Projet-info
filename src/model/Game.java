@@ -5,16 +5,15 @@ import model.characters.ChildWizard;
 import model.items.HoldableItem;
 import model.items.Wand;
 import model.map.Map;
-import model.map.Tile;
 import view.Window;
 import model.characters.Character;
 
 import java.awt.event.WindowEvent;
+import java.io.Serializable;
 import java.util.ArrayList;
-import model.Time;
 
 
-public class Game {
+public class Game implements Serializable {
     private static Game instance = null;
     private static boolean started = false;
     private GameObject selectedObject = null;
@@ -22,11 +21,13 @@ public class Game {
     private ArrayList<Character> family = new ArrayList<>();
     private int familyGold = 1000;
 
-    private Window window;
+    transient private Window window;
     private Map map;
-    private Thread gameTime;
     ObjectHolder selectedOH;
     private boolean itemToAdd = false;
+
+    Time time;
+    transient Thread gameTime;
 
     private Game() {
         map = new Map("shared/res/map.csv");
@@ -41,8 +42,19 @@ public class Game {
         family.get(3).setPos(map.getTileAt(17,20),map);
         family.get(0).carryItem(new Wand());
         family.get(0).carryItem(new Wand());
+        time = Time.getInstance();
+        startTime();
+    }
 
-        gameTime = new Thread(Time.getInstance());
+
+    public void stopTime(){
+        if(gameTime!=null){
+            gameTime.stop();
+        }
+    }
+    public void startTime(){
+        Time.setInstance(time);
+        gameTime = new Thread(time);
         gameTime.start();
     }
 
@@ -96,8 +108,10 @@ public class Game {
     public Map getMap(){
         return map;
     }
-    
 
+    public void setMap(Map map) {
+        this.map = map;
+    }
 
     public static Game getInstance(){
         if(instance == null && !started){
@@ -105,6 +119,10 @@ public class Game {
             started = true;
         }
         return instance;
+    }
+
+    public static void setInstance(Game game){
+        instance = game;
     }
 
     public static boolean isStarted(){
@@ -136,4 +154,5 @@ public class Game {
     public ArrayList<Character> getFamily() {
         return family;
     }
+
 }

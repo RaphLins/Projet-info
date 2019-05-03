@@ -11,7 +11,6 @@ import model.items.HoldableItem;
 
 
 public class InventoryDisplay extends JPanel{
-	Game game = Game.getInstance();
     TextureHashMap textures = new TextureHashMap();
     JButton buttons[] = new JButton[9];
     public InventoryDisplay() {
@@ -49,8 +48,8 @@ public class InventoryDisplay extends JPanel{
                     buttons[i].setIcon(new ImageIcon(image));
                     buttons[i].setText(item.ID);
                     buttons[i].addActionListener(e -> {//allows to move an item from inventory onto the map
-                        if(game.getDraggedObject()==null){
-                            game.setDraggedObject(item);
+                        if(Game.getInstance().getDraggedObject()==null){
+                            Game.getInstance().setDraggedObject(item);
                             ((ObjectHolder)selected).getInventory().remove(item);
                             update();
                         }
@@ -61,7 +60,7 @@ public class InventoryDisplay extends JPanel{
                     buttons[i].setText("");
                     buttons[i].setIcon(null);
                     buttons[i].addActionListener(e -> {
-                    	if(game.getDraggedObject()==null) {
+                    	if(Game.getInstance().getDraggedObject()==null) {
                     		Game.getInstance().itemToAdd(); //tell the Game that the next item clicked should be added to iventory
                     	}
                     });

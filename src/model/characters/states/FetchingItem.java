@@ -3,9 +3,9 @@ package model.characters.states;
 import model.characters.Character;
 
 public class FetchingItem extends MovingToObject {
-    private String type;
+    private Class type;
 
-    public FetchingItem(Character character, int groupID, String type) {
+    public FetchingItem(Character character, int groupID, Class type) {
         super(character, groupID, type);
         this.type = type;
     }

@@ -13,23 +13,20 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
 public class Mouse {
-    private Game game;
 
     public Mouse() {
-        this.game = Game.getInstance();
     }
 
 	public void mapEventRightClick(int x, int y) {
-		synchronized(game) {
-			GameObject selected = game.getSelectedObject();
-			if(selected instanceof Character){
-				((Character)selected).stopEverything();
-				((Character)selected).goTo(game.getMap().getTileAt(x,y));
+		Game game = Game.getInstance();
+		GameObject selected = game.getSelectedObject();
+		if(selected instanceof Character){
+			((Character)selected).stopEverything();
+			((Character)selected).goTo(game.getMap().getTileAt(x,y));
 			}
-		}
 	}
 	public void mapEventLeftClick(int x, int y) {
-		synchronized(game) {
+		Game game = Game.getInstance();
 			GameObject dragged = game.getDraggedObject();
 			if(dragged != null){
 				Tile target = game.getMap().getTileAt(x,y);
@@ -54,8 +51,6 @@ public class Mouse {
 				if(!(selected instanceof Decoration)){
 					game.selectObject(selected);
 				}
-
-			}
 		}
 	}
 }

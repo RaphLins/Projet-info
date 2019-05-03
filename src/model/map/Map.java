@@ -1,8 +1,6 @@
 package model.map;
 
-import model.Game;
-import model.GameObject;
-import model.ObjectHolder;
+import model.*;
 import model.characters.Character;
 import model.items.HoldableItem;
 
@@ -14,11 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Map{
-    public static int EAST = 0;
-    public static int NORTH = 1;
-    public static int WEST = 2;
-    public static int SOUTH = 3;
+public class Map implements Serializable{
     public static int WIDTH;
     public static int HEIGHT;
 
@@ -105,7 +99,7 @@ public class Map{
         return tilesAround;
     }
 
-    public ArrayList<GameObject> getNearbyObjects(Tile position, String type, int distanceMax){
+    public ArrayList<GameObject> getNearbyObjects(Tile position, Class type, int distanceMax){
         ArrayList<Tile> tilesAround = getNearbyTiles(position,distanceMax);
         ArrayList<GameObject> res = new ArrayList<>();
         for(Tile tile : tilesAround) {
@@ -114,12 +108,12 @@ public class Map{
                 if((!(o instanceof Character) && o instanceof ObjectHolder)){
                     ArrayList<HoldableItem> objects2 = ((ObjectHolder)o).getInventory();
                     for(GameObject o2 : objects2) {
-                        if (o2.ID == type) {
+                        if (type.isInstance(o2)) {
                             res.add(o2);
                         }
                     }
                 }
-                if (o.ID == type) {
+                if (type.isInstance(o)) {
                     if(o instanceof Obstacle){
                         res.add(o);
                     }
@@ -134,7 +128,7 @@ public class Map{
         return res;
     }
 
-    public Tile getClosestTile(Tile position, String type, int distanceMax) {
+    public Tile getClosestTile(Tile position, Class type, int distanceMax) {
         ArrayList<Tile> possibleTargets =  new ArrayList<>();
         for(GameObject object:getNearbyObjects(position,type,distanceMax)){
             possibleTargets.addAll(object.getAccessTiles());

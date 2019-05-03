@@ -2,7 +2,9 @@ package model.characters.states;
 
 import model.characters.Character;
 
-abstract public class State {
+import java.io.Serializable;
+
+abstract public class State implements Serializable {
 
     private Character character;
     private int groupID;//used to delete multiple states at once if one is canceled

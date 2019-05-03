@@ -2,24 +2,27 @@ package controller;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.*;
 
 import model.Game;
 import model.GameObject;
 import model.characters.Character;
 import model.items.Item;
 import view.MapView;
+import view.Window;
 
 public class Keyboard implements KeyListener {
-    private Game game;
+    private Window window;
     private MapView mapView;
 
-    public Keyboard(MapView mapView) {
-        this.game = Game.getInstance();
-        this.mapView = mapView;
+    public Keyboard(Window window) {
+        this.window = window;
+        this.mapView = window.getMapView();
     }
 
     @Override
     public void keyPressed(KeyEvent event) {
+        Game game = Game.getInstance();
         int key = event.getKeyCode();
         switch (key){
             case KeyEvent.VK_D: case KeyEvent.VK_RIGHT:
@@ -60,6 +63,36 @@ public class Keyboard implements KeyListener {
                 }
                 else {
                     System.out.println("Can't sell that");
+                }
+                break;
+            case KeyEvent.VK_1:
+                try {
+                    FileOutputStream fileOut = new FileOutputStream(new File("gameSave.txt"));
+                    ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+                    objectOut.writeObject(Game.getInstance());
+                    objectOut.close();
+                    System.out.println("Game saved");
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                break;
+            case KeyEvent.VK_2:
+                try {
+                    FileInputStream fileIn = new FileInputStream(new File("gameSave.txt"));
+                    ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+                    Game.getInstance().stopTime();
+                    Game.setInstance((Game)objectIn.readObject());
+                    Game.getInstance().startTime();
+                    Game.getInstance().setWindow(window);
+                    window.attachClock();
+                    window.getMapView().repaint();
+                    window.updateInventory();
+                    window.updateStatus();
+                    window.updateGold();
+                    objectIn.close();
+                    System.out.println("Game restored");
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
                 break;
         }

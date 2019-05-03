@@ -11,6 +11,7 @@ import javax.swing.*;
 import controller.Mouse;
 import model.GameObject;
 import model.ObjectWithActions;
+import model.Time;
 
 public class Window extends JFrame {
 	//private Time time = new Time(1550);
@@ -19,7 +20,7 @@ public class Window extends JFrame {
     private JPanel bottomRightPanel = new JPanel(new BorderLayout());
     private JPanel rightPanel = new JPanel();
     private JPanel viewSelector = new JPanel(new GridLayout(2,1));
-    private MapView mapView = new MapView(Game.getInstance().getMap());
+    private MapView mapView = new MapView();
     private StatusView statusView = new StatusView();
     private Clock clock = new Clock();
     private ShopView shopView = new ShopView();
@@ -140,7 +141,9 @@ public class Window extends JFrame {
     	
     }
 
-
+    public void attachClock(){
+        Time.getInstance().attach(clock);
+    }
 
     public void updateGold() {
         goldDisplay.setText("Gold: " + Game.getInstance().getGold() + "g");

@@ -7,9 +7,8 @@ import model.map.Map;
 import model.map.Tile;
 
 public class MovingTo extends State {
-    Tile target = null;
+    Tile target;
     int direction;
-
 
     public MovingTo(Character character, int groupID, Tile target){
         super(character,groupID);

@@ -8,9 +8,9 @@ import model.map.Tile;
 import java.util.ArrayList;
 
 public class MovingToObject extends MovingTo {
-    private String objectType;
+    private Class objectType;
 
-    public MovingToObject(Character character, int groupID, String objectType) {
+    public MovingToObject(Character character, int groupID, Class objectType) {
         super(character,groupID,null);
         this.objectType = objectType;
     }

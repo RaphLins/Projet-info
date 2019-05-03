@@ -9,9 +9,9 @@ import java.util.ArrayList;
 
 abstract public class UsingItem extends State {
     private UsableItem item;
-    private String type;
+    private Class type;
 
-    public UsingItem(Character character, int groupID, String type) {
+    public UsingItem(Character character, int groupID, Class type) {
         super(character,groupID);
         this.type = type;
     }

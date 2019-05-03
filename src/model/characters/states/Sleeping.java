@@ -1,10 +1,11 @@
 package model.characters.states;
 
 import model.characters.Character;
+import model.map.Bed;
 
 public class Sleeping extends UsingItem {
     public Sleeping(Character character, int groupID) {
-        super(character,groupID,"Bed");
+        super(character,groupID, Bed.class);
     }
 
     @Override

@@ -9,18 +9,16 @@ import model.TimeObserver;
 
 
 public class Clock extends JPanel implements TimeObserver{
-	
-	private Time time = Time.getInstance();
+
 	JLabel label = new JLabel();
-	
 	
 	public Clock() {
 		Time.getInstance().attach(this);
 		this.setPreferredSize(new Dimension(260, 30));
         this.setOpaque(false);
 		add(label);
-        
 	}
+
 	@Override
 	public void timePassed() {
 		repaint();
@@ -29,7 +27,7 @@ public class Clock extends JPanel implements TimeObserver{
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		label.setText("Time: "+convert(time.getMinutes()));
+		label.setText("Time: "+convert(Time.getInstance().getMinutes()));
 	}
 
 	public String convert(int i) {

@@ -1,14 +1,15 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class Time implements Runnable {
+public class Time implements Runnable, Serializable {
 	
 	private static Time instance = null;
 
-	private static int minutes = 0;
-	private static int waitTime = 40;
+	private int minutes = 0;
+	private int waitTime = 40;
 	private ArrayList<TimeObserver> timeObservers = new ArrayList<>();
 	long lastUpdate = 0;
 	
@@ -28,6 +29,7 @@ public class Time implements Runnable {
 				}
 				for (TimeObserver o : timeObservers) {
 					o.timePassed();
+					//System.out.println(o);
 				}
 				lastUpdate = currentTime;
 			}
@@ -54,4 +56,11 @@ public class Time implements Runnable {
 		timeObservers.add(o);
 	 }
 
+	public void detach(TimeObserver o) {
+		timeObservers.remove(o);
+	}
+
+	public static void setInstance(Time instance) {
+		Time.instance = instance;
+	}
 }

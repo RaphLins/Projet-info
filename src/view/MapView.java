@@ -24,8 +24,6 @@ public class MapView extends JPanel {
     private float zoom = 2;
     private static int paintCount = 0;
 
-    private Map map;
-
     private int viewPosX = 0;
     private int viewPosY = 0;
     private int mouseX = 0;
@@ -33,9 +31,7 @@ public class MapView extends JPanel {
     private Mouse mouseController = null;
     TextureHashMap textures = new TextureHashMap();
 
-    public MapView(Map map) {
-        this.map = map;
-
+    public MapView() {
         this.setFocusable(true);
         this.requestFocusInWindow();
         this.setPreferredSize(new Dimension(1660, 1020));
@@ -134,7 +130,7 @@ public class MapView extends JPanel {
     }
 
     public Tile getTileAtWindowPos(int x, int y){
-        return map.getTileAt(x+viewPosX,y+viewPosY);
+        return Game.getInstance().getMap().getTileAt(x+viewPosX,y+viewPosY);
     }
 
     public void redraw() {

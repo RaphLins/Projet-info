@@ -4,9 +4,10 @@ import model.Game;
 import model.GameObject;
 import model.places.Place;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Tile{
+public class Tile implements Serializable {
 	
 	private int x;
 	private int y;

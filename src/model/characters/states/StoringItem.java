@@ -3,8 +3,8 @@ package model.characters.states;
 import model.characters.Character;
 
 public class StoringItem extends MovingToObject {
-    private String type;
-    public StoringItem(Character character, int groupID, String type, String containerType) {
+    private Class type;
+    public StoringItem(Character character, int groupID, Class type, Class containerType) {
         super(character,groupID,containerType);
         this.type = type;
     }
