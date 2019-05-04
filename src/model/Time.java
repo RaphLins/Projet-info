@@ -46,7 +46,11 @@ public class Time implements Runnable, Serializable {
 		return waitTime;
 	}
 
-	 public void attach(TimeObserver o){
+	public void setWaitTime(int waitTime) {
+		this.waitTime = waitTime;
+	}
+
+	public void attach(TimeObserver o){
 		timeObservers.add(o);
 	 }
 
