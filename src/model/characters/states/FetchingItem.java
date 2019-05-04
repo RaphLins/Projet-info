@@ -26,7 +26,12 @@ public class FetchingItem extends MovingToObject {
     @Override
     public void finish() {
         super.finish();
-        getCharacter().pickUpItem(type,getCharacter().getPos());//pick up item once the destination is reached
-        getCharacter().pickUpItemInFront(type);//pick up item once the destination is reached
+        if(getCharacter().pickUpItem(type,getCharacter().getPos())||getCharacter().pickUpItemInFront(type)){//pick up item once the destination is reached
+            //item picked up
+        }
+        else {
+            System.out.println("inventory full");
+            cancel();
+        }
     }
 }

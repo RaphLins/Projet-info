@@ -110,8 +110,15 @@ public abstract class Character extends GameObject implements Directable, Object
 		return happiness;
 	}
 
-	public void carryItem(HoldableItem item){
-		item.storeIn(this);
+	public boolean carryItem(HoldableItem item){
+		if(inventory.size()<=9){
+			item.storeIn(this);
+			return true;
+		}
+		else {
+			//inventory full
+			return false;
+		}
 	}
 
 	public ArrayList<HoldableItem> getInventory() {
@@ -257,9 +264,9 @@ public abstract class Character extends GameObject implements Directable, Object
 		return res;
 	}
 
-	public void pickUpItem(Class type, Tile tile){//store item of given type on given tile in the inventory
+	public boolean pickUpItem(Class type, Tile tile){//store item of given type on given tile in the inventory
 		HoldableItem item = null;
-
+		boolean succes =false;
 		for(GameObject object:tile.getObjects()){
 			if(object instanceof ObjectHolder && !(object instanceof Character)){
 				for(GameObject storedObject : ((ObjectHolder)object).getInventory()) {
@@ -273,12 +280,13 @@ public abstract class Character extends GameObject implements Directable, Object
 			}
 		}
 		if(item !=null){
-			carryItem(item);
+			succes = carryItem(item);
 		}
+		return succes;
 	}
 
-	public void pickUpItemInFront(Class type) {
-		pickUpItem(type,getTileInFront());
+	public boolean pickUpItemInFront(Class type) {
+		return pickUpItem(type,getTileInFront());
 	}
 
 	public void stopEverything(){//cancel all states

@@ -23,7 +23,6 @@ public class Game implements Serializable {
 
     transient private Window window;
     private Map map;
-    ObjectHolder selectedOH;
     private boolean itemToAdd = false;
 
     Time time;
@@ -75,17 +74,15 @@ public class Game implements Serializable {
     }
 
     public void selectObject(GameObject object){
-        selectedObject = object;
-        if(object instanceof ObjectHolder) {
-        	selectedOH = (ObjectHolder)object;
+        if(itemToAdd) {
+            if(selectedObject instanceof ObjectHolder && object instanceof HoldableItem){
+                ((HoldableItem) object).storeIn((ObjectHolder)selectedObject);
+            }
         }
-        if(object instanceof Character){
-            //((Character)object).stopEverything();
+        else {
+            selectedObject = object;
         }
-        if(itemToAdd && object instanceof HoldableItem) {
-            ((HoldableItem) object).storeIn(selectedOH);
-        	itemToAdd =false;
-        }
+        itemToAdd = false;
         getWindow().updateStatus();
         getWindow().getMapView().repaint();
         getWindow().updateInventory();
