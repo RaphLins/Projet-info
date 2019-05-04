@@ -10,6 +10,7 @@ public class Main {
 		Window window = new Window("Game");
 		Game game = Game.getInstance();
 		game.setWindow(window);
+		game.newGame();
 		Keyboard keyboard = new Keyboard(window);
 		Mouse mouse = new Mouse();
 		window.setKeyListener(keyboard);

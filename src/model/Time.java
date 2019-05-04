@@ -5,33 +5,34 @@ import java.util.ArrayList;
 
 
 public class Time implements Runnable, Serializable {
-	
-	private static Time instance = null;
 
 	private int minutes = 0;
-	private int waitTime = 40;
+	private int waitTime = 60;
 	private ArrayList<TimeObserver> timeObservers = new ArrayList<>();
 	long lastUpdate = 0;
+	volatile boolean running = true;
 	
-	private Time() {
+	public Time() {
 	}
 	
 	@Override
 	public void run() {
 		while(true){
-			long currentTime = System.currentTimeMillis();
-			if(currentTime-lastUpdate>=waitTime){
-				if(minutes != 1440){
-					minutes+=1;
+			if(running){
+				long currentTime = System.currentTimeMillis();
+				if(currentTime-lastUpdate>=waitTime){
+					if(minutes != 1440){
+						minutes+=1;
+					}
+					else{
+						minutes = 0;
+					}
+					for (TimeObserver o : timeObservers) {
+							o.timePassed();
+						}
+
+					lastUpdate = currentTime;
 				}
-				else{
-					minutes = 0;
-				}
-				for (TimeObserver o : timeObservers) {
-					o.timePassed();
-					//System.out.println(o);
-				}
-				lastUpdate = currentTime;
 			}
 		}
 		
@@ -44,23 +45,16 @@ public class Time implements Runnable, Serializable {
 	public int getWaitTime() {
 		return waitTime;
 	}
-	
-	 public static Time getInstance(){
-	        if(instance == null){
-	            instance = new Time();
-	        }
-	        return instance;
-	 }
 
 	 public void attach(TimeObserver o){
 		timeObservers.add(o);
 	 }
 
-	public void detach(TimeObserver o) {
-		timeObservers.remove(o);
+	public void pause(){
+		running = false;
 	}
 
-	public static void setInstance(Time instance) {
-		Time.instance = instance;
+	public void start(){
+		running = true;
 	}
 }

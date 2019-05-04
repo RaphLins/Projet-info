@@ -31,8 +31,8 @@ public abstract class Character extends GameObject implements Directable, Object
 	//allows to easily have state sequences.
 
 	public Character() {
-		Time.getInstance().attach(this);
-	}	
+		Game.getInstance().getTime().attach(this);
+	}
 	//the character will be affected for every time's loop.
 
 	public void goTo(Tile target){
@@ -194,6 +194,10 @@ public abstract class Character extends GameObject implements Directable, Object
 	@Override
 	public void timePassed() {	//the method timePassed (polymorphism) is used in the run method in the thread time.
 		//Everything here is done automatically as the time passes.\
+		if(getPos()==null){
+			return;//to prevent running before proper initialization
+		}
+
 		State currentState = stateQueue.peek();
 
 		if(currentState instanceof Sleeping){

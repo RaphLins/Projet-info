@@ -9,28 +9,39 @@ import view.Window;
 import model.characters.Character;
 
 import java.awt.event.WindowEvent;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
-public class Game implements Serializable {
+public class Game {
     private static Game instance = null;
     private static boolean started = false;
     private GameObject selectedObject = null;
-    GameObject draggedObject = null;
+    private GameObject draggedObject = null;
     private ArrayList<Character> family = new ArrayList<>();
     private int familyGold = 1000;
 
-    transient private Window window;
+    private Window window;
     private Map map;
     private boolean itemToAdd = false;
 
-    Time time;
+    private Time time;
     transient Thread gameTime;
 
     private Game() {
+        time = new Time();
+    }
+
+    public void newGame(){
+        stopTime();
+        time = new Time();
+        itemToAdd = false;
+        selectedObject = null;
+        draggedObject = null;
         map = new Map("shared/res/map.csv");
         //Time.getInstance().run();
+        family = new ArrayList<>();
         family.add(new AdultWizard("M"));
         family.get(0).setPos(map.getTileAt(10,10),map);
         family.add(new AdultWizard("F"));
@@ -41,8 +52,9 @@ public class Game implements Serializable {
         family.get(3).setPos(map.getTileAt(17,20),map);
         family.get(0).carryItem(new Wand());
         family.get(0).carryItem(new Wand());
-        time = Time.getInstance();
+        started = true;
         startTime();
+        window.attachClock();
     }
 
 
@@ -52,7 +64,6 @@ public class Game implements Serializable {
         }
     }
     public void startTime(){
-        Time.setInstance(time);
         gameTime = new Thread(time);
         gameTime.start();
     }
@@ -111,15 +122,10 @@ public class Game implements Serializable {
     }
 
     public static Game getInstance(){
-        if(instance == null && !started){
+        if(instance == null){
             instance = new Game();
-            started = true;
         }
         return instance;
-    }
-
-    public static void setInstance(Game game){
-        instance = game;
     }
 
     public static boolean isStarted(){
@@ -148,8 +154,55 @@ public class Game implements Serializable {
         getWindow().updateGold();
     }
 
+    public Time getTime() {
+        return time;
+    }
+
     public ArrayList<Character> getFamily() {
         return family;
+    }
+
+    public void saveStateToFile(String filename){
+        try {
+            FileOutputStream fileOut = new FileOutputStream(new File(filename));
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+
+            ArrayList<Serializable> save = new ArrayList<>();
+            save.add(map);
+            save.add(time);
+            save.add(family);
+            save.add(familyGold);
+
+            objectOut.writeObject(save);
+            objectOut.close();
+            System.out.println("Game saved");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void restoreStateFromFile(String filename) throws IOException, ClassNotFoundException {
+        FileInputStream fileIn = new FileInputStream(new File(filename));
+        ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+        ArrayList<Serializable> saveFile = (ArrayList<Serializable>)objectIn.readObject();
+        objectIn.close();
+
+        stopTime();
+
+        Iterator<Serializable> save = saveFile.iterator();
+        map = (Map) save.next();
+        time = (Time) save.next();
+        family = (ArrayList<Character>) save.next();
+        familyGold = (int) save.next();
+
+        selectedObject = null;
+        draggedObject = null;
+        startTime();
+        window.attachClock();
+        window.getMapView().repaint();
+        window.updateInventory();
+        window.updateStatus();
+        window.updateGold();
     }
 
 }

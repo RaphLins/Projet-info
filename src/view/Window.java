@@ -4,18 +4,16 @@ import model.Game;
 
 import java.awt.*;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 
 import javax.swing.*;
 
 import controller.Mouse;
-import model.GameObject;
 import model.ObjectWithActions;
 import model.Time;
 
 public class Window extends JFrame {
-	//private Time time = new Time(1550);
-    private JPanel groupPanel = new JPanel(new BorderLayout());
+	private MainMenu mainMenu = new MainMenu(this);
+    private JPanel gameView = new JPanel(new BorderLayout());
     private JPanel bottomPanel = new JPanel(new BorderLayout());
     private JPanel bottomRightPanel = new JPanel(new BorderLayout());
     private JPanel rightPanel = new JPanel();
@@ -58,9 +56,9 @@ public class Window extends JFrame {
         });
         
 
-        groupPanel.add(mapView, BorderLayout.LINE_START);
-        groupPanel.add(rightPanel, BorderLayout.LINE_END);
-        groupPanel.add(bottomPanel, BorderLayout.PAGE_END);
+        gameView.add(mapView, BorderLayout.LINE_START);
+        gameView.add(rightPanel, BorderLayout.LINE_END);
+        gameView.add(bottomPanel, BorderLayout.PAGE_END);
 
         rightPanel.setLayout(new BoxLayout(rightPanel,BoxLayout.Y_AXIS));
         rightPanel.add(statusView);
@@ -84,9 +82,18 @@ public class Window extends JFrame {
         viewSelector.add(selectShop,BorderLayout.PAGE_END);
         viewSelector.setOpaque(false);
 
-        this.getContentPane().add(this.groupPanel);
+        setMainView(gameView);
+        setMainView(mainMenu);
         updateGold();
         this.setVisible(true);
+    }
+
+    public void setMainView(JPanel panel){
+        this.getContentPane().removeAll();
+        Game.getInstance().getTime().pause();
+        this.getContentPane().add(panel);
+        revalidate();
+        repaint();
     }
 
     public MapView getMapView(){
@@ -94,7 +101,7 @@ public class Window extends JFrame {
     }
 
     public void setKeyListener(KeyListener keyboard) {
-        this.mapView.addKeyListener(keyboard);
+        addKeyListener(keyboard);
     }
 
     public void setMouseListener(Mouse m) {
@@ -142,10 +149,19 @@ public class Window extends JFrame {
     }
 
     public void attachClock(){
-        Time.getInstance().attach(clock);
+        Game.getInstance().getTime().attach(clock);
     }
 
     public void updateGold() {
         goldDisplay.setText("Gold: " + Game.getInstance().getGold() + "g");
+    }
+
+    public void showGame() {
+        setMainView(gameView);
+        Game.getInstance().getTime().start();
+    }
+
+    public void showMainMenu() {
+        setMainView(mainMenu);
     }
 }

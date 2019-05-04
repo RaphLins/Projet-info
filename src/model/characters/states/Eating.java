@@ -20,7 +20,6 @@ public class Eating extends UsingItem {
         for(int i = 0;i<4;i++){
             Tile tile = Game.getInstance().getMap().getTileNextTo(getCharacter().getPos(),i);
             for(GameObject object:tile.getObjects()){
-                System.out.println(object);
                 if(Table.class.isInstance(object)){
                     table = (Table) object;
                     getCharacter().rotateTo(tile);

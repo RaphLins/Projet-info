@@ -2,7 +2,7 @@ package controller;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.*;
+import java.io.IOException;
 
 import model.Game;
 import model.GameObject;
@@ -25,6 +25,9 @@ public class Keyboard implements KeyListener {
         Game game = Game.getInstance();
         int key = event.getKeyCode();
         switch (key){
+            case KeyEvent.VK_ESCAPE:
+                window.showMainMenu();
+                break;
             case KeyEvent.VK_D: case KeyEvent.VK_RIGHT:
                 mapView.moveView(2, 0);
                 break;
@@ -63,36 +66,6 @@ public class Keyboard implements KeyListener {
                 }
                 else {
                     System.out.println("Can't sell that");
-                }
-                break;
-            case KeyEvent.VK_1:
-                try {
-                    FileOutputStream fileOut = new FileOutputStream(new File("gameSave.txt"));
-                    ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-                    objectOut.writeObject(Game.getInstance());
-                    objectOut.close();
-                    System.out.println("Game saved");
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-                break;
-            case KeyEvent.VK_2:
-                try {
-                    FileInputStream fileIn = new FileInputStream(new File("gameSave.txt"));
-                    ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-                    Game.getInstance().stopTime();
-                    Game.setInstance((Game)objectIn.readObject());
-                    Game.getInstance().startTime();
-                    Game.getInstance().setWindow(window);
-                    window.attachClock();
-                    window.getMapView().repaint();
-                    window.updateInventory();
-                    window.updateStatus();
-                    window.updateGold();
-                    objectIn.close();
-                    System.out.println("Game restored");
-                } catch (Exception ex) {
-                    ex.printStackTrace();
                 }
                 break;
         }
