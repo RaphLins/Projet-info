@@ -15,7 +15,10 @@ public class FamilyView extends JPanel{
         setPreferredSize(new Dimension(1660, 100));
         setOpaque(false);
         setLayout(new FlowLayout(FlowLayout.LEFT));
+    }
 
+    public void update(){
+        removeAll();
         for(Character character:Game.getInstance().getFamily()){
             Image image = textures.getAvatar(character.ID).getScaledInstance(40, 40, Image.SCALE_SMOOTH);
             JButton button = new JButton(character.ID, new ImageIcon(image));

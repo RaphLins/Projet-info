@@ -12,10 +12,10 @@ public abstract class GameObject implements Serializable {
     private ArrayList<Tile> allTiles = new ArrayList<>(); //an object can be on several tiles.
     private float xOffset = 0;
     private float yOffset = 0;
-    public static int EAST = 0;
-    public static int NORTH = 1;
-    public static int WEST = 2;
-    public static int SOUTH = 3;
+    public static final int EAST = 0;
+    public static final int NORTH = 1;
+    public static final int WEST = 2;
+    public static final int SOUTH = 3;
 
     public int width;
     public int height;
@@ -34,10 +34,20 @@ public abstract class GameObject implements Serializable {
     }
     public void offSetInDirection(float d, int direction){
         switch (direction) {
-            case 0 : xOffset +=d; break;
-            case 1 : yOffset -=d; break;
-            case 2 : xOffset -=d; break;
-            case 3 : yOffset +=d; break;
+            case EAST : xOffset +=d; break;
+            case NORTH : yOffset -=d; break;
+            case WEST : xOffset -=d; break;
+            case SOUTH : yOffset +=d; break;
+        }
+        Game.getInstance().updateTile(pos.getX(),pos.getY());
+    }
+
+    public void setOffsetInDirection(float d, int direction){
+        switch (direction) {
+            case EAST : xOffset =d; break;
+            case NORTH : yOffset =-d; break;
+            case WEST : xOffset =-d; break;
+            case SOUTH : yOffset =d; break;
         }
         Game.getInstance().updateTile(pos.getX(),pos.getY());
     }

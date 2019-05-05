@@ -52,6 +52,7 @@ public class Game {
         family.get(3).setPos(map.getTileAt(17,20),map);
         family.get(0).carryItem(new Wand());
         family.get(0).carryItem(new Wand());
+        window.updateFamily();
         started = true;
         startTime();
         window.attachClock();
@@ -203,6 +204,7 @@ public class Game {
         window.updateInventory();
         window.updateStatus();
         window.updateGold();
+        window.updateFamily();
     }
 
 }

@@ -164,4 +164,8 @@ public class Window extends JFrame {
     public void showMainMenu() {
         setMainView(mainMenu);
     }
+
+    public void updateFamily(){
+        familyView.update();
+    }
 }

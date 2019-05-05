@@ -72,7 +72,7 @@ public class Tile implements Serializable {
 		return y;
 	}
 
-	float distanceTo(Tile tile){
+	public float distanceTo(Tile tile){
 		return (float) Math.pow(Math.pow(tile.getX()-getX(),2) + Math.pow(tile.getY()-getY(),2),0.5);
 	}	//returns the distance as the crow flies between this tile and the tile in argument.
 
