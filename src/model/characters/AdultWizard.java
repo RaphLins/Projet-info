@@ -5,7 +5,7 @@ import model.map.Tile;
 public class AdultWizard extends Adult implements Wizard {
     private double magicPower = 50;
     public AdultWizard(String gender) {
-        super();
+        super(gender);
         ID = "Adult Wizard ("+gender+")";
     }
 

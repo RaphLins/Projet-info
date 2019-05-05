@@ -13,10 +13,14 @@ import model.map.*;
 import model.places.House;
 import model.places.Place;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.lang.Math;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Random;
+import java.util.Scanner;
 
 public abstract class Character extends GameObject implements Directable, ObjectHolder, TimeObserver,ObjectWithActions{
 	private double hunger = 100;
@@ -27,15 +31,41 @@ public abstract class Character extends GameObject implements Directable, Object
 	private Place location;
 	private House house;
 	private int direction = EAST;
+	private String name;
 	private ArrayList<HoldableItem> inventory = new ArrayList<>();
 
 	private LinkedList<State> stateQueue = new LinkedList<>();
 	//allows to easily have state sequences.
 
-	public Character() {
+	public Character(String gender) {
 		Game.getInstance().getTime().attach(this);
+
+		String filename;
+		if(gender.equals("M")){
+			filename = "shared/res/maleNames.txt";
+		}
+		else {
+			filename = "shared/res/femaleNames.txt";
+		}
+		Scanner s = null;
+		try {
+			s = new Scanner(new File(filename));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		ArrayList<String> nameList = new ArrayList<String>();
+		while (s.hasNext()){
+			nameList.add(s.next());
+		}
+		s.close();
+		name = nameList.get(new Random().nextInt(nameList.size())); //choose random name from list
 	}
 	//the character will be affected for every time's loop.
+
+
+	public String getName() {
+		return name;
+	}
 
 	public void goTo(Tile target){
 		if(target.isWalkable()){

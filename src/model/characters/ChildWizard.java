@@ -7,7 +7,7 @@ public class ChildWizard extends Kid implements Wizard {
 	double magicPower = 50;
 
 	public ChildWizard(String gender) {
-		super();
+		super(gender);
 		ID = "Child Wizard ("+gender+")";
 	}
 	@Override

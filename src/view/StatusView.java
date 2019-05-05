@@ -31,7 +31,14 @@ public class StatusView extends JPanel {
         int y = 20;
         g.setColor(Color.BLACK);
         g.setFont(new Font("default", Font.BOLD, 19));
-        g.drawString(selected.ID, 3, y);
+
+        if(selected instanceof Character){
+            g.drawString(((Character)selected).getName(), 3, y);
+        }
+        else{
+            g.drawString(selected.ID, 3, y);
+        }
+
         y+=20;
         if(selected instanceof Character){
             Character character = (Character)selected;

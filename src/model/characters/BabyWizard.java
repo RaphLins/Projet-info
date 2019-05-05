@@ -4,8 +4,8 @@ import model.map.Tile;
 public class BabyWizard extends Baby implements Wizard {
 
 	double magicPower = 50;
-	public BabyWizard() {
-		super();
+	public BabyWizard(String gender) {
+		super(gender);
 	}
 
 	@Override

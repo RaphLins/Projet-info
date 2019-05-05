@@ -5,7 +5,8 @@ import model.map.Tile;
 
 public abstract class Kid extends Character{
 
-	public Kid() {
+	public Kid(String gender) {
+		super(gender);
 	}
 
 	public void goToSchool(School school) {

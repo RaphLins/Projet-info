@@ -13,11 +13,11 @@ public class Time implements Serializable,Runnable {
 
 	private int minutes = 0;
 	private int waitTime = 200;
-	private int animWaitTime = 20;
+	private int animWaitTime = 40;
 	private ArrayList<TimeObserver> timeObservers = new ArrayList<>();
 	private ArrayList<Animation> animations = new ArrayList<>();
-	long lastUpdate = 0;
-	long lastAnimUpdate = 0;
+	private long lastUpdate = 0;
+	private long lastAnimUpdate = 0;
 	volatile boolean running = true;
 
 	
