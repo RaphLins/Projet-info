@@ -3,6 +3,7 @@ package model.map;
 import model.*;
 import model.characters.Character;
 import model.items.HoldableItem;
+import model.places.House;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -42,7 +43,6 @@ public class Map implements Serializable{
                 grid[i][j] = new Tile(i,j);
             }
         }//create array
-
         ObjectFactory tileFactory = new ObjectFactory();
         for (int j = 0; j < HEIGHT; j++) {
             String[] row = tempList.get(j).split(",",-1);
@@ -61,11 +61,25 @@ public class Map implements Serializable{
                         else if(type.equals("*")){
                             grid[i][j].ID = "Road";
                         }
+                        else {
+                        	if(type!=null) {
+                        		String split[] = type.split("-");
+                            	if(split.length==2){
+                            		String type2 = split[0];
+                            		String dimensions[] = split[1].split("x");
+                            		int width = Integer.parseInt(dimensions[0]);
+                            		int height = Integer.parseInt(dimensions[1]);
+                            		if(type2.equals("House")) {
+                            			House house = new House(grid[i][j],height,width,this);
+                            		}
+                            	}
+                        	}
+                        }
                     }
-                }
 
-            }
-        }//add objects
+                }
+            }//add objects
+        }
     }
 
     public Tile getTileAt(int x, int y){
@@ -152,5 +166,14 @@ public class Map implements Serializable{
             }
         }
         return res;
+    }
+    
+    public static boolean isInteger(String str) {
+    	try {
+    		int i = Integer.parseInt(str);
+    	}catch(NumberFormatException | NullPointerException nfe) {
+    		return false;
+    	}
+    	return true;
     }
 }

@@ -7,6 +7,7 @@ import javax.swing.*;
 
 import model.Game;
 import model.GameObject;
+import model.items.Food;
 import model.items.Item;
 import model.items.Plate;
 import model.items.Wand;
@@ -32,6 +33,7 @@ public class ShopView extends JPanel{
         shopItems.add(new Wand());
         shopItems.add(new Table());
         shopItems.add(new Plate());
+        shopItems.add(new Food());
 
         for(Item item: shopItems){
             Image image = textures.get(item.ID);
@@ -44,27 +46,35 @@ public class ShopView extends JPanel{
             button.setVerticalTextPosition(SwingConstants.BOTTOM);
             button.setHorizontalTextPosition(SwingConstants.CENTER);
             button.setPreferredSize(new Dimension(95,95));
+            
+            if(!(item instanceof Food)) {
+            	button.addActionListener(e -> {
+            		Game game = Game.getInstance();
+            		if(game.getDraggedObject()==null){
+            			if(game.spendGold(price)){
+            				try {
+            					game.setDraggedObject(((GameObject)item).getClass().newInstance());//create item of same class
+            				} catch (InstantiationException e1) {
+            					e1.printStackTrace();
+            				} catch (IllegalAccessException e1) {
+            					e1.printStackTrace();
+            				}
+            			}
+            			else System.out.println("Not enough gold");
+            		}
+            		else System.out.println("Place current item first");
+            	});
 
-            button.addActionListener(e -> {
-                Game game = Game.getInstance();
-                        if(game.getDraggedObject()==null){
-                            if(game.spendGold(price)){
-                                try {
-                                    game.setDraggedObject(((GameObject)item).getClass().newInstance());//create item of same class
-                                } catch (InstantiationException e1) {
-                                    e1.printStackTrace();
-                                } catch (IllegalAccessException e1) {
-                                    e1.printStackTrace();
-                                }
-                            }
-                            else System.out.println("Not enough gold");
-                        }
-                        else System.out.println("Place current item first");
-            });
+            	add(button);
+            }
+            else {
+            	button.addActionListener(e-> {
+            		
+            	});
+            	add(button);
+            }
 
-            add(button);
         }
-
     }
 
 }

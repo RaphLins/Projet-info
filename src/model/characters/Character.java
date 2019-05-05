@@ -10,6 +10,7 @@ import model.characters.states.*;
 import model.items.HoldableItem;
 import model.items.Plate;
 import model.map.*;
+import model.places.House;
 import model.places.Place;
 
 import java.lang.Math;
@@ -24,6 +25,7 @@ public abstract class Character extends GameObject implements Directable, Object
 	private double energy = 100;
 	private double happiness = 50;
 	private Place location;
+	private House house;
 	private int direction = EAST;
 	private ArrayList<HoldableItem> inventory = new ArrayList<>();
 
