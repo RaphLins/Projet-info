@@ -29,6 +29,10 @@ public class MovingTo extends State implements Animation {
         return target;
     }
 
+    public void setTarget(Tile target) {
+        this.target = target;
+    }
+
     @Override
     public void init() {
         Game.getInstance().getTime().attach(this);

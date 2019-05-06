@@ -191,7 +191,7 @@ public abstract class Character extends GameObject implements Directable, Object
 	
 	public void incrementHunger(double i) {
 		hunger = Math.max(Math.min(hunger+i,100),0);
-        if (hunger<=90) {
+        if (hunger<=60) {
             Boolean bool = true;
             for(State state : stateQueue){
                 if(state instanceof Eating){
@@ -241,6 +241,11 @@ public abstract class Character extends GameObject implements Directable, Object
 		incrementEnergy(-0.14);
 		incrementHunger(-0.26);
 		incrementHygiene(-0.07);
+
+		if(stateQueue.isEmpty()){
+			stateQueue.add(new Wandering(this,12));
+			stateQueue.add(new Waiting(this,12,10));
+		}
 
 		if(currentState !=null){
 			currentState.performAction();	//polymorphism
