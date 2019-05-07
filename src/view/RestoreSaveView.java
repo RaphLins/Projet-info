@@ -25,7 +25,7 @@ public class RestoreSaveView extends JPanel {
                     try {
                         Game.getInstance().restoreStateFromFile("shared/saves/"+filename);
                     } catch (IOException e1) {
-                        e1.printStackTrace();
+                        System.out.println("Error reading file");
                     } catch (ClassNotFoundException e1) {
                         e1.printStackTrace();
                     }
