@@ -13,7 +13,7 @@ public class TextureHashMap {
     int H = MapView.TILE_HEIGHT;
     HashMap<String,BufferedImage> textures= new HashMap<>();
     public TextureHashMap(){
-        try {
+    	try {
             BufferedImage characters = ImageIO.read(new File("shared/res/characters.png"));
             BufferedImage items = ImageIO.read(new File("shared/res/items.png"));
             BufferedImage tileset1 = ImageIO.read(new File("shared/res/tileset1.png"));

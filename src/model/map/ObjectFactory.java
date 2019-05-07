@@ -12,8 +12,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class ObjectFactory {
-
-
+	
+	private ArrayList<Character> charactersToAssign = new ArrayList<>();
 
     public GameObject getInstance(String type){
         GameObject res = null;
@@ -38,16 +38,17 @@ public class ObjectFactory {
         String character[] = type.split("_");
         if (character.length>=2) {
         	 String charType = character[0];
-             String charGender = character[1];
-             if(charType.equals("AW")) {
-             	res = new AdultWizard(charGender);             	
+        	 String charGender = character[1];
+        	 if(charType.equals("AW")) {
+            	 res = new AdultWizard(charGender);             	
              }
              else if(charType.equals("CW")) {
-             	res = new ChildWizard(charGender);
+            	 res = new ChildWizard(charGender);
              }
+             charactersToAssign.add((Character)res);
              if(character.length>=3 && character[2].equals("fam")) {
-             	Game.getInstance().getFamily().add((Character) res);
-             	System.out.println(Game.getInstance().getFamily());
+            	 Game.getInstance().getFamily().add((Character) res);
+            	 charactersToAssign.remove((Character)res);
              }
         }
         
@@ -64,5 +65,9 @@ public class ObjectFactory {
         	}
         }
         return res;
+    }
+    
+    public ArrayList<Character> getCharactersToAssign() {
+    	return charactersToAssign;
     }
 }

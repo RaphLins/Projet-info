@@ -64,21 +64,26 @@ public class Map implements Serializable{
                         else {
                         	if(type!=null) {
                         		String split[] = type.split("-");
-                            	if(split.length==2){
+                            	if(split.length>=2){
                             		String type2 = split[0];
                             		String dimensions[] = split[1].split("x");
                             		int width = Integer.parseInt(dimensions[0]);
                             		int height = Integer.parseInt(dimensions[1]);
                             		if(type2.equals("House")) {
                             			House house = new House(grid[i][j],height,width,this);
+                            			if(split.length>=3 && split[2].equals("fam")) {
+                            				Game.getInstance().setFamilyHouse(house);
+                            			}
                             		}
                             	}
                         	}
                         }
                     }
-
                 }
             }//add objects
+        }
+        for(Character c : tileFactory.getCharactersToAssign()) {
+        	c.setHouse((House)(c.getPos().getLocation()));
         }
     }
 
@@ -155,7 +160,7 @@ public class Map implements Serializable{
         }
     }
 
-    public Tile getClosestTile(Tile position, ArrayList<Tile> possibleTargets) { //utilise les coordonn�es des cases contenant l'objet qu'on cherche pour d�terminer celle qui est la plus proche � vol d'oiseau
+    public Tile getClosestTile(Tile position, ArrayList<Tile> possibleTargets) { //utilise les coordonnees des cases contenant l'objet qu'on cherche pour determiner celle qui est la plus proche a vol d'oiseau
         Tile res = possibleTargets.get(0);
         float currentDistance = res.distanceTo(position);
         for (Tile tile : possibleTargets) {
@@ -168,12 +173,5 @@ public class Map implements Serializable{
         return res;
     }
     
-    public static boolean isInteger(String str) {
-    	try {
-    		int i = Integer.parseInt(str);
-    	}catch(NumberFormatException | NullPointerException nfe) {
-    		return false;
-    	}
-    	return true;
-    }
+   
 }

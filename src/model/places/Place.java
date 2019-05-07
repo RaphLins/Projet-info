@@ -4,16 +4,18 @@ package model.places;
 import model.map.Map;
 import model.map.Tile;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Place {
-	private ArrayList<Tile> area = new ArrayList<Tile>();
+public abstract class Place implements Serializable{
+	protected ArrayList<Tile> area = new ArrayList<Tile>();
 	private ArrayList<Character> people = new ArrayList<Character>();
 	private Tile pos;
 	private int height;
 	private int width;
 	
 	public Place(Tile pos, int height, int width, Map map) {
+		
 		this.pos = pos;
 		int x = pos.getX();
 		int y = pos.getY();

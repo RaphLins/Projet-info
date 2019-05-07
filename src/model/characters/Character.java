@@ -7,6 +7,7 @@ import model.ObjectWithActions;
 import model.Time;
 import model.TimeObserver;
 import model.characters.states.*;
+import model.items.Food;
 import model.items.HoldableItem;
 import model.items.Plate;
 import model.map.*;
@@ -97,12 +98,14 @@ public abstract class Character extends GameObject implements Directable, Object
 
 	public void eat() {
         stateQueue.add(new FetchingItem(this,1, Plate.class));
+        stateQueue.add(new FetchingItem(this,1,Food.class));
         stateQueue.add(new MovingToObject(this,1, Stool.class));
         stateQueue.add(new Eating(this,1));
         stateQueue.add(new StoringItem(this,1,Plate.class, Wardrobe.class));
 	}
 
 	public void wash() {
+		//System.out.println(house);
         stateQueue.add(new MovingToObject(this,2, Bath.class));
         stateQueue.add(new Washing(this,2));
 	}
@@ -234,12 +237,13 @@ public abstract class Character extends GameObject implements Directable, Object
 
 		if(currentState instanceof Sleeping){
 			incrementBladder(-0.2);
+			incrementHunger(-0.13);
 		}
 		else {
 			incrementBladder(-0.4);
+			incrementHunger(-0.26);
 		}
 		incrementEnergy(-0.14);
-		incrementHunger(-0.26);
 		incrementHygiene(-0.07);
 
 		if(currentState !=null){
@@ -330,5 +334,9 @@ public abstract class Character extends GameObject implements Directable, Object
 			stateQueue.peek().cancel();
 		}
 		stateQueue.clear();
+	}
+	
+	public void setHouse(House house) {
+		this.house = house;
 	}
 }

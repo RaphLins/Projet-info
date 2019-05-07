@@ -3,6 +3,8 @@ package model.characters.states;
 import model.Game;
 import model.GameObject;
 import model.characters.Character;
+import model.items.Food;
+import model.items.HoldableItem;
 import model.items.Plate;
 import model.map.Stool;
 import model.map.Table;
@@ -36,6 +38,12 @@ public class Eating extends UsingItem {
 
     @Override
     public void run() {
+    	for(HoldableItem item : getCharacter().getInventory()) {
+    		if(item instanceof Food) {
+    			getCharacter().getInventory().remove(item);
+    			break;
+    		}
+    	}
         getCharacter().incrementHunger(5.24);
         if(getCharacter().getHunger()==100){	//the state is stopped if the value of hunger has reached its maximum.
             finish();

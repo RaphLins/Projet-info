@@ -5,6 +5,7 @@ import model.characters.ChildWizard;
 import model.items.HoldableItem;
 import model.items.Wand;
 import model.map.Map;
+import model.places.House;
 import view.Window;
 import model.characters.Character;
 
@@ -21,6 +22,7 @@ public class Game {
     private GameObject draggedObject = null;
     private ArrayList<Character> family = new ArrayList<>();
     private int familyGold = 1000;
+    private House familyHouse;
 
     private Window window;
     private Map map;
@@ -120,6 +122,9 @@ public class Game {
     public void setMap(Map map) {
         this.map = map;
     }
+    public void setFamilyHouse(House familyHouse) {
+    	this.familyHouse = familyHouse;
+    }
 
     public static Game getInstance(){
         if(instance == null){
@@ -138,6 +143,10 @@ public class Game {
 
     public int getGold(){
         return familyGold;
+    }
+    
+    public House getFamilyHouse() {
+    	return familyHouse;
     }
 
     public boolean spendGold(int val){

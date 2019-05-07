@@ -80,5 +80,8 @@ public class Tile implements Serializable {
 		this.location = location;
 	}
 	
+	public Place getLocation() {
+		return location;
+	}
 
 }

@@ -106,7 +106,7 @@ public class MapView extends JPanel {
             if (object instanceof Directable) {
                 id += ((Directable) object).getDirection();
             }
-            if(id=="Wall" && Math.hypot(mouseX-viewPosX-i,mouseY-viewPosY-j)<=0.5){//hide walls around mouse
+            if(id=="Wall" && Math.hypot(mouseX-viewPosX-i,mouseY-viewPosY-j)<=1.5){//hide walls around mouse
                 id="Cut Wall";
             }
             BufferedImage image = textures.get(id);

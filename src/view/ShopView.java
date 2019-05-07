@@ -12,6 +12,7 @@ import model.items.Item;
 import model.items.Plate;
 import model.items.Wand;
 import model.map.*;
+import model.places.House;
 
 
 public class ShopView extends JPanel{
@@ -47,7 +48,7 @@ public class ShopView extends JPanel{
             button.setHorizontalTextPosition(SwingConstants.CENTER);
             button.setPreferredSize(new Dimension(95,95));
             
-            if(!(item instanceof Food)) {
+            if(!(item instanceof Food || item instanceof Plate)) {
             	button.addActionListener(e -> {
             		Game game = Game.getInstance();
             		if(game.getDraggedObject()==null){
@@ -64,15 +65,62 @@ public class ShopView extends JPanel{
             		}
             		else System.out.println("Place current item first");
             	});
-
-            	add(button);
             }
+            
+            else if(item instanceof Plate) {
+            	button.addActionListener(e-> {
+            		boolean res = false;
+            		House familyHouse = Game.getInstance().getFamilyHouse();
+            		for (Tile tile : familyHouse.getArea() ) {
+            			for(GameObject o : tile.getObjects()) {
+            				if(o instanceof Wardrobe && ((Wardrobe)o).getInventory().size()<9) {
+            					if(Game.getInstance().spendGold(price)) {
+            						Plate plate = new Plate();
+            						plate.storeIn((Wardrobe)o);
+            						Game.getInstance().getWindow().updateInventory();
+            					}
+            					else {
+            						System.out.println("Not enough gold");
+            					}
+            					res = true;
+            				}
+            			}
+            			if(res) break;
+            		}
+            		if(!res) {
+            			System.out.println("No Wardrobe with enough space found");
+            		}
+            	});
+            }
+            
             else {
             	button.addActionListener(e-> {
+            		boolean res = false;
+            		House familyHouse = Game.getInstance().getFamilyHouse();
+            		for (Tile tile : familyHouse.getArea() ) {
+            			for(GameObject o : tile.getObjects()) {
+            				System.out.println("ok");
+            				if(o instanceof Fridge && ((Fridge)o).getInventory().size()<9) {
+            					if(Game.getInstance().spendGold(price)) {
+            						Food food = new Food();
+            						food.storeIn((Fridge)o);
+            						Game.getInstance().getWindow().updateInventory();
+            					}
+            					else {
+            						System.out.println("Not enough gold");
+            					}
+            					res = true;
+            				}
+            			}
+            			if(res) break;
+            		}
+            		if(!res) {
+            			System.out.println("No fridge with available place found");
+            		}
             		
             	});
-            	add(button);
             }
+            add(button);
 
         }
     }
