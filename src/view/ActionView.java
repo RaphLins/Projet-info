@@ -14,7 +14,7 @@ public class ActionView extends JPanel{
     public ActionView() {
     	setPreferredSize(new Dimension(260, 50));
     	GameObject selected = Game.getInstance().getSelectedObject();
-    	if(selected instanceof Character) {
+    	if(selected instanceof Character && Game.getInstance().getFamily().contains(selected)) {
     		Character c = (Character)selected;
 			addButton("Eating").addActionListener(e -> {
 				c.stopEverything();

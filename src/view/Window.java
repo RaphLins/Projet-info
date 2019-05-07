@@ -128,6 +128,7 @@ public class Window extends JFrame {
     	if (currentActionView != null) {
     		rightPanel.remove(currentActionView);
     	}
+    	
     	if (Game.getInstance().getSelectedObject() instanceof ObjectWithActions) {
     		selectAction = new JButton("Actions");
         	selectAction.setOpaque(false);

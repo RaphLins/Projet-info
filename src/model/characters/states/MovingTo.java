@@ -6,6 +6,7 @@ import model.characters.AStar;
 import model.characters.Character;
 import model.map.Map;
 import model.map.Tile;
+import model.places.House;
 
 public class MovingTo extends State implements Animation {
     private Tile target;
@@ -46,9 +47,13 @@ public class MovingTo extends State implements Animation {
     @Override
     public void run() {
         Tile target = getTarget();
-        if(target == null){
-            cancel();
-            return;
+        //if((target.getLocation() instanceof House && target.getLocation() != getCharacter().getHouse()) || target==null) {
+        	//cancel();
+        	//return;
+        //}
+        if(target==null) {
+        	cancel();
+        	return;
         }
         Map map = Game.getInstance().getMap();
         direction= (new AStar(getCharacter().getPos(), target, map)).getNextStep();

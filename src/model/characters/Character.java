@@ -105,7 +105,6 @@ public abstract class Character extends GameObject implements Directable, Object
 	}
 
 	public void wash() {
-		//System.out.println(house);
         stateQueue.add(new MovingToObject(this,2, Bath.class));
         stateQueue.add(new Washing(this,2));
 	}
@@ -343,5 +342,8 @@ public abstract class Character extends GameObject implements Directable, Object
 	
 	public void setHouse(House house) {
 		this.house = house;
+	}
+	public House getHouse() {
+		return house;
 	}
 }
