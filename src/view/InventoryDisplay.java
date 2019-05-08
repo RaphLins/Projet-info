@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import model.*;
+import model.characters.Character;
 import model.items.HoldableItem;
 
 
@@ -35,6 +36,9 @@ public class InventoryDisplay extends JPanel{
 
     public void update(){
         GameObject selected = Game.getInstance().getSelectedObject();
+        if (selected instanceof Character && !(Game.getInstance().getFamily().contains(selected))) {
+        	return;
+        }
 
         if(selected != null && selected instanceof ObjectHolder){
             ArrayList<HoldableItem> inventory = ((ObjectHolder)selected).getInventory();

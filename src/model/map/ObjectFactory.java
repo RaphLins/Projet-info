@@ -6,7 +6,10 @@ import model.characters.AdultWizard;
 import model.characters.Character;
 import model.characters.ChildWizard;
 import model.items.Broom;
+import model.items.Food;
+import model.items.Plate;
 import model.places.House;
+import model.ObjectHolder;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -45,10 +48,14 @@ public class ObjectFactory {
              else if(charType.equals("CW")) {
             	 res = new ChildWizard(charGender);
              }
-             charactersToAssign.add((Character)res);
+        	 charactersToAssign.add((Character)res);
              if(character.length>=3 && character[2].equals("fam")) {
             	 Game.getInstance().getFamily().add((Character) res);
             	 charactersToAssign.remove((Character)res);
+             }
+             else {
+            	 (new Food()).storeIn((ObjectHolder)res);
+            	 (new Plate()).storeIn((ObjectHolder)res);
              }
         }
         

@@ -99,7 +99,6 @@ public class ShopView extends JPanel{
             		House familyHouse = Game.getInstance().getFamilyHouse();
             		for (Tile tile : familyHouse.getArea() ) {
             			for(GameObject o : tile.getObjects()) {
-            				System.out.println("ok");
             				if(o instanceof Fridge && ((Fridge)o).getInventory().size()<9) {
             					if(Game.getInstance().spendGold(price)) {
             						Food food = new Food();

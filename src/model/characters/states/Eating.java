@@ -38,10 +38,12 @@ public class Eating extends UsingItem {
 
     @Override
     public void run() {
-    	for(HoldableItem item : getCharacter().getInventory()) {
-    		if(item instanceof Food) {
-    			getCharacter().getInventory().remove(item);
-    			break;
+    	if(Game.getInstance().getFamily().contains(getCharacter())) {
+    		for(HoldableItem item : getCharacter().getInventory()) {
+        		if(item instanceof Food) {
+        			getCharacter().getInventory().remove(item);
+        			break;
+        		}
     		}
     	}
         getCharacter().incrementHunger(5.24);

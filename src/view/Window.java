@@ -123,10 +123,12 @@ public class Window extends JFrame {
     public void updateActionView() {
     	if (selectAction!=null) {
     		rightPanel.remove(selectAction);
+            rightPanel.updateUI();
     	}
     	if (currentActionView != null) {
     		rightPanel.remove(currentActionView);
     	}
+    	
     	if (Game.getInstance().getSelectedObject() instanceof ObjectWithActions) {
     		selectAction = new JButton("Actions");
         	selectAction.setOpaque(false);

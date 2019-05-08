@@ -73,6 +73,9 @@ public class Map implements Serializable{
                             			House house = new House(grid[i][j],height,width,this);
                             			if(split.length>=3 && split[2].equals("fam")) {
                             				Game.getInstance().setFamilyHouse(house);
+                            				for(Character c : Game.getInstance().getFamily()) {
+                            					c.setHouse(house);
+                            				}
                             			}
                             		}
                             	}

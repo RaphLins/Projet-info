@@ -25,6 +25,9 @@ public class StatusView extends JPanel {
 	public void paint(Graphics g) {
 		super.paintComponent(g);
         GameObject selected = Game.getInstance().getSelectedObject();
+        if (selected instanceof Character && !(Game.getInstance().getFamily().contains(selected))) {
+        	return;
+        }
         if(selected==null){
             return;
         }

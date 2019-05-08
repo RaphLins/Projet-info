@@ -1,8 +1,6 @@
 package view;
+import java.awt.*;
 import java.util.ArrayList;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.Graphics;
 
 import javax.swing.*;
 
@@ -16,37 +14,25 @@ public class ActionView extends JPanel{
     public ActionView() {
     	setPreferredSize(new Dimension(260, 50));
     	GameObject selected = Game.getInstance().getSelectedObject();
-    	if(selected instanceof Character) {
+    	if(selected instanceof Character && Game.getInstance().getFamily().contains(selected)) {
     		Character c = (Character)selected;
-    		JButton eatButton = new JButton("Eating");
-    		eatButton.addActionListener(e -> {
-    			c.stopEverything();
-    			c.eat();          
-    		});
-    		JButton peeButton = new JButton("Peeing");
-    		peeButton.addActionListener(e -> {
-    			c.stopEverything();
-    			c.pee();          
-    		});
-    		JButton washButton = new JButton("Washing");
-    		washButton.addActionListener(e -> {
-    			c.stopEverything();
-    			c.wash();          
-    		});
-    		JButton sleepButton = new JButton("Sleeping");
-    		sleepButton.addActionListener(e -> {
-    			c.stopEverything();
-    			c.sleep();          
-    		}); 
+			addButton("Eating").addActionListener(e -> {
+				c.stopEverything();
+				c.eat();
+			});
+			addButton("Peeing").addActionListener(e -> {
+				c.stopEverything();
+				c.pee();
+			});
+			addButton("Washing").addActionListener(e -> {
+				c.stopEverything();
+				c.wash();
+			});
+    		addButton("Sleeping").addActionListener(e -> {
+				c.stopEverything();
+				c.sleep();
+			});
     		setLayout(new GridLayout(3,3));
-            add(eatButton);
-            add(peeButton);
-            add(washButton);
-            add(sleepButton);
-            add(new JButton("a"));
-            add(new JButton("b"));
-            add(new JButton("c"));
-            add(new JButton("d"));
     	}
         setOpaque(false);
     }
@@ -55,5 +41,14 @@ public class ActionView extends JPanel{
     public void paint(Graphics g) {
         super.paint(g);
     }
+
+	private JButton addButton(String text){
+		JButton button = new JButton(text);
+		button.setOpaque(false);
+		button.setContentAreaFilled(false);
+		button.setFocusable(false);
+		add(button);
+		return button;
+	}
 
 }
