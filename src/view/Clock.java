@@ -13,7 +13,7 @@ public class Clock extends JPanel implements TimeObserver{
 
 	private JLabel timeDisplay = new JLabel();
 	private JPanel controlButtons = new JPanel();
-	private String stateSring = "";
+	private String stateString = "";
 	
 	public Clock() {
 		this.setPreferredSize(new Dimension(260, 30));
@@ -28,23 +28,23 @@ public class Clock extends JPanel implements TimeObserver{
 		add(controlButtons, BorderLayout.PAGE_END);
 
 		addButton("<html>&#9205</html>  ").addActionListener(e -> {
-			Game.getInstance().getTime().setWaitTime(200);
+			Game.getInstance().getTime().setWaitTime(80);
 			Game.getInstance().getTime().start();
-			stateSring = "";
+			stateString = "";
 		});
 		addButton("<html>&#9208</html>").addActionListener(e -> {
 			Game.getInstance().getTime().pause();
-			stateSring = " (paused)";
+			stateString = " (paused)";
 		});
 		addButton("<html>&#9197</html>").addActionListener(e -> {
-			Game.getInstance().getTime().setWaitTime(100);
+			Game.getInstance().getTime().setWaitTime(40);
 			Game.getInstance().getTime().start();
-			stateSring = " (x2)";
+			stateString = " (x2)";
 		});
 		addButton("<html>&#9197&#9197</html>").addActionListener(e -> {
-			Game.getInstance().getTime().setWaitTime(50);
+			Game.getInstance().getTime().setWaitTime(20);
 			Game.getInstance().getTime().start();
-			stateSring = " (x4)";
+			stateString = " (x4)";
 		});
 	}
 
@@ -56,7 +56,7 @@ public class Clock extends JPanel implements TimeObserver{
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		timeDisplay.setText("Time: "+convert(Game.getInstance().getTime().getMinutes())+stateSring);
+		timeDisplay.setText("Time: "+convert(Game.getInstance().getTime().getMinutes())+ stateString);
 	}
 
 	public String convert(int i) {

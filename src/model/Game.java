@@ -55,8 +55,8 @@ public class Game {
         //family.get(0).carryItem(new Wand());
         window.updateFamily();
         started = true;
-        startTime();
         window.attachClock();
+        startTime();
     }
 
 

@@ -22,7 +22,6 @@ abstract public class State implements Serializable {
     abstract public void run();
 
     public void cancel(){
-        getCharacter().incrementHappiness(-0.2);
         getCharacter().cancelAction();//delete all states with the same group ID
     }
 

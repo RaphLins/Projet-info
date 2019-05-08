@@ -28,4 +28,8 @@ public class MovingToObject extends MovingTo {
         }
         super.finish();
     }
+
+    public Class getObjectType() {
+        return objectType;
+    }
 }

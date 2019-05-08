@@ -3,6 +3,7 @@ package view;
 import controller.Mouse;
 import model.Game;
 import model.GameObject;
+import model.characters.Character;
 import model.map.Map;
 import model.characters.Directable;
 import model.map.Tile;
@@ -109,6 +110,9 @@ public class MapView extends JPanel {
             if(id=="Wall" && Math.hypot(mouseX-viewPosX-i,mouseY-viewPosY-j)<=1.5){//hide walls around mouse
                 id="Cut Wall";
             }
+            int partX = i-object.getPosX();//to fix
+            int partY = object.height-(object.getPosY()-j);//to fix
+            //BufferedImage image = textures.getPart(id);
             BufferedImage image = textures.get(id);
             if(image!=null){
                 drawImage(image, object.getExactX() - viewPosX,object.getExactY() - viewPosY,g);

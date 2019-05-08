@@ -27,13 +27,17 @@ public class HoldableItem extends Item {// those items can be stored in inventor
         else return ((GameObject)container).getPos();
     }
 
-    public void storeIn(ObjectHolder container){
-        removeFromMap();
-        container.getInventory().add(this);
-        if(Game.isStarted() && Game.getInstance().getSelectedObject() == container){
-            Game.getInstance().getWindow().updateInventory();//update inventory if it is currently shown on screen
+    public boolean storeIn(ObjectHolder container){
+        if(container.getInventory().size()<9){
+            removeFromMap();
+            container.getInventory().add(this);
+            if(Game.isStarted() && Game.getInstance().getSelectedObject() == container){
+                Game.getInstance().getWindow().updateInventory();//update inventory if it is currently shown on screen
+            }
+            this.container = container;
+            return true;
         }
-        this.container = container;
+        else return false;
     }
 
     @Override

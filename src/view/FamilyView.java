@@ -34,6 +34,7 @@ public class FamilyView extends JPanel{
 
             button.addActionListener(e -> {
                 Game.getInstance().selectObject(character);
+                Game.getInstance().getWindow().getMapView().centerView(character.getPosX(),character.getPosY());
             });
 
             add(button);

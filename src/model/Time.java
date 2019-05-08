@@ -11,8 +11,8 @@ import java.util.ArrayList;
 
 public class Time implements Serializable,Runnable {
 
-	private int minutes = 0;
-	private int waitTime = 400;
+	private int minutes = 480;
+	private int waitTime = 80;
 	private int animWaitTime = 40;
 	private ArrayList<TimeObserver> timeObservers = new ArrayList<>();
 	private ArrayList<Animation> animations = new ArrayList<>();
@@ -70,6 +70,10 @@ public class Time implements Serializable,Runnable {
 	
 	public int getMinutes() {
 		return minutes;
+	}
+
+	public int getHours() {
+		return minutes/60;
 	}
 	
 	public int getWaitTime() {

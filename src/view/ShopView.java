@@ -61,9 +61,9 @@ public class ShopView extends JPanel{
             					e1.printStackTrace();
             				}
             			}
-            			else System.out.println("Not enough gold");
+            			else Game.getInstance().getWindow().message("Not enough gold.");
             		}
-            		else System.out.println("Place current item first");
+            		else Game.getInstance().getWindow().message("Place current item first.");
             	});
             }
             
@@ -80,7 +80,7 @@ public class ShopView extends JPanel{
             						Game.getInstance().getWindow().updateInventory();
             					}
             					else {
-            						System.out.println("Not enough gold");
+									Game.getInstance().getWindow().message("Not enough gold.");
             					}
             					res = true;
             				}
@@ -88,7 +88,7 @@ public class ShopView extends JPanel{
             			if(res) break;
             		}
             		if(!res) {
-            			System.out.println("No Wardrobe with enough space found");
+						Game.getInstance().getWindow().message("No Wardrobe with enough space found.");
             		}
             	});
             }
@@ -106,7 +106,7 @@ public class ShopView extends JPanel{
             						Game.getInstance().getWindow().updateInventory();
             					}
             					else {
-            						System.out.println("Not enough gold");
+									Game.getInstance().getWindow().message("Not enough gold.");
             					}
             					res = true;
             				}
@@ -114,7 +114,7 @@ public class ShopView extends JPanel{
             			if(res) break;
             		}
             		if(!res) {
-            			System.out.println("No fridge with available place found");
+						Game.getInstance().getWindow().message("No fridge with available place found.");
             		}
             		
             	});

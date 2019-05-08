@@ -56,13 +56,6 @@ public abstract class GameObject implements Serializable {
         setPos(Game.getInstance().getMap().getTileNextTo(pos,direction));
     }
 
-    public int getXOffset(){
-        return (int) xOffset;
-    }
-    public int getYOffset(){
-        return (int) yOffset;
-    }
-
     public int getPosX() {
         return pos.getX();
     }

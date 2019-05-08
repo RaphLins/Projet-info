@@ -75,6 +75,17 @@ public class TextureHashMap {
         return textures.get(id);
     }
 
+    public BufferedImage getPart(String id, int partX, int partY){//to fix
+        System.out.println(partX+ " "+partY);
+        BufferedImage image = textures.get(id);
+        int x = partX*W;
+        int y = image.getHeight()-H*partY;
+        int w = W;
+        int h = image.getHeight()-y+H;
+        System.out.println("first part x:" +x +" y:"+y+" w:"+w+" h:"+h);
+        return image.getSubimage(x,y,W,h);
+    }
+
     public BufferedImage getAvatar(String id){
         return get(id).getSubimage(5,9,10,10);
     }

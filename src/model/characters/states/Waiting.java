@@ -4,7 +4,7 @@ import model.characters.Character;
 
 public class Waiting extends State {
     private long duration;
-    private long minutesPassed;
+    private long minutesPassed = 0;
 
     public Waiting(Character character, int groupID, long duration) {
         super(character, groupID);

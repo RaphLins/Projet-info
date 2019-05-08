@@ -2,6 +2,7 @@ package model.characters.states;
 
 import model.Animation;
 import model.Game;
+import model.GameObject;
 import model.characters.AStar;
 import model.characters.Character;
 import model.map.Map;
@@ -13,6 +14,7 @@ public class MovingTo extends State implements Animation {
     private boolean teleport;
     private int direction;
     private Tile lastPos = null;
+    private int tilePerMinute = 3;
 
     private float animOffset = 0;
 
@@ -46,53 +48,64 @@ public class MovingTo extends State implements Animation {
 
     @Override
     public void run() {
-        Tile target = getTarget();
-        if((target==null || target.getLocation() instanceof House && target.getLocation() != getCharacter().getHouse())) {
-        	cancel();
-        	return;
-        }
-        //if(target==null) {
-        //	cancel();
-        //	return;
-        //}
-        Map map = Game.getInstance().getMap();
-        direction= (new AStar(getCharacter().getPos(), target, map)).getNextStep();
-        //AStar allows to find the best way to go to the target (it's used to find the direction where the character should go next).
-        if(direction==-100){
-            cancel();
-        }
-        else if (direction != -1) {
-            //for animation
-            if(lastPos!=null){
-                lastPos.removeObject(getCharacter());
+        if(Game.getInstance().getTime().getMinutes()%tilePerMinute==0){//only move one tile every "tilePerMinutes" minutes
+            Tile target = getTarget();
+            if((target==null || target.getLocation() instanceof House && target.getLocation() != getCharacter().getHouse())) {
+                getCharacter().incrementHappiness(-0.2);
+                if(this instanceof MovingToObject){
+                    String objectID="";
+                    try {
+                        objectID = ((GameObject)((MovingToObject)this).getObjectType().newInstance()).ID;
+                    } catch (IllegalAccessException e) {
+                    } catch (InstantiationException e) {
+                    }
+                    Game.getInstance().getWindow().message("Warning, "+getCharacter().getName()+" can't find any available "+objectID+"!");
+                }
+                else {
+                    System.out.println("No possible path");
+                }
+                cancel();
+                return;
             }
-            lastPos = getCharacter().getPos();
+            Map map = Game.getInstance().getMap();
+            direction= (new AStar(getCharacter().getPos(), target, map)).getNextStep();
+            //AStar allows to find the best way to go to the target (it's used to find the direction where the character should go next).
+            if(direction==-100){
+                cancel();
+            }
+            else if (direction != -1) {
+                //for animation
+                if(lastPos!=null){
+                    lastPos.removeObject(getCharacter());
+                }
+                lastPos = getCharacter().getPos();
 
-            //main code
-            Tile nextTile = map.getTileNextTo(getCharacter().getPos(), direction);	//gets the tile corresponding to the direction found with AStar.
-            getCharacter().rotateTo(nextTile);
-            getCharacter().setPos(nextTile);
+                //main code
+                Tile nextTile = map.getTileNextTo(getCharacter().getPos(), direction);	//gets the tile corresponding to the direction found with AStar.
+                getCharacter().rotateTo(nextTile);
+                getCharacter().setPos(nextTile);
 
-            //for animation
-            lastPos.addObject(getCharacter());
-            animOffset = -1;
-            getCharacter().resetOffset();
-            getCharacter().setOffsetInDirection(animOffset,direction);
-        }
-        else {
-            //then direction = -1, as defined in the method getNextStep() in AStar. That means the character is arrived.
-            finish();
+                //for animation
+                lastPos.addObject(getCharacter());
+                animOffset = -1;
+                getCharacter().resetOffset();
+                getCharacter().setOffsetInDirection(animOffset,direction);
+            }
+            else {
+                //then direction = -1, as defined in the method getNextStep() in AStar. That means the character is arrived.
+                finish();
+            }
         }
     }
 
     @Override
     public void animate(float timeFraction) {
-        if(animOffset+timeFraction>0){
+        if(animOffset+timeFraction/tilePerMinute>0){
             animOffset=0;
             getCharacter().resetOffset();
         }
         else {
-            animOffset+=timeFraction;
+            animOffset+=timeFraction/tilePerMinute;
             getCharacter().setOffsetInDirection(animOffset,direction);
         }
         getCharacter().getPos().update();

@@ -51,11 +51,11 @@ public class Keyboard implements KeyListener {
                         game.setDraggedObject(selected);
                     }
                     else {
-                        System.out.println("Can't move that");
+                        Game.getInstance().getWindow().message("Can't move that.");
                     }
                 }
                 else {
-                    System.out.println("Select an object to move it");
+                    Game.getInstance().getWindow().message("Select an object to move it.");
                 }
                 break;
             case KeyEvent.VK_R:
@@ -65,7 +65,7 @@ public class Keyboard implements KeyListener {
                     selected2.removeFromMap();
                 }
                 else {
-                    System.out.println("Can't sell that");
+                    Game.getInstance().getWindow().message("Can't sell that.");
                 }
                 break;
         }

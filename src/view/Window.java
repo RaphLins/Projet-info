@@ -23,11 +23,12 @@ public class Window extends JFrame {
     private Clock clock = new Clock();
     private ShopView shopView = new ShopView();
     private FamilyView familyView = new FamilyView();
+    private JLabel messageDisp = new JLabel();
     //private ActionView actionView = new ActionView();
     private InventoryDisplay inventoryDisplay = new InventoryDisplay();
-    JLabel goldDisplay = new JLabel();
-    ActionView currentActionView;
-    JButton selectAction;
+    private JLabel goldDisplay = new JLabel();
+    private ActionView currentActionView;
+    private JButton selectAction;
 
     public Window(String title) {
         super(title);
@@ -54,9 +55,15 @@ public class Window extends JFrame {
             bottomPanel.add(shopView);
             repaint();
         });
-        
+
+        messageDisp.setHorizontalAlignment(SwingConstants.CENTER);
+        messageDisp.setVerticalAlignment(SwingConstants.BOTTOM);
+        messageDisp.setOpaque(false);
+        messageDisp.setPreferredSize(new Dimension(1920,30));
+        messageDisp.setFont(new Font("default", Font.BOLD, 15));
 
         gameView.add(mapView, BorderLayout.LINE_START);
+        gameView.add(messageDisp, BorderLayout.PAGE_START);
         gameView.add(rightPanel, BorderLayout.LINE_END);
         gameView.add(bottomPanel, BorderLayout.PAGE_END);
 
@@ -169,5 +176,19 @@ public class Window extends JFrame {
 
     public void updateFamily(){
         familyView.update();
+    }
+
+    public void message(String text){
+        messageDisp.setText(text);
+        new Thread(){
+            public void run() {
+                try {
+                    Thread.sleep(1500);
+                    messageDisp.setText("");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 }

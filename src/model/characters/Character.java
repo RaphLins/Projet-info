@@ -145,14 +145,7 @@ public abstract class Character extends GameObject implements Directable, Object
 	}
 
 	public boolean carryItem(HoldableItem item){
-		if(inventory.size()<=9){
-			item.storeIn(this);
-			return true;
-		}
-		else {
-			//inventory full
-			return false;
-		}
+		return item.storeIn(this);
 	}
 
 	public ArrayList<HoldableItem> getInventory() {
@@ -163,7 +156,7 @@ public abstract class Character extends GameObject implements Directable, Object
 		bladder = Math.max(Math.min(bladder+i,100),0);	//changes the bladder's value by i (i can be positive if for example the character is peeing, or negative in other cases).
 		//even if the character has to pee, the action can't be done automatically if he's doing something else.
 		//the value can't exceed 100 (because of the min) and can't be lower than 0 (because of the max).
-		if (bladder<=30) {
+		if (bladder<=50) {
 		    Boolean bool = true;
 		    for(State state : stateQueue){
 		        if(state instanceof Peeing){
@@ -178,7 +171,7 @@ public abstract class Character extends GameObject implements Directable, Object
 	
 	public void incrementEnergy(double i) {
 		energy = Math.max(Math.min(energy+i,100),0);
-        if (energy<=30) {
+        if (energy<=15 || Game.getInstance().getTime().getHours()>21) {
             Boolean bool = true;
             for(State state : stateQueue){
                 if(state instanceof Sleeping){
@@ -193,7 +186,7 @@ public abstract class Character extends GameObject implements Directable, Object
 	
 	public void incrementHunger(double i) {
 		hunger = Math.max(Math.min(hunger+i,100),0);
-        if (hunger<=60) {
+        if (hunger<=70) {
             Boolean bool = true;
             for(State state : stateQueue){
                 if(state instanceof Eating){
@@ -208,7 +201,7 @@ public abstract class Character extends GameObject implements Directable, Object
 	
 	public void incrementHygiene(double i) {
 		hygiene = Math.max(Math.min(hygiene+i,100),0);
-        if (hygiene<=50) {
+        if (hygiene<=67) {
             Boolean bool = true;
             for(State state : stateQueue){
                 if(state instanceof Washing){
@@ -235,15 +228,14 @@ public abstract class Character extends GameObject implements Directable, Object
 		State currentState = stateQueue.peek();
 
 		if(currentState instanceof Sleeping){
-			incrementBladder(-0.2);
-			incrementHunger(-0.13);
+			incrementBladder(-0.04);
 		}
 		else {
-			incrementBladder(-0.4);
-			incrementHunger(-0.26);
+			incrementBladder(-0.17);
 		}
-		incrementEnergy(-0.14);
-		incrementHygiene(-0.07);
+		incrementEnergy(-0.05);
+		incrementHunger(-0.1);
+		incrementHygiene(-0.023);
 
 		if(stateQueue.isEmpty()){
 			stateQueue.add(new Wandering(this,12));

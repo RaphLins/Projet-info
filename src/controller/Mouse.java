@@ -35,7 +35,7 @@ public class Mouse {
 					game.setDraggedObject(null);
 				}
 				else {
-					System.out.println("Can't place there");
+					Game.getInstance().getWindow().message("Can't place there.");
 				}
 			}
 			else{
