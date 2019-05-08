@@ -48,7 +48,7 @@ public class ObjectFactory {
              else if(charType.equals("CW")) {
             	 res = new ChildWizard(charGender);
              }
-        	 charactersToAssign.add((Character)res);
+             charactersToAssign.add((Character)res);
              if(character.length>=3 && character[2].equals("fam")) {
             	 Game.getInstance().getFamily().add((Character) res);
             	 charactersToAssign.remove((Character)res);
