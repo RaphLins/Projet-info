@@ -8,7 +8,7 @@ import model.map.Bookshelf;
 import model.map.Tile;
 
 public class AdultWizard extends Adult implements Wizard {
-    private double magicPower = 50;
+    private double magicPower = 100;
     public AdultWizard(String gender) {
         super(gender);
         ID = "Adult Wizard ("+gender+")";

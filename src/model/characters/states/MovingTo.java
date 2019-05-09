@@ -16,12 +16,14 @@ public class MovingTo extends State implements Animation {
     private int direction;
     private Tile lastPos = null;
     private static int tilePerMinute = 3;
+    String IDSave;
 
     private float animOffset = 0;
 
     public MovingTo(Character character, int groupID, Tile target){
         super(character,groupID);
         this.target = target;
+        IDSave = character.ID;
     }
 
     public Tile getTarget(){
@@ -36,8 +38,9 @@ public class MovingTo extends State implements Animation {
     public void init() {
         Game.getInstance().getTime().attach(this);
         super.init();
+        Tile target = getTarget();
         if(getCharacter() instanceof Wizard ){
-            if(((Wizard)getCharacter()).getMagicPower()==100 && target.distanceTo(getCharacter().getPos())>10){
+            if(((Wizard)getCharacter()).getMagicPower()==100 && target!=null && target.distanceTo(getCharacter().getPos())>5){
                 teleport = true;
             }
         }
@@ -45,7 +48,7 @@ public class MovingTo extends State implements Animation {
 
     @Override
     public void run() {
-        if(Game.getInstance().getTime().getMinutes()%tilePerMinute==0){//only move one tile every "tilePerMinutes" minutes
+        Map map = Game.getInstance().getMap();
             Tile target = getTarget();
             if(target==null) {
                 getCharacter().incrementHappiness(-0.2);
@@ -61,38 +64,53 @@ public class MovingTo extends State implements Animation {
                     }
                 }
                 else {
-                    System.out.println("No possible path");
                 }
                 cancel();
                 return;
             }
-            Map map = Game.getInstance().getMap();
-            direction= (new AStar(getCharacter().getPos(), target, map)).getNextStep();
-            //AStar allows to find the best way to go to the target (it's used to find the direction where the character should go next).
-            if(direction==-100){
-                cancel();
-            }
-            else if (direction != -1) {
-                //for animation
-                if(lastPos!=null){
-                    lastPos.removeObject(getCharacter());
+            if(teleport){
+                getCharacter().ID = "Teleporting";
+                int x = getCharacter().getPosX();
+                int y = getCharacter().getPosY();
+                int deltaX = target.getX()-x;
+                int deltaY = target.getY()-y;
+                float distance = (float) Math.sqrt(Math.pow(deltaX,2)+Math.pow(deltaY,2));
+                getCharacter().rotateTo(target);
+                getCharacter().setPos(map.getTileAt(Math.round(x+deltaX/distance),Math.round(y+deltaY/distance)));
+
+                if(getCharacter().getPos()==target){
+                    finish();
                 }
-                lastPos = getCharacter().getPos();
-
-                //main code
-                Tile nextTile = map.getTileNextTo(getCharacter().getPos(), direction);	//gets the tile corresponding to the direction found with AStar.
-                getCharacter().rotateTo(nextTile);
-                getCharacter().setPos(nextTile);
-
-                //for animation
-                lastPos.addObject(getCharacter());
-                animOffset = -1;
-                getCharacter().resetOffset();
-                getCharacter().setOffsetInDirection(animOffset,direction);
             }
-            else {
-                //then direction = -1, as defined in the method getNextStep() in AStar. That means the character is arrived.
-                finish();
+            else{
+                if(Game.getInstance().getTime().getMinutes()%tilePerMinute==0){//only move one tile every "tilePerMinutes" minutes
+                direction= (new AStar(getCharacter().getPos(), target, map)).getNextStep();
+                //AStar allows to find the best way to go to the target (it's used to find the direction where the character should go next).
+                if(direction==-100){
+                    cancel();
+                }
+                else if (direction != -1) {
+                    //for animation
+                    if(lastPos!=null){
+                        lastPos.removeObject(getCharacter());
+                    }
+                    lastPos = getCharacter().getPos();
+
+                    //main code
+                    Tile nextTile = map.getTileNextTo(getCharacter().getPos(), direction);	//gets the tile corresponding to the direction found with AStar.
+                    getCharacter().rotateTo(nextTile);
+                    getCharacter().setPos(nextTile);
+
+                    //for animation
+                    lastPos.addObject(getCharacter());
+                    animOffset = -1;
+                    getCharacter().resetOffset();
+                    getCharacter().setOffsetInDirection(animOffset,direction);
+                }
+                else {
+                    //then direction = -1, as defined in the method getNextStep() in AStar. That means the character is arrived.
+                    finish();
+                }
             }
         }
     }
@@ -112,6 +130,9 @@ public class MovingTo extends State implements Animation {
 
     @Override
     public void finish() {
+        if(teleport){
+            getCharacter().ID = IDSave;
+        }
         //end animation
         if(lastPos!=null){
             lastPos.removeObject(getCharacter());
@@ -124,6 +145,10 @@ public class MovingTo extends State implements Animation {
 
     @Override
     public void cancel() {
+        if(teleport){
+            getCharacter().ID = IDSave;
+            getCharacter().setPos(getCharacter().getAccessTiles().get(0));
+        }
         //end animation
         if(lastPos!=null){
             lastPos.removeObject(getCharacter());

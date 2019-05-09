@@ -44,6 +44,11 @@ public class TextureHashMap {
             textures.put("Food",tileset1.getSubimage(437,954,20,20));
             textures.put("Magic Book",items.getSubimage(120,20,20,20));
             textures.put("Tree",tileset1.getSubimage(100,876,20,40));
+            textures.put("Teleporting",items.getSubimage(140,0,20,40));
+            textures.put("Teleporting0",items.getSubimage(140,0,20,40));
+            textures.put("Teleporting1",items.getSubimage(140,0,20,40));
+            textures.put("Teleporting2",items.getSubimage(140,0,20,40));
+            textures.put("Teleporting3",items.getSubimage(140,0,20,40));
             put("White", items,4,0,1,2);
             put4("Adult Wizard (M)",characters,0,0,1,2);
             put4("Adult Wizard (F)",characters,0,2,1,2);
