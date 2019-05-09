@@ -1,12 +1,18 @@
 package model.characters.states;
 
 import model.characters.Character;
+import model.places.Place;
 
-public class FetchingItem extends MovingToObject {
+public class FetchingItem extends MovingToObjectByType {
     private Class type;
 
     public FetchingItem(Character character, int groupID, Class type) {
         super(character, groupID, type);
+        this.type = type;
+    }
+
+    public FetchingItem(Character character, int groupID, Class type, Place location) {
+        super(character, groupID, type,location);
         this.type = type;
     }
 

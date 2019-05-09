@@ -14,7 +14,7 @@ public class MovingTo extends State implements Animation {
     private boolean teleport;
     private int direction;
     private Tile lastPos = null;
-    private int tilePerMinute = 3;
+    private static int tilePerMinute = 3;
 
     private float animOffset = 0;
 
@@ -50,16 +50,18 @@ public class MovingTo extends State implements Animation {
     public void run() {
         if(Game.getInstance().getTime().getMinutes()%tilePerMinute==0){//only move one tile every "tilePerMinutes" minutes
             Tile target = getTarget();
-            if((target==null || target.getLocation() instanceof House && target.getLocation() != getCharacter().getHouse())) {
+            if(target==null) {
                 getCharacter().incrementHappiness(-0.2);
-                if(this instanceof MovingToObject){
+                if(this instanceof MovingToObjectByType){
                     String objectID="";
                     try {
-                        objectID = ((GameObject)((MovingToObject)this).getObjectType().newInstance()).ID;
+                        objectID = ((GameObject)((MovingToObjectByType)this).getObjectType().newInstance()).ID;
                     } catch (IllegalAccessException e) {
                     } catch (InstantiationException e) {
                     }
-                    Game.getInstance().getWindow().message("Warning, "+getCharacter().getName()+" can't find any available "+objectID+"!");
+                    if(Game.getInstance().getFamily().contains(getCharacter())){
+                        Game.getInstance().getWindow().message("Warning, "+getCharacter().getName()+" can't find any available "+objectID+"!");
+                    }
                 }
                 else {
                     System.out.println("No possible path");

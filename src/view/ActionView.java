@@ -16,30 +16,31 @@ public class ActionView extends JPanel{
     	GameObject selected = Game.getInstance().getSelectedObject();
     	if(selected instanceof Character && Game.getInstance().getFamily().contains(selected)) {
     		Character c = (Character)selected;
-			addButton("Eating").addActionListener(e -> {
+			addButton("Eat").addActionListener(e -> {
 				c.stopEverything();
 				c.eat();
 			});
-			addButton("Peeing").addActionListener(e -> {
+			addButton("Pee").addActionListener(e -> {
 				c.stopEverything();
 				c.pee();
 			});
-			addButton("Washing").addActionListener(e -> {
+			addButton("Wash").addActionListener(e -> {
 				c.stopEverything();
 				c.wash();
 			});
-    		addButton("Sleeping").addActionListener(e -> {
+    		addButton("Sleep").addActionListener(e -> {
 				c.stopEverything();
 				c.sleep();
 			});
+			if(selected instanceof Character){
+				addButton("Socialize").addActionListener(e->{
+					Game.getInstance().getWindow().remove(this);
+					Game.getInstance().getWindow().showSocializeView();
+				});
+			}
     		setLayout(new GridLayout(3,3));
     	}
         setOpaque(false);
-    }
-    
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
     }
 
 	private JButton addButton(String text){

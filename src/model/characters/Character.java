@@ -4,13 +4,13 @@ import model.Game;
 import model.GameObject;
 import model.ObjectHolder;
 import model.ObjectWithActions;
-import model.Time;
 import model.TimeObserver;
 import model.characters.states.*;
 import model.items.Food;
 import model.items.HoldableItem;
 import model.items.Plate;
 import model.map.*;
+import model.map.Map;
 import model.places.House;
 import model.places.Place;
 
@@ -18,10 +18,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.Math;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public abstract class Character extends GameObject implements Directable, ObjectHolder, TimeObserver,ObjectWithActions{
 	private double hunger = 100;
@@ -34,6 +31,7 @@ public abstract class Character extends GameObject implements Directable, Object
 	private int direction = EAST;
 	private String name;
 	private ArrayList<HoldableItem> inventory = new ArrayList<>();
+	private HashMap<Character,Integer> relationLevels = new HashMap<>();
 
 	private LinkedList<State> stateQueue = new LinkedList<>();
 	//allows to easily have state sequences.
@@ -97,25 +95,25 @@ public abstract class Character extends GameObject implements Directable, Object
 	}
 
 	public void eat() {
-        stateQueue.add(new FetchingItem(this,1, Plate.class));
-        stateQueue.add(new FetchingItem(this,1,Food.class));
-        stateQueue.add(new MovingToObject(this,1, Stool.class));
+        stateQueue.add(new FetchingItem(this,1, Plate.class,getHouse()));
+        stateQueue.add(new FetchingItem(this,1,Food.class,getHouse()));
+        stateQueue.add(new MovingToObjectByType(this,1, Stool.class,getHouse()));
         stateQueue.add(new Eating(this,1));
-        stateQueue.add(new StoringItem(this,1,Plate.class, Wardrobe.class));
+        stateQueue.add(new StoringItem(this,1,Plate.class, Wardrobe.class,getHouse()));
 	}
 
 	public void wash() {
-        stateQueue.add(new MovingToObject(this,2, Bath.class));
+        stateQueue.add(new MovingToObjectByType(this,2, Bath.class,getHouse()));
         stateQueue.add(new Washing(this,2));
 	}
 
 	public void pee() {
-        stateQueue.add(new MovingToObject(this,3, Toilet.class));
+        stateQueue.add(new MovingToObjectByType(this,3, Toilet.class,getHouse()));
         stateQueue.add(new Peeing(this,3));
 	}
 
 	public void sleep() {
-        stateQueue.add(new MovingToObject(this,4, Bed.class));
+        stateQueue.add(new MovingToObjectByType(this,4, Bed.class,getHouse()));
         stateQueue.add(new Sleeping(this,4));
 	}
 
@@ -331,11 +329,35 @@ public abstract class Character extends GameObject implements Directable, Object
 		}
 		stateQueue.clear();
 	}
+
+    public void increaseRelationLevel(Character character){
+        relationLevels.put(character, relationLevels.getOrDefault(character,0) + 1);
+    }
+
+    public void socialize(Character acquaintance){
+		stateQueue.add(new MovingToObject(this,40,acquaintance));
+		stateQueue.add(new Socializing(this,40,acquaintance));
+	}
+
+    public int getRelationLevel(Character character){
+	    return relationLevels.getOrDefault(character,0);
+    }
 	
 	public void setHouse(House house) {
 		this.house = house;
 	}
 	public House getHouse() {
 		return house;
+	}
+
+	public ArrayList<Tile> getAccessTiles(){
+		ArrayList<Tile> tiles = new ArrayList<>();
+		for(int i:accessDirections){
+			Tile target2 = Game.getInstance().getMap().getTileNextTo(getPos(),i);
+			if(target2.isWalkable()) {
+				tiles.add(target2);
+			} //si le personnage ne peut pas aller sur la case, il va chercher � aller sur celles � c�t� de l'objet
+		}
+		return tiles;
 	}
 }

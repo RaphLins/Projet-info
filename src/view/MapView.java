@@ -100,6 +100,7 @@ public class MapView extends JPanel {
     }
 
     private void drawTile(Tile tile, int i,int j, Graphics g){
+        GameObject draggedObject = Game.getInstance().getDraggedObject();
         drawImage(textures.get(tile.ID),i,j,g);//draw background
         ArrayList<GameObject> objects = (ArrayList<GameObject>)tile.getObjects().clone();//clone to avoid concurrent modification exception
         for(GameObject object: objects){//draw items
@@ -119,7 +120,14 @@ public class MapView extends JPanel {
             }
         }
 
-        GameObject draggedObject = Game.getInstance().getDraggedObject();
+        /*if(draggedObject!=null && tile.getLocation()!=Game.getInstance().getFamilyHouse()){
+            ((Graphics2D)g).setComposite(AlphaComposite.SrcOver.derive(0.2f));//draw transparent
+            g.setColor(Color.white);
+            int x2 = (int) ((i) * TILE_WIDTH * zoom);
+            int y2 = (int) ((j)* TILE_WIDTH * zoom);
+            g.fillRect(x2,y2,(int)(TILE_WIDTH*zoom),(int)(TILE_HEIGHT*zoom));
+            ((Graphics2D)g).setComposite(AlphaComposite.SrcOver);//end transparent
+        }*/
         if(i==mouseX-viewPosX && j==mouseY-viewPosY && draggedObject!=null){//draw dragged object
             ((Graphics2D)g).setComposite(AlphaComposite.SrcOver.derive(0.6f));//draw transparent
             drawImage(textures.get(draggedObject.ID),i,j,g);

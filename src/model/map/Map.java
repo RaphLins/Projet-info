@@ -4,6 +4,7 @@ import model.*;
 import model.characters.Character;
 import model.items.HoldableItem;
 import model.places.House;
+import model.places.Place;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -121,10 +122,9 @@ public class Map implements Serializable{
         return tilesAround;
     }
 
-    public ArrayList<GameObject> getNearbyObjects(Tile position, Class type, int distanceMax){
-        ArrayList<Tile> tilesAround = getNearbyTiles(position,distanceMax);
+    public ArrayList<GameObject> findObjectsByType(Class type, ArrayList<Tile> tiles){
         ArrayList<GameObject> res = new ArrayList<>();
-        for(Tile tile : tilesAround) {
+        for(Tile tile : tiles) {
             ArrayList<GameObject> objects = tile.getObjects();
             for(GameObject o : objects) {
                 if((!(o instanceof Character) && o instanceof ObjectHolder)){
@@ -150,11 +150,23 @@ public class Map implements Serializable{
         return res;
     }
 
-    public Tile getClosestTile(Tile position, Class type, int distanceMax) {
-        ArrayList<Tile> possibleTargets =  new ArrayList<>();
-        for(GameObject object:getNearbyObjects(position,type,distanceMax)){
-            possibleTargets.addAll(object.getAccessTiles());
+    public ArrayList<GameObject> getNearbyObjects(Tile position, Class type, int distanceMax){
+        return findObjectsByType(type, getNearbyTiles(position,distanceMax));
+    }
+    public Tile getClosestTile(Tile position, Class type, Place location) {
+        return getClosestTile(position, getAllAccessTiles(findObjectsByType(type,location.getArea())));
+    }
+
+    public ArrayList<Tile> getAllAccessTiles(ArrayList<GameObject> objects){
+        ArrayList<Tile> accessTiles =  new ArrayList<>();
+        for(GameObject object:objects){
+            accessTiles.addAll(object.getAccessTiles());
         }
+        return accessTiles;
+    }
+
+    public Tile getClosestTile(Tile position, Class type, int distanceMax) {
+        ArrayList<Tile> possibleTargets = getAllAccessTiles(getNearbyObjects(position,type,distanceMax));
         if(possibleTargets.isEmpty()){
             return null;
         }
@@ -164,6 +176,9 @@ public class Map implements Serializable{
     }
 
     public Tile getClosestTile(Tile position, ArrayList<Tile> possibleTargets) { //utilise les coordonnees des cases contenant l'objet qu'on cherche pour determiner celle qui est la plus proche a vol d'oiseau
+        if(possibleTargets.isEmpty()){
+            return null;
+        }
         Tile res = possibleTargets.get(0);
         float currentDistance = res.distanceTo(position);
         for (Tile tile : possibleTargets) {

@@ -78,6 +78,7 @@ public class ShopView extends JPanel{
             						Plate plate = new Plate();
             						plate.storeIn((Wardrobe)o);
             						Game.getInstance().getWindow().updateInventory();
+									Game.getInstance().getWindow().message("The plate was automatically added in a Wardrobe.");
             					}
             					else {
 									Game.getInstance().getWindow().message("Not enough gold.");
@@ -104,7 +105,9 @@ public class ShopView extends JPanel{
             						Food food = new Food();
             						food.storeIn((Fridge)o);
             						Game.getInstance().getWindow().updateInventory();
-            					}
+									Game.getInstance().getWindow().message("The plate was automatically added in a Fridge.");
+
+								}
             					else {
 									Game.getInstance().getWindow().message("Not enough gold.");
             					}

@@ -10,6 +10,7 @@ import javax.swing.*;
 import controller.Mouse;
 import model.ObjectWithActions;
 import model.Time;
+import model.characters.Character;
 
 public class Window extends JFrame {
 	private MainMenu mainMenu = new MainMenu(this);
@@ -28,6 +29,7 @@ public class Window extends JFrame {
     private InventoryDisplay inventoryDisplay = new InventoryDisplay();
     private JLabel goldDisplay = new JLabel();
     private ActionView currentActionView;
+    private SocializeView currentSocializeView;
     private JButton selectAction;
 
     public Window(String title) {
@@ -135,6 +137,10 @@ public class Window extends JFrame {
     	if (currentActionView != null) {
     		rightPanel.remove(currentActionView);
     	}
+
+        if (currentSocializeView != null) {
+            rightPanel.remove(currentSocializeView);
+        }
     	
     	if (Game.getInstance().getSelectedObject() instanceof ObjectWithActions) {
     		selectAction = new JButton("Actions");
@@ -143,11 +149,11 @@ public class Window extends JFrame {
             selectAction.setFocusable(false);
 
             selectAction.addActionListener(e->{
-            	ActionView previousActionView = currentActionView;
-            	if (!rightPanel.isAncestorOf(previousActionView)) {
+            	if (!rightPanel.isAncestorOf(currentActionView)) {
             		currentActionView = new ActionView();
+            		inventoryDisplay.setVisible(false);
+                    rightPanel.remove(selectAction);
             		rightPanel.add(currentActionView);
-            		rightPanel.remove(selectAction);
             		rightPanel.updateUI();
             	}
             });
@@ -180,15 +186,27 @@ public class Window extends JFrame {
 
     public void message(String text){
         messageDisp.setText(text);
-        new Thread(){
-            public void run() {
-                try {
-                    Thread.sleep(1500);
-                    messageDisp.setText("");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        new Thread(() -> {
+            try {
+                Thread.sleep(3000);
+                messageDisp.setText("");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        }.start();
+        }).start();
+    }
+
+    public void showSocializeView() {
+        SocializeView previousSocializeView = currentSocializeView;
+        if (!rightPanel.isAncestorOf(previousSocializeView)) {
+            currentSocializeView = new SocializeView();
+            rightPanel.remove(selectAction);
+            rightPanel.add(currentSocializeView);
+            rightPanel.updateUI();
+        }
+    }
+
+    public void removeSocializeView() {
+        rightPanel.remove(currentSocializeView);
     }
 }

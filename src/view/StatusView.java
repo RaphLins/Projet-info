@@ -25,8 +25,7 @@ public class StatusView extends JPanel {
 	public void paint(Graphics g) {
 		super.paintComponent(g);
         GameObject selected = Game.getInstance().getSelectedObject();
-        if (selected instanceof Character && !(Game.getInstance().getFamily().contains(selected))) {
-        	return;
+        if ((Game.getInstance().getFamily().contains(selected))) {
         }
         if(selected==null){
             return;
@@ -41,9 +40,8 @@ public class StatusView extends JPanel {
         else{
             g.drawString(selected.ID, 3, y);
         }
-
         y+=20;
-        if(selected instanceof Character){
+        if(selected instanceof Character && Game.getInstance().getFamily().contains(selected)){
             Character character = (Character)selected;
             g.setColor(Color.BLUE);
             y+=10;

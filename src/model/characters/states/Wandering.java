@@ -3,32 +3,24 @@ package model.characters.states;
 import model.Game;
 import model.characters.Character;
 import model.map.Tile;
+import model.places.House;
+import model.places.Place;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Wandering extends MovingTo {
-    int tileWalked = 0;
     public Wandering(Character character, int groupID) {
         super(character, groupID, null);
-    }
-
-    @Override
-    public Tile getTarget() {
-        ArrayList<Tile> tilesAround = Game.getInstance().getMap().getNearbyTiles(getCharacter().getPos(),1);
-        tilesAround.removeIf(tile -> !tile.isWalkable());
-        Tile target = tilesAround.get(new Random().nextInt(tilesAround.size()));
-        return target;
-    }
-
-    @Override
-    public void run() {
-        if(tileWalked<=2){
-            super.run();
-            tileWalked++;
-        }
-        else{
-            finish();
+        Place location = getCharacter().getPos().getLocation();
+        if(location == getCharacter().getHouse()){
+            ArrayList<Tile> tiles = new ArrayList<>(location.getArea());
+            tiles.removeIf(tile->!tile.isWalkable());
+            tiles.removeIf(tile->tile.distanceTo(getCharacter().getPos())>5);
+            if(!tiles.isEmpty()){
+                setTarget(tiles.get(new Random().nextInt(tiles.size())));
+            }
         }
     }
+
 }

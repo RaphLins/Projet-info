@@ -15,7 +15,6 @@ public abstract class Place implements Serializable {
 	private int width;
 	
 	public Place(Tile pos, int height, int width, Map map) {
-		
 		this.pos = pos;
 		int x = pos.getX();
 		int y = pos.getY();
@@ -26,7 +25,6 @@ public abstract class Place implements Serializable {
 				Tile tile = map.getTileAt(x+j, y-i);
 				area.add(tile);
 				tile.setLocation(this);
-				
 			}
 		}
 	}

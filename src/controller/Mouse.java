@@ -31,8 +31,11 @@ public class Mouse {
 			if(dragged != null){
 				Tile target = game.getMap().getTileAt(x,y);
 				if(target.isWalkable()){
-					dragged.setPos(target);
-					game.setDraggedObject(null);
+					if(target.getLocation() == Game.getInstance().getFamilyHouse()){
+						dragged.setPos(target);
+						game.setDraggedObject(null);
+					}
+					Game.getInstance().getWindow().message("You can only build in your house");
 				}
 				else {
 					Game.getInstance().getWindow().message("Can't place there.");
