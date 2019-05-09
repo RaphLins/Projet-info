@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 import javax.swing.*;
 
 import controller.Mouse;
+import model.GameObject;
 import model.ObjectWithActions;
 import model.Time;
 import model.characters.Character;
@@ -141,8 +142,8 @@ public class Window extends JFrame {
         if (currentSocializeView != null) {
             rightPanel.remove(currentSocializeView);
         }
-    	
-    	if (Game.getInstance().getSelectedObject() instanceof ObjectWithActions) {
+        GameObject selected = Game.getInstance().getSelectedObject();
+    	if (selected instanceof ObjectWithActions && !(selected instanceof Character && !(Game.getInstance().getFamily().contains(selected)))) {
     		selectAction = new JButton("Actions");
         	selectAction.setOpaque(false);
             selectAction.setContentAreaFilled(false);

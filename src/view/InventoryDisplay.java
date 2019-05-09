@@ -36,11 +36,7 @@ public class InventoryDisplay extends JPanel{
 
     public void update(){
         GameObject selected = Game.getInstance().getSelectedObject();
-        if (selected instanceof Character && !(Game.getInstance().getFamily().contains(selected))) {
-        	return;
-        }
-
-        if(selected != null && selected instanceof ObjectHolder){
+        if(selected != null && selected instanceof ObjectHolder && !(selected instanceof Character && !(Game.getInstance().getFamily().contains(selected)))){
             ArrayList<HoldableItem> inventory = ((ObjectHolder)selected).getInventory();
             for(int i = 0;i<9;i++){
                 for( ActionListener al : buttons[i].getActionListeners() ) {//remove all actions on the button

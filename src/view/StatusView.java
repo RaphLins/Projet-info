@@ -25,8 +25,6 @@ public class StatusView extends JPanel {
 	public void paint(Graphics g) {
 		super.paintComponent(g);
         GameObject selected = Game.getInstance().getSelectedObject();
-        if ((Game.getInstance().getFamily().contains(selected))) {
-        }
         if(selected==null){
             return;
         }
@@ -66,7 +64,7 @@ public class StatusView extends JPanel {
 
         }
 
-        if(selected instanceof ObjectHolder){
+        if(selected instanceof ObjectHolder && !(selected instanceof Character && !Game.getInstance().getFamily().contains(selected))){
             int x = 3;
             g.setColor(Color.BLACK);
             g.setFont(new Font("default", Font.BOLD, 16));

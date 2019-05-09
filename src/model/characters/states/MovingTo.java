@@ -23,7 +23,6 @@ public class MovingTo extends State implements Animation {
     public MovingTo(Character character, int groupID, Tile target){
         super(character,groupID);
         this.target = target;
-        IDSave = character.ID;
     }
 
     public Tile getTarget(){
@@ -38,6 +37,7 @@ public class MovingTo extends State implements Animation {
     public void init() {
         Game.getInstance().getTime().attach(this);
         super.init();
+        IDSave = getCharacter().ID;
         Tile target = getTarget();
         if(getCharacter() instanceof Wizard ){
             if(((Wizard)getCharacter()).getMagicPower()==100 && target!=null && target.distanceTo(getCharacter().getPos())>5){
