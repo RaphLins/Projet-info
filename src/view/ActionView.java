@@ -6,7 +6,10 @@ import javax.swing.*;
 
 import model.GameObject;
 import model.Game;
+import model.characters.AdultWizard;
 import model.characters.Character;
+import model.characters.ChildWizard;
+import model.characters.Wizard;
 
 public class ActionView extends JPanel{
 	
@@ -32,12 +35,23 @@ public class ActionView extends JPanel{
 				c.stopEverything();
 				c.sleep();
 			});
-			if(selected instanceof Character){
-				addButton("Socialize").addActionListener(e->{
-					Game.getInstance().getWindow().remove(this);
-					Game.getInstance().getWindow().showSocializeView();
+    		addButton("Socialize").addActionListener(e->{
+    			Game.getInstance().getWindow().remove(this);
+    			Game.getInstance().getWindow().showSocializeView();
+    		});
+    		if(selected instanceof ChildWizard){
+				addButton("Read Magic Book").addActionListener(e->{
+					c.stopEverything();
+					((ChildWizard)c).readMagicBook();
 				});
 			}
+			if(selected instanceof AdultWizard){
+				addButton("Read Magic Book").addActionListener(e->{
+					c.stopEverything();
+					((AdultWizard)c).readMagicBook();
+				});
+			}
+
     		setLayout(new GridLayout(3,3));
     	}
         setOpaque(false);

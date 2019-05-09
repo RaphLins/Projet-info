@@ -7,10 +7,7 @@ import javax.swing.*;
 
 import model.Game;
 import model.GameObject;
-import model.items.Food;
-import model.items.Item;
-import model.items.Plate;
-import model.items.Wand;
+import model.items.*;
 import model.map.*;
 import model.places.House;
 
@@ -35,6 +32,7 @@ public class ShopView extends JPanel{
         shopItems.add(new Table());
         shopItems.add(new Plate());
         shopItems.add(new Food());
+		shopItems.add(new MagicBook());
 
         for(Item item: shopItems){
             Image image = textures.get(item.ID);

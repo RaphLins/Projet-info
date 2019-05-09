@@ -8,6 +8,7 @@ import model.TimeObserver;
 import model.characters.states.*;
 import model.items.Food;
 import model.items.HoldableItem;
+import model.items.MagicBook;
 import model.items.Plate;
 import model.map.*;
 import model.map.Map;
@@ -95,25 +96,25 @@ public abstract class Character extends GameObject implements Directable, Object
 	}
 
 	public void eat() {
-        stateQueue.add(new FetchingItem(this,1, Plate.class,getHouse()));
-        stateQueue.add(new FetchingItem(this,1,Food.class,getHouse()));
-        stateQueue.add(new MovingToObjectByType(this,1, Stool.class,getHouse()));
+        stateQueue.add(new FetchingItem(this,1, Plate.class, getHouse()));
+        stateQueue.add(new FetchingItem(this,1,Food.class, getHouse()));
+        stateQueue.add(new MovingToObjectByType(this,1, Stool.class, getHouse()));
         stateQueue.add(new Eating(this,1));
-        stateQueue.add(new StoringItem(this,1,Plate.class, Wardrobe.class,getHouse()));
+        stateQueue.add(new StoringItem(this,1,Plate.class, Wardrobe.class, getHouse()));
 	}
 
 	public void wash() {
-        stateQueue.add(new MovingToObjectByType(this,2, Bath.class,getHouse()));
+        stateQueue.add(new MovingToObjectByType(this,2, Bath.class, getHouse()));
         stateQueue.add(new Washing(this,2));
 	}
 
 	public void pee() {
-        stateQueue.add(new MovingToObjectByType(this,3, Toilet.class,getHouse()));
+        stateQueue.add(new MovingToObjectByType(this,3, Toilet.class, getHouse()));
         stateQueue.add(new Peeing(this,3));
 	}
 
 	public void sleep() {
-        stateQueue.add(new MovingToObjectByType(this,4, Bed.class,getHouse()));
+        stateQueue.add(new MovingToObjectByType(this,4, Bed.class, getHouse()));
         stateQueue.add(new Sleeping(this,4));
 	}
 
@@ -359,5 +360,9 @@ public abstract class Character extends GameObject implements Directable, Object
 			} //si le personnage ne peut pas aller sur la case, il va chercher � aller sur celles � c�t� de l'objet
 		}
 		return tiles;
+	}
+
+	public LinkedList<State> getStateQueue() {
+		return stateQueue;
 	}
 }

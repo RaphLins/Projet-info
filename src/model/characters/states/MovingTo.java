@@ -5,13 +5,14 @@ import model.Game;
 import model.GameObject;
 import model.characters.AStar;
 import model.characters.Character;
+import model.characters.Wizard;
 import model.map.Map;
 import model.map.Tile;
 import model.places.House;
 
 public class MovingTo extends State implements Animation {
     private Tile target;
-    private boolean teleport;
+    private boolean teleport =false;
     private int direction;
     private Tile lastPos = null;
     private static int tilePerMinute = 3;
@@ -21,11 +22,6 @@ public class MovingTo extends State implements Animation {
     public MovingTo(Character character, int groupID, Tile target){
         super(character,groupID);
         this.target = target;
-    }
-
-    public MovingTo(Character character, int groupID, Tile target, boolean teleport){
-        this(character,groupID,target);
-        this.teleport = teleport;
     }
 
     public Tile getTarget(){
@@ -40,10 +36,11 @@ public class MovingTo extends State implements Animation {
     public void init() {
         Game.getInstance().getTime().attach(this);
         super.init();
-        if(teleport && target.distanceTo(getCharacter().getPos())>10){
-
+        if(getCharacter() instanceof Wizard ){
+            if(((Wizard)getCharacter()).getMagicPower()==100 && target.distanceTo(getCharacter().getPos())>10){
+                teleport = true;
+            }
         }
-
     }
 
     @Override
