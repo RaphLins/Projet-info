@@ -5,9 +5,8 @@ import model.characters.states.ReadingMagicBook;
 import model.characters.states.StoringItem;
 import model.items.MagicBook;
 import model.map.Bookshelf;
-import model.map.Tile;
 
-public class ChildWizard extends Kid implements Wizard {
+public class ChildWizard extends Child implements Wizard {
 
 	double magicPower = 50;
 
@@ -31,4 +30,5 @@ public class ChildWizard extends Kid implements Wizard {
 		getStateQueue().add(new ReadingMagicBook(this,9));
 		getStateQueue().add(new StoringItem(this,9,MagicBook.class, Bookshelf.class));
 	}
+
 }

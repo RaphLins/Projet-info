@@ -3,6 +3,7 @@ package model.map;
 import model.Game;
 import model.GameObject;
 import model.characters.AdultWizard;
+import model.characters.BabyWizard;
 import model.characters.Character;
 import model.characters.ChildWizard;
 import model.items.Broom;
@@ -21,6 +22,8 @@ public class ObjectFactory {
     public GameObject getInstance(String type){
         GameObject res = null;
 
+
+
         switch(type) {
                 case "X": res= new Wall(); break;
                 case "Fr": res = new Fridge(); break;
@@ -37,6 +40,8 @@ public class ObjectFactory {
                 case "AW_F" : res = new AdultWizard("F"); break;
                 case "CW_M" : res = new ChildWizard("M"); break;
                 case "CW_F" : res = new ChildWizard("F"); break;
+                case "BW_F" : res = new BabyWizard("F"); break;
+                case "BW_M" : res = new BabyWizard("M"); break;
             }
         String character[] = type.split("_");
         if (character.length>=2) {
@@ -47,6 +52,9 @@ public class ObjectFactory {
              }
              else if(charType.equals("CW")) {
             	 res = new ChildWizard(charGender);
+             }
+             else if(charType.equals("BW")) {
+                 res = new BabyWizard(charGender);
              }
              charactersToAssign.add((Character)res);
              if(character.length>=3 && character[2].equals("fam")) {

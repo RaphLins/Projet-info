@@ -8,14 +8,13 @@ import model.characters.Character;
 import model.characters.Wizard;
 import model.map.Map;
 import model.map.Tile;
-import model.places.House;
 
 public class MovingTo extends State implements Animation {
     private Tile target;
     private boolean teleport =false;
     private int direction;
     private Tile lastPos = null;
-    private static int tilePerMinute = 3;
+    private int minutePerTile;
     String IDSave;
 
     private float animOffset = 0;
@@ -23,6 +22,7 @@ public class MovingTo extends State implements Animation {
     public MovingTo(Character character, int groupID, Tile target){
         super(character,groupID);
         this.target = target;
+        minutePerTile = 30/character.getSpeed();
     }
 
     public Tile getTarget(){
@@ -83,7 +83,7 @@ public class MovingTo extends State implements Animation {
                 }
             }
             else{
-                if(Game.getInstance().getTime().getMinutes()%tilePerMinute==0){//only move one tile every "tilePerMinutes" minutes
+                if(Game.getInstance().getTime().getMinutes()% minutePerTile ==0){//only move one tile every "tilePerMinutes" minutes
                 direction= (new AStar(getCharacter().getPos(), target, map)).getNextStep();
                 //AStar allows to find the best way to go to the target (it's used to find the direction where the character should go next).
                 if(direction==-100){
@@ -117,12 +117,12 @@ public class MovingTo extends State implements Animation {
 
     @Override
     public void animate(float timeFraction) {
-        if(animOffset+timeFraction/tilePerMinute>0){
+        if(animOffset+timeFraction/ minutePerTile >0){
             animOffset=0;
             getCharacter().resetOffset();
         }
         else {
-            animOffset+=timeFraction/tilePerMinute;
+            animOffset+=timeFraction/ minutePerTile;
             getCharacter().setOffsetInDirection(animOffset,direction);
         }
         getCharacter().getPos().update();

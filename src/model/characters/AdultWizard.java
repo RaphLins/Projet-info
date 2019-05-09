@@ -1,5 +1,7 @@
 package model.characters;
 
+import model.Game;
+import model.GameObject;
 import model.characters.states.FetchingItem;
 import model.characters.states.ReadingMagicBook;
 import model.characters.states.StoringItem;
@@ -29,5 +31,4 @@ public class AdultWizard extends Adult implements Wizard {
         getStateQueue().add(new ReadingMagicBook(this,9));
         getStateQueue().add(new StoringItem(this,9,MagicBook.class, Bookshelf.class));
     }
-
 }

@@ -1,6 +1,6 @@
 package model.places;
 
-import model.characters.Kid;
+import model.characters.Child;
 import model.map.Map;
 import model.map.Tile;
 
@@ -10,7 +10,7 @@ public class School extends WorkablePlace {
 		super(pos, height, width, map);
 	}
 
-	public void study(Kid kid) {
+	public void study(Child child) {
 		
 	}
 

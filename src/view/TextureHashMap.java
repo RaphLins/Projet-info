@@ -54,6 +54,8 @@ public class TextureHashMap {
             put4("Adult Wizard (F)",characters,0,2,1,2);
             put4("Child Wizard (M)",characters,0,4,1,2);
             put4("Child Wizard (F)",characters,0,6,1,2);
+            put4("Baby Wizard (F)",characters,0,8,1,2);
+            put4("Baby Wizard (M)",characters,0,8,1,2);
 
         } catch (IOException e) {
         }

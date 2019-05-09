@@ -38,14 +38,6 @@ public class Eating extends UsingItem {
 
     @Override
     public void run() {
-    	if(Game.getInstance().getFamily().contains(getCharacter())) {
-    		for(HoldableItem item : getCharacter().getInventory()) {
-        		if(item instanceof Food) {
-        			getCharacter().getInventory().remove(item);
-        			break;
-        		}
-    		}
-    	}
         getCharacter().incrementHunger(5.24);
         if(getCharacter().getHunger()==100){	//the state is stopped if the value of hunger has reached its maximum.
             finish();
@@ -54,6 +46,14 @@ public class Eating extends UsingItem {
 
     @Override
     public void finish() {
+        if(Game.getInstance().getFamily().contains(getCharacter())) {
+            for(HoldableItem item : getCharacter().getInventory()) {
+                if(item instanceof Food) {
+                    getCharacter().getInventory().remove(item);
+                    break;
+                }
+            }
+        }
         getCharacter().pickUpItemInFront(Plate.class);
         super.finish();
     }

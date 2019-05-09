@@ -21,7 +21,7 @@ import java.lang.Math;
 
 import java.util.*;
 
-public abstract class Character extends GameObject implements Directable, ObjectHolder, TimeObserver,ObjectWithActions{
+public abstract class Character extends GameObject implements Directable, ObjectHolder, TimeObserver,ObjectWithActions, SoundListenner, SoundMaker{
 	private double hunger = 100;
 	private double hygiene = 60;
 	private double bladder = 100;
@@ -33,6 +33,7 @@ public abstract class Character extends GameObject implements Directable, Object
 	private String name;
 	private ArrayList<HoldableItem> inventory = new ArrayList<>();
 	private HashMap<Character,Integer> relationLevels = new HashMap<>();
+	private int speed = 10;
 
 	private LinkedList<State> stateQueue = new LinkedList<>();
 	//allows to easily have state sequences.
@@ -156,13 +157,7 @@ public abstract class Character extends GameObject implements Directable, Object
 		//even if the character has to pee, the action can't be done automatically if he's doing something else.
 		//the value can't exceed 100 (because of the min) and can't be lower than 0 (because of the max).
 		if (bladder<=50) {
-		    Boolean bool = true;
-		    for(State state : stateQueue){
-		        if(state instanceof Peeing){
-		            bool=false;
-                }
-            }
-		    if(bool){
+		    if(!stateInQueue(Peeing.class)){
                 pee();
             }
 		}
@@ -171,13 +166,7 @@ public abstract class Character extends GameObject implements Directable, Object
 	public void incrementEnergy(double i) {
 		energy = Math.max(Math.min(energy+i,100),0);
         if (energy<=15 || Game.getInstance().getTime().getHours()>21) {
-            Boolean bool = true;
-            for(State state : stateQueue){
-                if(state instanceof Sleeping){
-                    bool=false;
-                }
-            }
-            if(bool){
+            if(!stateInQueue(Sleeping.class)){
                 sleep();
             }
         }
@@ -185,32 +174,10 @@ public abstract class Character extends GameObject implements Directable, Object
 	
 	public void incrementHunger(double i) {
 		hunger = Math.max(Math.min(hunger+i,100),0);
-        if (hunger<=70) {
-            Boolean bool = true;
-            for(State state : stateQueue){
-                if(state instanceof Eating){
-                    bool=false;
-                }
-            }
-            if(bool){
-                eat();
-            }
-        }
 	}
 	
 	public void incrementHygiene(double i) {
 		hygiene = Math.max(Math.min(hygiene+i,100),0);
-        if (hygiene<=67) {
-            Boolean bool = true;
-            for(State state : stateQueue){
-                if(state instanceof Washing){
-                    bool=false;
-                }
-            }
-            if(bool){
-                wash();
-            }
-        }
 	}
 
 	public void incrementHappiness(double i) {
@@ -364,5 +331,23 @@ public abstract class Character extends GameObject implements Directable, Object
 
 	public LinkedList<State> getStateQueue() {
 		return stateQueue;
+	}
+
+	public int getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+
+	public boolean stateInQueue(Class stateType){
+		Boolean inQueue = false;
+		for(State state : stateQueue){
+			if(stateType.isInstance(state)){
+				inQueue=true;
+			}
+		}
+		return inQueue;
 	}
 }

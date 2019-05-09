@@ -2,3 +2,7 @@
 saves/
 
 res/META-INF/MANIFEST\.MF
+
+res/\.~lock\.map\.csv#
+
+res/map2\.csv
