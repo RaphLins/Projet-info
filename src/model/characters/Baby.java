@@ -46,14 +46,4 @@ public abstract class Baby extends Character {
         super.incrementHygiene(100);
     }
 
-    @Override
-    public void makeSound(String sound) {
-        for(Tile tile: Game.getInstance().getMap().getNearbyTiles(getPos(),40)){
-            for(GameObject object:tile.getObjects()){
-                if(object instanceof SoundListenner){
-                    ((SoundListenner)object).reactToSound(sound,this);
-                }
-            }
-        }
-    }
 }

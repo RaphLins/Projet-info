@@ -34,6 +34,7 @@ public abstract class Character extends GameObject implements Directable, Object
 	private ArrayList<HoldableItem> inventory = new ArrayList<>();
 	private HashMap<Character,Integer> relationLevels = new HashMap<>();
 	private int speed = 10;
+	private String sound = "";
 
 	private LinkedList<State> stateQueue = new LinkedList<>();
 	//allows to easily have state sequences.
@@ -349,5 +350,33 @@ public abstract class Character extends GameObject implements Directable, Object
 			}
 		}
 		return inQueue;
+	}
+
+	@Override
+	public void makeSound(String sound) {
+		this.sound = sound;
+		new Thread(() -> {
+			try {
+				Thread.sleep(3000);
+				stopMakingSound();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}).start();
+		for(Tile tile: Game.getInstance().getMap().getNearbyTiles(getPos(),40)){
+			for(GameObject object:tile.getObjects()){
+				if(object instanceof SoundListenner){
+					((SoundListenner)object).reactToSound(sound,this);
+				}
+			}
+		}
+	}
+
+	public void stopMakingSound() {
+		sound = "";
+	}
+
+	public String getSound() {
+		return sound;
 	}
 }

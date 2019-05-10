@@ -4,6 +4,8 @@ import controller.Mouse;
 import model.Game;
 import model.GameObject;
 import model.characters.Character;
+import model.characters.SoundListenner;
+import model.characters.SoundMaker;
 import model.map.Map;
 import model.characters.Directable;
 import model.map.Tile;
@@ -19,7 +21,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-public class MapView extends JPanel {
+public class MapView extends JPanel implements SoundListenner {
     public static final int TILE_WIDTH =  20;
     public static final int TILE_HEIGHT =  20;
     private float zoom = 2;
@@ -30,7 +32,8 @@ public class MapView extends JPanel {
     private int mouseX = 0;
     private int mouseY = 0;
     private Mouse mouseController = null;
-    TextureHashMap textures = new TextureHashMap();
+    private TextureHashMap textures = new TextureHashMap();
+    private ArrayList<Character> shownCharacters = new ArrayList<>();
 
     public MapView() {
         this.setFocusable(true);
@@ -77,6 +80,7 @@ public class MapView extends JPanel {
     }
 
     public void paint(Graphics g) {
+        shownCharacters.clear();
         GameObject selected = Game.getInstance().getSelectedObject();
         for(int j = 0; j < getWindowHeight()+2; j++){
             for(int i = 0; i < getWindowWidth()+1; i++){
@@ -95,6 +99,14 @@ public class MapView extends JPanel {
             g.setColor(new Color(255,204,153,120));
             g.fillOval(x,y,TILE_WIDTH*(int)zoom,TILE_HEIGHT*(int)zoom);
         }
+
+        for(Character c:shownCharacters){
+            String sound = c.getSound();
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("default", Font.BOLD, 15));
+            g.drawString(sound, (int)((c.getExactX()-viewPosX)*TILE_WIDTH*zoom), (int)((c.getExactY()-viewPosY)*TILE_WIDTH*zoom));
+        }
+
         //System.out.println("painted "+paintCount);
         //paintCount++;
     }
@@ -105,6 +117,9 @@ public class MapView extends JPanel {
         ArrayList<GameObject> objects = (ArrayList<GameObject>)tile.getObjects().clone();//clone to avoid concurrent modification exception
         for(GameObject object: objects){//draw items
             String id = object.ID;
+            if(object instanceof Character){
+                shownCharacters.add((Character) object);
+            }
             if (object instanceof Directable) {
                 id += ((Directable) object).getDirection();
             }
@@ -183,4 +198,9 @@ public class MapView extends JPanel {
         setViewPos(x-getWindowWidth()/2,y-getWindowHeight()/2);
     }
 
+
+    @Override
+    public void reactToSound(String sound, SoundMaker source) {
+        repaint();
+    }
 }

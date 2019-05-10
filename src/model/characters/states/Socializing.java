@@ -13,8 +13,10 @@ public class Socializing extends Waiting {
     @Override
     public void run() {
         super.run();
-        getCharacter().incrementHappiness(getCharacter().getRelationLevel(acquaintance)*2);
-        acquaintance.incrementHappiness(acquaintance.getRelationLevel(acquaintance)*2);
+        getCharacter().makeSound("bla bla bla");
+        acquaintance.makeSound("bla bla bla");
+        getCharacter().incrementHappiness(getCharacter().getRelationLevel(acquaintance)*0.1);
+        acquaintance.incrementHappiness(acquaintance.getRelationLevel(acquaintance)*0.1);
     }
 
     @Override
