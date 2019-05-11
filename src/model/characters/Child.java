@@ -47,16 +47,20 @@ public abstract class Child extends Character{
 		super.incrementHygiene(i);
 		if (getHygiene()<=67) {
 			if(!stateInQueue(Washing.class)){
+				System.out.println("wash");
 				wash();
 			}
 		}
 	}
-	
-	public School getClosestSchool(ArrayList<School> schools) {
-		ArrayList<Tile> possibleTargets = new ArrayList<>();
-    	for(School school : schools) {
-    		possibleTargets.add(school.getPos());
-    	}
-    	return (School) Game.getInstance().getMap().getClosestTile(this.getPos(), possibleTargets).getLocation();
-    }
+
+	@Override
+	public void timePassed() {
+		super.timePassed();
+		int hours = Game.getInstance().getTime().getHours();
+		if(hours>=7 && hours<=16){
+			if(!stateInQueue(Studying.class)){
+				goToSchool();
+			}
+		}
+	}
 }
