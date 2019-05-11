@@ -9,6 +9,11 @@ public class Peeing extends UsingItem {
     }
 
     @Override
+    public void init() {
+        getCharacter().getLocation();
+        super.init();
+    }
+    @Override
     public void run() {
         getCharacter().incrementBladder(50.8);
         if(getCharacter().getBladder()==100){

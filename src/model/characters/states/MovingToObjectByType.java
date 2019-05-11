@@ -24,6 +24,14 @@ public class MovingToObjectByType extends MovingToObject {
     }
 
     @Override
+    public void init() {
+        if(location==null){
+            location=getCharacter().getLocation();
+        }
+        super.init();
+    }
+
+    @Override
     public Tile getTarget() {
         if(location == null){
             return Game.getInstance().getMap().getClosestTile(getCharacter().getPos(), objectType, 50);

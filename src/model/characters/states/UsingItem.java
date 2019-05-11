@@ -46,6 +46,7 @@ abstract public class UsingItem extends State {
     public void cancel() {
         if(item!=null){
             item.stopUsing();
+            item = null;
         }
         super.cancel();
     }

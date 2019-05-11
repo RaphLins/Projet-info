@@ -20,9 +20,9 @@ public class FetchingItem extends MovingToObjectByType {
         if(getCharacter().getItem(getObjectType())!=null){//skip this state if the character already has the item
             super.finish();
         }
-        else if(getObjectType()== Food.class){
+        else if(getObjectType()== Food.class && getCharacter().getLocation() != getCharacter().getHouse()){
             if(Game.getInstance().spendGold(10)){
-                getCharacter().carryItem(new Food());
+                new Food().storeIn(getCharacter());
             }
             super.finish();
         }

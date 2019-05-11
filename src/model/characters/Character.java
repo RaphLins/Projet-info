@@ -97,11 +97,11 @@ public abstract class Character extends GameObject implements Directable, Object
 	}
 
 	public void eat() {
-		stateQueue.add(new FetchingItem(this,1, Plate.class, getLocation()));
+		stateQueue.add(new FetchingItem(this,1, Plate.class));
 		stateQueue.add(new FetchingItem(this,1,Food.class, getHouse()));
-		stateQueue.add(new MovingToObjectByType(this,1, Stool.class, getLocation()));
+		stateQueue.add(new MovingToObjectByType(this,1, Stool.class));
 		stateQueue.add(new Eating(this,1));
-		stateQueue.add(new StoringItem(this,1,Plate.class, Wardrobe.class, getLocation()));
+		stateQueue.add(new StoringItem(this,1,Plate.class, Wardrobe.class));
 	}
 
 	public void wash() {
@@ -110,7 +110,7 @@ public abstract class Character extends GameObject implements Directable, Object
 	}
 
 	public void pee() {
-		stateQueue.add(new MovingToObjectByType(this,3, Toilet.class, getLocation()));
+		stateQueue.add(new MovingToObjectByType(this,3, Toilet.class));
 		stateQueue.add(new Peeing(this,3));
 	}
 

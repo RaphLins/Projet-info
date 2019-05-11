@@ -44,15 +44,16 @@ public class Working extends UsingItem{
 	 public void run() {
 		 getCharacter().incrementHappiness(-0.01);
 		 Game.getInstance().earnGold(1);
-		 if(getCharacter().getHygiene()<=20 || getCharacter().getEnergy()<=20) {
+		 if(getCharacter().getHygiene()<=20 || getCharacter().getEnergy()<=20 || Game.getInstance().getTime().getHours()>=17) {
 			 finish();
+			 getCharacter().pee();
 		 }
 		 else if(getCharacter().getBladder()<=20) {
-			 cancel();
+			 super.cancel();
 			 ((Adult)getCharacter()).work();
 		 }
 		 else if(getCharacter().getHunger()<=35) {
-			 cancel();
+			 super.cancel();
 			 ((Adult)getCharacter()).work();
 		 }
 	 }
@@ -61,6 +62,12 @@ public class Working extends UsingItem{
 	public void finish() {
 		getCharacter().setLocation(getCharacter().getHouse());
 		super.finish();
+	}
+
+	@Override
+	public void cancel() {
+		getCharacter().setLocation(getCharacter().getHouse());
+		super.cancel();
 	}
 
 }

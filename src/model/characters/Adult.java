@@ -18,9 +18,11 @@ public abstract class Adult extends Character {
     }
 
     public void work() {
-        WorkablePlace workablePlace = (WorkablePlace) Game.getInstance().getMap().getClosestPlace(getPos(),MinistryOfMagic.class);
-    	getStateQueue().add(new MovingToObjectByType(this,66, Stool.class,workablePlace));
-    	getStateQueue().add(new Working(this,66,workablePlace));
+        if(!stateInQueue(Working.class)){
+            WorkablePlace workablePlace = (WorkablePlace) Game.getInstance().getMap().getClosestPlace(getPos(),MinistryOfMagic.class);
+            getStateQueue().add(new MovingToObjectByType(this,66, Stool.class,workablePlace));
+            getStateQueue().add(new Working(this,66,workablePlace));
+        }
 	}
 
     @Override

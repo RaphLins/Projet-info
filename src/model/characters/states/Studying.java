@@ -20,25 +20,25 @@ public class Studying extends UsingItem {
 
 	@Override
 	public void init() {
-		super.init();
 		getCharacter().setLocation(school);
+		super.init();
 	}
 
 	@Override
 	 public void run() {
-		 getCharacter().incrementHappiness(-0.03);
-		 getCharacter().incrementEnergy(-0.03);
+		 getCharacter().incrementHappiness(-0.01);
 		 
-		 if(getCharacter().getHygiene()<=20 || getCharacter().getEnergy()<=20) {
+		 if(getCharacter().getHygiene()<=20 || getCharacter().getEnergy()<=20 || Game.getInstance().getTime().getHours()>=17) {
 			 finish();
+			 getCharacter().pee();
 		 }
 		 else if(getCharacter().getBladder()<=20) {
-			 cancel();
+			 super.cancel();
 			 ((Child)getCharacter()).goToSchool();
 		 }
-		 else if(getCharacter().getHunger()<=70) {
-			 cancel();
-			 ((Child)getCharacter()).goToSchool();	
+		 else if(getCharacter().getHunger()<=35) {
+			 super.cancel();
+			 ((Child)getCharacter()).goToSchool();
 		 }
 		if(getCharacter() instanceof Wizard) {
 			((Wizard)getCharacter()).incrementMagicPower(0.015);
@@ -48,7 +48,12 @@ public class Studying extends UsingItem {
 	@Override
 	public void finish() {
 		getCharacter().setLocation(getCharacter().getHouse());
-		System.out.println(getCharacter().getLocation());
 		super.finish();
+	}
+
+	@Override
+	public void cancel() {
+		getCharacter().setLocation(getCharacter().getHouse());
+		super.cancel();
 	}
 }
