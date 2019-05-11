@@ -36,22 +36,28 @@ public class ActionView extends JPanel{
     			Game.getInstance().getWindow().remove(this);
     			Game.getInstance().getWindow().showSocializeView();
     		});
-    		if(selected instanceof Wizard && !(selected instanceof BabyWizard)){
-				addButton("Read Magic Book").addActionListener(e->{
+			if(selected instanceof ChildWizard){
+				addButton("<html>Read Magic<br> Book</html>").addActionListener(e->{
 					c.stopEverything();
 					((ChildWizard)c).readMagicBook();
 				});
 			}
+			if(selected instanceof AdultWizard){
+				addButton("<html>Read Magic<br> Book</html>").addActionListener(e->{
+					c.stopEverything();
+					((AdultWizard)c).readMagicBook();
+				});
+			}
 
 			if(selected instanceof Adult) {
-				addButton("Go to work").addActionListener(e->{
+				addButton("<html>Go to<br> work</html>").addActionListener(e->{
 					c.stopEverything();
 					((Adult)c).work();
 				});
 			}
 			
 			if(selected instanceof Child) {
-				addButton("Go to school").addActionListener(e->{
+				addButton("<html>Go to<br> school</html>").addActionListener(e->{
 					c.stopEverything();
 					((Child)c).goToSchool();
 				});
@@ -67,6 +73,8 @@ public class ActionView extends JPanel{
 		button.setOpaque(false);
 		button.setContentAreaFilled(false);
 		button.setFocusable(false);
+		button.setMargin(new Insets(1, 1, 1, 1) );
+		button.setFont(new Font("default", Font.BOLD, 11));
 		add(button);
 		return button;
 	}
