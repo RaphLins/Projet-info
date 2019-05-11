@@ -121,7 +121,7 @@ public abstract class GameObject implements Serializable {
                     Tile target2 = map.getTileNextTo(tile,i);
                     if(target2.isWalkable() && !tiles.contains(target2)) {
                         tiles.add(target2);
-                    } //si le personnage ne peut pas aller sur la case, il va chercher � aller sur celles � c�t� de l'objet
+                    } //si le personnage ne peut pas aller sur la case, il va chercher a aller sur celles a cote de l'objet
                 }
             }
         }

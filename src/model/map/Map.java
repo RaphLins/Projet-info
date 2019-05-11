@@ -4,7 +4,9 @@ import model.*;
 import model.characters.Character;
 import model.items.HoldableItem;
 import model.places.House;
+import model.places.MinistryOfMagic;
 import model.places.Place;
+import model.places.School;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -17,6 +19,8 @@ import java.util.List;
 public class Map implements Serializable{
     public static int WIDTH;
     public static int HEIGHT;
+    private ArrayList <School> schools = new ArrayList<>();
+    private ArrayList<MinistryOfMagic> ministriesOfMagic = new ArrayList<>();
 
     private Tile[][] grid;
 
@@ -79,7 +83,16 @@ public class Map implements Serializable{
                             				}
                             			}
                             		}
+                            		else if (type2.equals("School")) {
+                            			School school = new School(grid[i][j],height,width,this);
+                            			schools.add(school);
+                            		}
+                            		else if (type2.equals("MinistryOfMagic")){
+                            			MinistryOfMagic ministryOfMagic = new MinistryOfMagic(grid[i][j],height,width,this);
+                            			ministriesOfMagic.add(ministryOfMagic);
+                            		}
                             	}
+                            	
                         	}
                         }
                     }
@@ -189,5 +202,12 @@ public class Map implements Serializable{
             }
         }
         return res;
+    }
+    public ArrayList<School> getSchools(){
+    	return schools;
+    }
+    
+    public ArrayList<MinistryOfMagic> getMinistriesOfMagic(){
+    	return ministriesOfMagic;
     }
 }

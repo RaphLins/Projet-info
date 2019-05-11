@@ -36,6 +36,7 @@ public class ObjectFactory {
                 case "St": res = new Stool(); break;
                 case "Ben": res = new Bench(); break;
                 case "Bo": res = new Bookshelf(); break;
+                case "Pl" : res = new Plate(); break;
                 case "AW_M": res = new AdultWizard("M"); break;
                 case "AW_F" : res = new AdultWizard("F"); break;
                 case "CW_M" : res = new ChildWizard("M"); break;
@@ -74,7 +75,7 @@ public class ObjectFactory {
         		String dimensions[] = split[1].split("x");
         		int width = Integer.parseInt(dimensions[0]);
         		int height = Integer.parseInt(dimensions[1]);
-        		if(!(type.equals("House"))) {
+        		if(!(type.equals("House")||type.equals("School")||type.equals("MinistryOfMagic"))) {
         			res = new Decoration(type,width,height);
         		}
         	}

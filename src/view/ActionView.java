@@ -6,8 +6,11 @@ import javax.swing.*;
 
 import model.GameObject;
 import model.Game;
+import model.characters.Adult;
 import model.characters.AdultWizard;
+import model.characters.BabyWizard;
 import model.characters.Character;
+import model.characters.Child;
 import model.characters.ChildWizard;
 import model.characters.Wizard;
 
@@ -39,16 +42,24 @@ public class ActionView extends JPanel{
     			Game.getInstance().getWindow().remove(this);
     			Game.getInstance().getWindow().showSocializeView();
     		});
-    		if(selected instanceof ChildWizard){
+    		if(selected instanceof Wizard && !(selected instanceof BabyWizard)){
 				addButton("Read Magic Book").addActionListener(e->{
 					c.stopEverything();
 					((ChildWizard)c).readMagicBook();
 				});
 			}
-			if(selected instanceof AdultWizard){
-				addButton("Read Magic Book").addActionListener(e->{
+
+			if(selected instanceof Adult) {
+				addButton("Go to work").addActionListener(e->{
 					c.stopEverything();
-					((AdultWizard)c).readMagicBook();
+					((Adult)c).work();
+				});
+			}
+			
+			if(selected instanceof Child) {
+				addButton("Go to school").addActionListener(e->{
+					c.stopEverything();
+					((Child)c).goToSchool();
 				});
 			}
 

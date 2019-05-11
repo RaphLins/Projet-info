@@ -4,7 +4,6 @@ import model.Game;
 import model.GameObject;
 import model.characters.Character;
 import model.map.Tile;
-import model.places.House;
 import model.places.Place;
 
 import java.util.ArrayList;

@@ -11,6 +11,7 @@ import model.map.Table;
 import model.map.Tile;
 
 public class Eating extends UsingItem {
+
     public Eating(Character character, int groupID) {
         super(character, groupID, Stool.class);
     }

@@ -6,6 +6,12 @@ import model.characters.states.*;
 import model.items.Food;
 import model.map.Tile;
 import model.places.WorkablePlace;
+import model.places.MinistryOfMagic;
+import model.places.Place;
+import java.util.ArrayList;
+import model.characters.states.MovingToObjectByType;
+import model.map.Stool;
+import model.map.Table;
 
 public abstract class Adult extends Character {
 
@@ -14,8 +20,9 @@ public abstract class Adult extends Character {
         super(gender);
     }
 
-    public void work(WorkablePlace place) {
-		
+    public void work() {
+    	getStateQueue().add(new MovingToObjectByType((Character)this,66,Stool.class,getClosestWorkPlace(Game.getInstance().getMap().getMinistriesOfMagic())));
+    	getStateQueue().add(new Working((Character)this,66));
 	}
 
     @Override
@@ -54,5 +61,12 @@ public abstract class Adult extends Character {
                 }
             }
         }
+    }
+    public MinistryOfMagic getClosestWorkPlace(ArrayList<MinistryOfMagic> ministriesOfMagic) {
+    	ArrayList<Tile> possibleTargets = new ArrayList<>();
+    	for(MinistryOfMagic ministry : ministriesOfMagic) {
+    		possibleTargets.add(ministry.getPos());
+    	}
+    	return (MinistryOfMagic) Game.getInstance().getMap().getClosestTile(this.getPos(), possibleTargets).getLocation();
     }
 }

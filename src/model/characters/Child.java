@@ -1,11 +1,14 @@
 package model.characters;
 
+import java.util.ArrayList;
+
 import model.Game;
-import model.GameObject;
 import model.characters.states.Eating;
-import model.characters.states.State;
+import model.characters.states.MovingToObjectByType;
+import model.characters.states.Studying;
 import model.characters.states.Washing;
 import model.places.School;
+import model.map.Bench;
 import model.map.Tile;
 
 public abstract class Child extends Character{
@@ -14,8 +17,9 @@ public abstract class Child extends Character{
 		super(gender);
 	}
 
-	public void goToSchool(School school) {
-		
+	public void goToSchool() {
+		getStateQueue().add(new MovingToObjectByType((Character)this,66,Bench.class,getClosestSchool(Game.getInstance().getMap().getSchools())));
+    	getStateQueue().add(new Studying((Character)this,66));
 	}
 
 	@Override
@@ -42,4 +46,12 @@ public abstract class Child extends Character{
 			}
 		}
 	}
+	
+	public School getClosestSchool(ArrayList<School> schools) {
+		ArrayList<Tile> possibleTargets = new ArrayList<>();
+    	for(School school : schools) {
+    		possibleTargets.add(school.getPos());
+    	}
+    	return (School) Game.getInstance().getMap().getClosestTile(this.getPos(), possibleTargets).getLocation();
+    }
 }

@@ -32,4 +32,8 @@ public abstract class Place implements Serializable {
 	public ArrayList<Tile> getArea(){
 		return area;
 	}
+	
+	public Tile getPos() {
+		return pos;
+	}
 }

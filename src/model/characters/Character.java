@@ -98,11 +98,13 @@ public abstract class Character extends GameObject implements Directable, Object
 	}
 
 	public void eat() {
-        stateQueue.add(new FetchingItem(this,1, Plate.class, getHouse()));
-        stateQueue.add(new FetchingItem(this,1,Food.class, getHouse()));
-        stateQueue.add(new MovingToObjectByType(this,1, Stool.class, getHouse()));
+		if (!(getPos().getLocation() instanceof House) || getPos().getLocation()==getHouse()) {
+			stateQueue.add(new FetchingItem(this,1, Plate.class, getPos().getLocation()));
+	        stateQueue.add(new FetchingItem(this,1,Food.class, getHouse()));
+		}
+        stateQueue.add(new MovingToObjectByType(this,1, Stool.class, getPos().getLocation()));
         stateQueue.add(new Eating(this,1));
-        stateQueue.add(new StoringItem(this,1,Plate.class, Wardrobe.class, getHouse()));
+        stateQueue.add(new StoringItem(this,1,Plate.class, Wardrobe.class, getPos().getLocation()));
 	}
 
 	public void wash() {
@@ -111,8 +113,13 @@ public abstract class Character extends GameObject implements Directable, Object
 	}
 
 	public void pee() {
-        stateQueue.add(new MovingToObjectByType(this,3, Toilet.class, getHouse()));
-        stateQueue.add(new Peeing(this,3));
+		if (!(getPos().getLocation() instanceof House) || getPos().getLocation()==getHouse()) {
+			stateQueue.add(new MovingToObjectByType(this,3, Toilet.class, getPos().getLocation()));
+		}
+		else {
+			stateQueue.add(new MovingToObjectByType(this,3, Toilet.class, getHouse()));
+		}
+		stateQueue.add(new Peeing(this,3));
 	}
 
 	public void sleep() {
@@ -379,4 +386,5 @@ public abstract class Character extends GameObject implements Directable, Object
 	public String getSound() {
 		return sound;
 	}
+	
 }
