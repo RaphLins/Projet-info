@@ -19,8 +19,7 @@ import java.util.List;
 public class Map implements Serializable{
     private int width;
     private int height;
-    private ArrayList <School> schools = new ArrayList<>();
-    private ArrayList<MinistryOfMagic> ministriesOfMagic = new ArrayList<>();
+    private ArrayList<Place> places = new ArrayList<>();
 
     private Tile[][] grid;
 
@@ -82,16 +81,17 @@ public class Map implements Serializable{
                             				Game.getInstance().setFamilyHouse(house);
                             				for(Character c : Game.getInstance().getFamily()) {
                             					c.setHouse(house);
+                            					c.setLocation(house);
                             				}
                             			}
                             		}
                             		else if (type2.equals("School")) {
                             			School school = new School(grid[i][j],height,width,this);
-                            			schools.add(school);
+                            			places.add(school);
                             		}
                             		else if (type2.equals("MinistryOfMagic")){
                             			MinistryOfMagic ministryOfMagic = new MinistryOfMagic(grid[i][j],height,width,this);
-                            			ministriesOfMagic.add(ministryOfMagic);
+                                        places.add(ministryOfMagic);
                             		}
                             	}
                             	
@@ -103,6 +103,7 @@ public class Map implements Serializable{
         }
         for(Character c : tileFactory.getCharactersToAssign()) {
         	c.setHouse((House)(c.getPos().getLocation()));
+            c.setLocation((House)(c.getPos().getLocation()));
         }
     }
 
@@ -205,12 +206,8 @@ public class Map implements Serializable{
         }
         return res;
     }
-    public ArrayList<School> getSchools(){
-    	return schools;
-    }
-    
-    public ArrayList<MinistryOfMagic> getMinistriesOfMagic(){
-    	return ministriesOfMagic;
+    public ArrayList<Place> getPlaces(){
+    	return places;
     }
 
     public GameObject getClosestObject(Tile position, ArrayList<GameObject> possibleTargets) { //utilise les coordonnees des cases contenant l'objet qu'on cherche pour determiner celle qui est la plus proche a vol d'oiseau
@@ -227,6 +224,16 @@ public class Map implements Serializable{
             }
         }
         return res;
+    }
+
+    public Place getClosestPlace(Tile tile, Class type) {
+        ArrayList<Tile> possibleTargets = new ArrayList<>();
+        for(Place place : places) {
+            if(type.isInstance(place)){
+                possibleTargets.add(place.getPos());
+            }
+        }
+        return Game.getInstance().getMap().getClosestTile(tile, possibleTargets).getLocation();
     }
 
     public int getHeight() {

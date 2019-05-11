@@ -18,8 +18,9 @@ public abstract class Adult extends Character {
     }
 
     public void work() {
-    	getStateQueue().add(new MovingToObjectByType((Character)this,66, Stool.class,getClosestWorkPlace(Game.getInstance().getMap().getMinistriesOfMagic())));
-    	getStateQueue().add(new Working((Character)this,66));
+        WorkablePlace workablePlace = (WorkablePlace) Game.getInstance().getMap().getClosestPlace(getPos(),MinistryOfMagic.class);
+    	getStateQueue().add(new MovingToObjectByType(this,66, Stool.class,workablePlace));
+    	getStateQueue().add(new Working(this,66,workablePlace));
 	}
 
     @Override
@@ -59,11 +60,5 @@ public abstract class Adult extends Character {
             }
         }
     }
-    public MinistryOfMagic getClosestWorkPlace(ArrayList<MinistryOfMagic> ministriesOfMagic) {
-    	ArrayList<Tile> possibleTargets = new ArrayList<>();
-    	for(MinistryOfMagic ministry : ministriesOfMagic) {
-    		possibleTargets.add(ministry.getPos());
-    	}
-    	return (MinistryOfMagic) Game.getInstance().getMap().getClosestTile(this.getPos(), possibleTargets).getLocation();
-    }
+
 }

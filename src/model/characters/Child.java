@@ -20,8 +20,9 @@ public abstract class Child extends Character{
 	}
 
 	public void goToSchool() {
-		getStateQueue().add(new MovingToObjectByType((Character)this,66, Bench.class,getClosestSchool(Game.getInstance().getMap().getSchools())));
-    	getStateQueue().add(new Studying((Character)this,66));
+		School school = (School) Game.getInstance().getMap().getClosestPlace(getPos(),School.class);
+		getStateQueue().add(new MovingToObjectByType(this,66, Bench.class,school));
+    	getStateQueue().add(new Studying(this,66,school));
 	}
 
 	@Override
