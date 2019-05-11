@@ -47,7 +47,7 @@ public class Working extends UsingItem{
 			 getCharacter().pee();
 			 ((Adult)getCharacter()).work();
 		 }
-		 if(getCharacter().getHunger()<=20) {
+		 if(getCharacter().getHunger()<=35) {
 			 getCharacter().stopEverything();
 			 getCharacter().eat();
 			 ((Adult)getCharacter()).work();

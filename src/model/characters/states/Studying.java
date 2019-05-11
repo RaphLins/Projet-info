@@ -36,22 +36,27 @@ public class Studying extends State {
 	 @Override
 	 public void run() {
 		 getCharacter().incrementHappiness(-0.03);
+		 getCharacter().incrementEnergy(-0.03);
+		 
+		 if(getCharacter().getHygiene()<=40 || getCharacter().getEnergy()<=40) {
+			 
+			 finish();		
+		 }
+		 
 		 if(getCharacter() instanceof Wizard) {
 			 ((Wizard)getCharacter()).incrementMagicPower(0.015);
-		 }
-		 if(getCharacter().getHygiene()<=20 || getCharacter().getEnergy()<=20) {
-			 finish();
 		 }
 		 if(getCharacter().getBladder()<=20) {
 			 getCharacter().stopEverything();
 			 getCharacter().pee();
 			 ((Child)getCharacter()).goToSchool();
 		 }
-		 if(getCharacter().getHunger()<=20) {
+		 if(getCharacter().getHunger()<=70) {
 			 getCharacter().stopEverything();
 			 getCharacter().eat();
-			 ((Child)getCharacter()).goToSchool();
+			 ((Child)getCharacter()).goToSchool();	
 		 }
+
 	 }
 
 

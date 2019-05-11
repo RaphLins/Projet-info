@@ -33,7 +33,7 @@ public abstract class Character extends GameObject implements Directable, Object
 	private String name;
 	private ArrayList<HoldableItem> inventory = new ArrayList<>();
 	private HashMap<Character,Integer> relationLevels = new HashMap<>();
-	private int speed = 10;
+	private int speed = 30;
 	private String sound = "";
 
 	private LinkedList<State> stateQueue = new LinkedList<>();
@@ -98,13 +98,20 @@ public abstract class Character extends GameObject implements Directable, Object
 	}
 
 	public void eat() {
-		if (!(getPos().getLocation() instanceof House) || getPos().getLocation()==getHouse()) {
-			stateQueue.add(new FetchingItem(this,1, Plate.class, getPos().getLocation()));
-	        stateQueue.add(new FetchingItem(this,1,Food.class, getHouse()));
+		if(getPos().getLocation()==null || getPos().getLocation() instanceof House) {
+			stateQueue.add(new FetchingItem(this,1, Plate.class, getHouse()));
+			stateQueue.add(new FetchingItem(this,1,Food.class, getHouse()));
+	        stateQueue.add(new MovingToObjectByType(this,1, Stool.class, getHouse()));
+	        stateQueue.add(new Eating(this,1));
+	        stateQueue.add(new StoringItem(this,1,Plate.class, Wardrobe.class, getHouse()));
 		}
-        stateQueue.add(new MovingToObjectByType(this,1, Stool.class, getPos().getLocation()));
-        stateQueue.add(new Eating(this,1));
-        stateQueue.add(new StoringItem(this,1,Plate.class, Wardrobe.class, getPos().getLocation()));
+		else {
+			stateQueue.add(new FetchingItem(this,1, Plate.class, getPos().getLocation()));
+			stateQueue.add(new FetchingItem(this,1,Food.class, getHouse()));
+	        stateQueue.add(new MovingToObjectByType(this,1, Stool.class, getPos().getLocation()));
+	        stateQueue.add(new Eating(this,1));
+	        stateQueue.add(new StoringItem(this,1,Plate.class, Wardrobe.class, getPos().getLocation()));
+		}
 	}
 
 	public void wash() {
@@ -113,11 +120,11 @@ public abstract class Character extends GameObject implements Directable, Object
 	}
 
 	public void pee() {
-		if (!(getPos().getLocation() instanceof House) || getPos().getLocation()==getHouse()) {
-			stateQueue.add(new MovingToObjectByType(this,3, Toilet.class, getPos().getLocation()));
+		if (getPos().getLocation() == null || getPos().getLocation() instanceof House) {
+			stateQueue.add(new MovingToObjectByType(this,3, Toilet.class, getHouse()));
 		}
 		else {
-			stateQueue.add(new MovingToObjectByType(this,3, Toilet.class, getHouse()));
+			stateQueue.add(new MovingToObjectByType(this,3, Toilet.class, getPos().getLocation()));
 		}
 		stateQueue.add(new Peeing(this,3));
 	}

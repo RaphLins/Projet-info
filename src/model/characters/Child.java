@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 import model.Game;
 import model.characters.states.Eating;
+import model.characters.states.FetchingItem;
 import model.characters.states.MovingToObjectByType;
 import model.characters.states.Studying;
 import model.characters.states.Washing;
+import model.items.Food;
 import model.places.School;
 import model.map.Bench;
 import model.map.Tile;
