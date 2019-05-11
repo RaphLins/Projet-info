@@ -17,14 +17,16 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Map implements Serializable{
-    public static int WIDTH;
-    public static int HEIGHT;
+    private int width;
+    private int height;
     private ArrayList <School> schools = new ArrayList<>();
     private ArrayList<MinistryOfMagic> ministriesOfMagic = new ArrayList<>();
 
     private Tile[][] grid;
 
     public Map(int width, int height) {
+        this.width = width;
+        this.height = height;
         grid = new Tile[width][height];
         for(int i = 0; i < width; i++){
             for(int j = 0; j< height; j++){
@@ -40,18 +42,18 @@ public class Map implements Serializable{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        HEIGHT = tempList.size();
-        WIDTH = tempList.get(0).split(",",-1).length;
-        grid = new Tile[WIDTH][HEIGHT];
-        for(int i = 0; i < WIDTH; i++){
-            for(int j = 0; j< HEIGHT; j++){
+        height = tempList.size();
+        width = tempList.get(0).split(",",-1).length;
+        grid = new Tile[width][height];
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j< height; j++){
                 grid[i][j] = new Tile(i,j);
             }
         }//create array
         ObjectFactory tileFactory = new ObjectFactory();
-        for (int j = 0; j < HEIGHT; j++) {
+        for (int j = 0; j < height; j++) {
             String[] row = tempList.get(j).split(",",-1);
-            for (int i = 0; i < WIDTH; i++) {
+            for (int i = 0; i < width; i++) {
                 ArrayList<String> types = new ArrayList();
                 if(i<row.length){
                     types = new ArrayList(Arrays.asList(row[i].split(" ")));
@@ -61,10 +63,10 @@ public class Map implements Serializable{
                             object.setPos(grid[i][j],this);
                         }
                         if(type.equals(".")){
-                            grid[i][j].ID = "Floor";
+                            grid[i][j].setID("Floor");
                         }
                         else if(type.equals("*")){
-                            grid[i][j].ID = "Road";
+                            grid[i][j].setID("Road");
                         }
                         else {
                         	if(type!=null) {
@@ -105,7 +107,7 @@ public class Map implements Serializable{
     }
 
     public Tile getTileAt(int x, int y){
-        return grid[Math.max(Math.min(x,WIDTH-1),0)][Math.max(Math.min(y,HEIGHT-1),0)];
+        return grid[Math.max(Math.min(x, width -1),0)][Math.max(Math.min(y, height -1),0)];
     }
 
     public Tile[][] getGrid(){
@@ -209,5 +211,29 @@ public class Map implements Serializable{
     
     public ArrayList<MinistryOfMagic> getMinistriesOfMagic(){
     	return ministriesOfMagic;
+    }
+
+    public GameObject getClosestObject(Tile position, ArrayList<GameObject> possibleTargets) { //utilise les coordonnees des cases contenant l'objet qu'on cherche pour determiner celle qui est la plus proche a vol d'oiseau
+        if(possibleTargets.isEmpty()){
+            return null;
+        }
+        GameObject res = possibleTargets.get(0);
+        float currentDistance = res.getPos().distanceTo(position);
+        for (GameObject obj : possibleTargets) {
+            float distance = obj.getPos().distanceTo(position);
+            if(distance<currentDistance) {
+                res = obj;
+                currentDistance = distance;
+            }
+        }
+        return res;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 }

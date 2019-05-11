@@ -9,6 +9,8 @@ import javax.swing.*;
 import model.*;
 import model.characters.Character;
 import model.items.HoldableItem;
+import model.map.GameObject;
+import model.map.ObjectHolder;
 
 
 public class InventoryDisplay extends JPanel{
@@ -44,9 +46,9 @@ public class InventoryDisplay extends JPanel{
                 }
                 if(i<inventory.size()){
                     HoldableItem item = inventory.get(i);
-                    Image image = textures.get(item.ID).getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+                    Image image = textures.get(item.getID()).getScaledInstance(40, 40, Image.SCALE_SMOOTH);
                     buttons[i].setIcon(new ImageIcon(image));
-                    buttons[i].setText(item.ID);
+                    buttons[i].setText(item.getID());
                     buttons[i].addActionListener(e -> {//allows to move an item from inventory onto the map
                         if(Game.getInstance().getDraggedObject()==null){
                             Game.getInstance().setDraggedObject(item);

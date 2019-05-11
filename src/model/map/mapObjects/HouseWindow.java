@@ -1,11 +1,11 @@
-package model.map;
+package model.map.mapObjects;
 
-import model.GameObject;
 import model.items.Item;
+import model.map.Obstacle;
 
 public class HouseWindow extends Item implements Obstacle {
 
     public HouseWindow() {
-        ID = "House Window";
+        setID("House Window");
     }
 }

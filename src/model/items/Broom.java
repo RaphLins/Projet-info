@@ -6,12 +6,7 @@ public class Broom extends HoldableItem {
 
 	public Broom() {
 		super();
-		ID = "Broom";
-		price = 50;
-	}
-
-	@Override
-	public int getPrice() {
-		return price;
+		setID("Broom");
+		setPrice(50);
 	}
 }

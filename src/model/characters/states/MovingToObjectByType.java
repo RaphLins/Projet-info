@@ -1,14 +1,14 @@
 package model.characters.states;
 
 import model.Game;
-import model.GameObject;
+import model.map.GameObject;
 import model.characters.Character;
 import model.map.Tile;
 import model.places.Place;
 
 import java.util.ArrayList;
 
-public class MovingToObjectByType extends MovingTo {
+public class MovingToObjectByType extends MovingToObject {
     private Class objectType;
     private Place location = null;
 
@@ -37,7 +37,7 @@ public class MovingToObjectByType extends MovingTo {
     public void finish() {
         ArrayList<GameObject> list  = Game.getInstance().getMap().getNearbyObjects(getCharacter().getPos(), objectType,1);
         if(!list.isEmpty()){
-            getCharacter().rotateTo(list.get(0).getPos());//rotate to face the object found
+            getCharacter().rotateTo(Game.getInstance().getMap().getClosestObject(getCharacter().getPos(),list).getPos());//rotate to face the object found
         }
         super.finish();
     }

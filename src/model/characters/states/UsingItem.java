@@ -1,7 +1,7 @@
 package model.characters.states;
 
 import model.Game;
-import model.GameObject;
+import model.map.GameObject;
 import model.characters.Character;
 import model.map.UsableItem;
 

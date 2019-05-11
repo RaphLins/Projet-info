@@ -1,18 +1,15 @@
 package model.characters;
 
 import model.Game;
-import model.GameObject;
 import model.characters.states.*;
 import model.items.Food;
 import model.map.Tile;
+import model.map.mapObjects.Stool;
 import model.places.WorkablePlace;
 import model.places.MinistryOfMagic;
 import model.places.Place;
 import java.util.ArrayList;
 import model.characters.states.MovingToObjectByType;
-import model.map.Stool;
-import model.map.Table;
-
 public abstract class Adult extends Character {
 
 
@@ -21,7 +18,7 @@ public abstract class Adult extends Character {
     }
 
     public void work() {
-    	getStateQueue().add(new MovingToObjectByType((Character)this,66,Stool.class,getClosestWorkPlace(Game.getInstance().getMap().getMinistriesOfMagic())));
+    	getStateQueue().add(new MovingToObjectByType((Character)this,66, Stool.class,getClosestWorkPlace(Game.getInstance().getMap().getMinistriesOfMagic())));
     	getStateQueue().add(new Working((Character)this,66));
 	}
 

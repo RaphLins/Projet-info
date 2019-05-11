@@ -1,8 +1,8 @@
 package model.characters.states;
 
-import model.Animation;
+import model.time.Animation;
 import model.Game;
-import model.GameObject;
+import model.map.GameObject;
 import model.characters.AStar;
 import model.characters.Character;
 import model.characters.Wizard;
@@ -15,7 +15,7 @@ public class MovingTo extends State implements Animation {
     private int direction;
     private Tile lastPos = null;
     private int minutePerTile;
-    String IDSave;
+    private String IDSave;
 
     private float animOffset = 0;
 
@@ -37,7 +37,7 @@ public class MovingTo extends State implements Animation {
     public void init() {
         Game.getInstance().getTime().attach(this);
         super.init();
-        IDSave = getCharacter().ID;
+        IDSave = getCharacter().getID();
         Tile target = getTarget();
         if(getCharacter() instanceof Wizard ){
             if(((Wizard)getCharacter()).getMagicPower()==100 && target!=null && target.distanceTo(getCharacter().getPos())>5){
@@ -55,7 +55,7 @@ public class MovingTo extends State implements Animation {
                 if(this instanceof MovingToObjectByType){
                     String objectID="";
                     try {
-                        objectID = ((GameObject)((MovingToObjectByType)this).getObjectType().newInstance()).ID;
+                        objectID = ((GameObject)((MovingToObjectByType)this).getObjectType().newInstance()).getID();
                     } catch (IllegalAccessException e) {
                     } catch (InstantiationException e) {
                     }
@@ -69,7 +69,7 @@ public class MovingTo extends State implements Animation {
                 return;
             }
             if(teleport){
-                getCharacter().ID = "Teleporting";
+                getCharacter().setID("Teleporting");
                 int x = getCharacter().getPosX();
                 int y = getCharacter().getPosY();
                 int deltaX = target.getX()-x;
@@ -131,7 +131,7 @@ public class MovingTo extends State implements Animation {
     @Override
     public void finish() {
         if(teleport){
-            getCharacter().ID = IDSave;
+            getCharacter().setID(IDSave);
         }
         //end animation
         if(lastPos!=null){
@@ -146,7 +146,7 @@ public class MovingTo extends State implements Animation {
     @Override
     public void cancel() {
         if(teleport){
-            getCharacter().ID = IDSave;
+            getCharacter().setID(IDSave);
             getCharacter().setPos(getCharacter().getAccessTiles().get(0));
         }
         //end animation

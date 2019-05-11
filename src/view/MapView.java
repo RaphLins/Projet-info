@@ -2,20 +2,18 @@ package view;
 
 import controller.Mouse;
 import model.Game;
-import model.GameObject;
+import model.map.GameObject;
 import model.characters.Character;
 import model.characters.SoundListenner;
 import model.characters.SoundMaker;
 import model.map.Map;
 import model.characters.Directable;
 import model.map.Tile;
-import model.map.Wall;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -80,11 +78,12 @@ public class MapView extends JPanel implements SoundListenner {
     }
 
     public void paint(Graphics g) {
+        Map map = Game.getInstance().getMap();
         shownCharacters.clear();
         GameObject selected = Game.getInstance().getSelectedObject();
         for(int j = 0; j < getWindowHeight()+2; j++){
             for(int i = 0; i < getWindowWidth()+1; i++){
-                if(i<Map.WIDTH && j<Map.HEIGHT){
+                if(i<map.getWidth() && j<map.getHeight()){
                     drawTile(getTileAtWindowPos(i,j),i,j,g);
                 }
                 else{
@@ -113,10 +112,10 @@ public class MapView extends JPanel implements SoundListenner {
 
     private void drawTile(Tile tile, int i,int j, Graphics g){
         GameObject draggedObject = Game.getInstance().getDraggedObject();
-        drawImage(textures.get(tile.ID),i,j,g);//draw background
+        drawImage(textures.get(tile.getID()),i,j,g);//draw background
         ArrayList<GameObject> objects = (ArrayList<GameObject>)tile.getObjects().clone();//clone to avoid concurrent modification exception
         for(GameObject object: objects){//draw items
-            String id = object.ID;
+            String id = object.getID();
             if(object instanceof Character){
                 shownCharacters.add((Character) object);
             }
@@ -126,9 +125,6 @@ public class MapView extends JPanel implements SoundListenner {
             if(id=="Wall" && Math.hypot(mouseX-viewPosX-i,mouseY-viewPosY-j)<=1.5){//hide walls around mouse
                 id="Cut Wall";
             }
-            int partX = i-object.getPosX();//to fix
-            int partY = object.height-(object.getPosY()-j);//to fix
-            //BufferedImage image = textures.getPart(id);
             BufferedImage image = textures.get(id);
             if(image!=null){
                 drawImage(image, object.getExactX() - viewPosX,object.getExactY() - viewPosY,g);
@@ -145,7 +141,7 @@ public class MapView extends JPanel implements SoundListenner {
         }*/
         if(i==mouseX-viewPosX && j==mouseY-viewPosY && draggedObject!=null){//draw dragged object
             ((Graphics2D)g).setComposite(AlphaComposite.SrcOver.derive(0.6f));//draw transparent
-            drawImage(textures.get(draggedObject.ID),i,j,g);
+            drawImage(textures.get(draggedObject.getID()),i,j,g);
             ((Graphics2D)g).setComposite(AlphaComposite.SrcOver);//end transparent
         }
     }
@@ -158,10 +154,6 @@ public class MapView extends JPanel implements SoundListenner {
 
     public Tile getTileAtWindowPos(int x, int y){
         return Game.getInstance().getMap().getTileAt(x+viewPosX,y+viewPosY);
-    }
-
-    public void redraw() {
-        this.repaint();
     }
 
     public void addMouse(Mouse m) {
@@ -180,8 +172,9 @@ public class MapView extends JPanel implements SoundListenner {
     }
 
     private void setViewPos(int x, int y){
-        viewPosX = Math.max(Math.min(x,Map.WIDTH-getWindowWidth()-1),0);
-        viewPosY = Math.max(Math.min(y,Map.HEIGHT-getWindowHeight()-1),0);
+        Map map = Game.getInstance().getMap();
+        viewPosX = Math.max(Math.min(x,map.getWidth()-getWindowWidth()-1),0);
+        viewPosY = Math.max(Math.min(y,map.getHeight()-getWindowHeight()-1),0);
         repaint();
     }
 
@@ -197,7 +190,6 @@ public class MapView extends JPanel implements SoundListenner {
     public void centerView(int x, int y){
         setViewPos(x-getWindowWidth()/2,y-getWindowHeight()/2);
     }
-
 
     @Override
     public void reactToSound(String sound, SoundMaker source) {

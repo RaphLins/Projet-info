@@ -1,12 +1,12 @@
-package model.map;
+package model.map.mapObjects;
 
-import model.GameObject;
+import model.map.GameObject;
 
 public class Floor extends GameObject {
 
     public Floor() {
         super();
-        ID = "Floor";
+        setID("Floor");
     }
 
 }

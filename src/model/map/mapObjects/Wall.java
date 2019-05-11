@@ -1,12 +1,12 @@
-package model.map;
+package model.map.mapObjects;
 
-import model.GameObject;
 import model.items.Item;
+import model.map.Obstacle;
 
 public class Wall extends Item implements Obstacle {
     public Wall() {
         super();
-        ID = "Wall";
-        price = 10;
+        setID("Wall");
+        setPrice(10);
     }
 }

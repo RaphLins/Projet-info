@@ -33,6 +33,16 @@ public class MainMenu extends JPanel {
             window.setMainView(new RestoreSaveView(window));
         });
 
+        JToggleButton button = new JToggleButton("ToggleButton Press Me");
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setOpaque(false);
+        button.setFocusable(false);
+
+        button.addActionListener(e->{
+            System.out.println("TEST");
+        });
+        add(button);
+
         setVisible(true);
     }
 

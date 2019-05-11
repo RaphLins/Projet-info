@@ -22,7 +22,7 @@ public class FamilyView extends JPanel{
     public void update(){
         removeAll();
         for(Character character:Game.getInstance().getFamily()){
-            Image image = textures.getAvatar(character.ID).getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+            Image image = textures.getAvatar(character.getID()).getScaledInstance(40, 40, Image.SCALE_SMOOTH);
             JButton button = new JButton(character.getName(), new ImageIcon(image));
             button.setOpaque(false);
             button.setContentAreaFilled(false);

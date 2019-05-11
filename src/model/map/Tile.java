@@ -1,7 +1,6 @@
 package model.map;
 
 import model.Game;
-import model.GameObject;
 import model.places.Place;
 
 import java.io.Serializable;
@@ -12,20 +11,28 @@ public class Tile implements Serializable {
 	private int x;
 	private int y;
 	private boolean isWalkable = true;
-	public String ID;
+	private String ID;
 	private Place location;
 
 	private ArrayList<GameObject> objects = new ArrayList<>();
 	public Tile(int x, int y) {
 		this.x = x;
 		this.y = y;
-		ID = "Grass";	//default ID : a new tile created with this constructor will be grass.
+		setID("Grass");//default ID : a new tile created with this constructor will be grass.
 	}
 
 	public Tile(Tile tile) {
 		this(tile.getX(),tile.getY());
 		objects = tile.getObjects();
 		update();
+	}
+
+	public void setID(String ID) {
+		this.ID = ID;
+	}
+
+	public String getID() {
+		return ID;
 	}
 
 	public boolean isWalkable(){

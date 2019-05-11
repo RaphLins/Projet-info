@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import model.Game;
-import model.GameObject;
+import model.map.GameObject;
 import model.items.*;
 import model.map.*;
+import model.map.mapObjects.*;
 import model.places.House;
 
 
@@ -35,9 +36,9 @@ public class ShopView extends JPanel{
 		shopItems.add(new MagicBook());
 
         for(Item item: shopItems){
-            Image image = textures.get(item.ID);
+            Image image = textures.get(item.getID());
             int price = item.getPrice();
-            JButton button = new JButton( "<html><center>"+item.ID+"<br>"+price+"g"+"</center></html>",new ImageIcon(image));
+            JButton button = new JButton( "<html><center>"+item.getID()+"<br>"+price+"g"+"</center></html>",new ImageIcon(image));
             button.setOpaque(false);
             button.setContentAreaFilled(false);
             //button.setBorderPainted(false);

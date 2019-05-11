@@ -1,23 +1,17 @@
 package controller;
 
 import model.Game;
-import model.GameObject;
+import model.map.GameObject;
 import model.characters.Character;
-import model.map.Decoration;
-import model.map.Map;
+import model.map.mapObjects.Decoration;
 import model.map.Tile;
-import view.MapView;
-import view.Window;
-
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 
 public class Mouse {
 
     public Mouse() {
     }
 
-	public void mapEventRightClick(int x, int y) {
+	public void mapEventRightClick(int x, int y) {//moves the selected character
 		Game game = Game.getInstance();
 		GameObject selected = game.getSelectedObject();
 		if(selected instanceof Character && game.getFamily().contains(selected)){
@@ -25,7 +19,7 @@ public class Mouse {
 			((Character)selected).goTo(game.getMap().getTileAt(x,y));
 			}
 	}
-	public void mapEventLeftClick(int x, int y) {
+	public void mapEventLeftClick(int x, int y) {//select an object
 		Game game = Game.getInstance();
 		GameObject dragged = game.getDraggedObject();
 		if(dragged != null){

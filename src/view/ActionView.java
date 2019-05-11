@@ -1,18 +1,12 @@
 package view;
 import java.awt.*;
-import java.util.ArrayList;
 
 import javax.swing.*;
 
-import model.GameObject;
-import model.Game;
-import model.characters.Adult;
-import model.characters.AdultWizard;
-import model.characters.BabyWizard;
+import model.characters.*;
 import model.characters.Character;
-import model.characters.Child;
-import model.characters.ChildWizard;
-import model.characters.Wizard;
+import model.map.GameObject;
+import model.Game;
 
 public class ActionView extends JPanel{
 	

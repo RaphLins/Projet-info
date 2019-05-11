@@ -1,19 +1,16 @@
 package model.characters;
 
-import model.Game;
-import model.GameObject;
 import model.characters.states.FetchingItem;
 import model.characters.states.ReadingMagicBook;
 import model.characters.states.StoringItem;
 import model.items.MagicBook;
-import model.map.Bookshelf;
-import model.map.Tile;
+import model.map.mapObjects.Bookshelf;
 
 public class AdultWizard extends Adult implements Wizard {
-    private double magicPower = 100;
+    private double magicPower = 80;
     public AdultWizard(String gender) {
         super(gender);
-        ID = "Adult Wizard ("+gender+")";
+        setID("Adult Wizard (" + gender + ")");
     }
 
     @Override

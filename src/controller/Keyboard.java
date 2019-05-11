@@ -2,10 +2,9 @@ package controller;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.IOException;
 
 import model.Game;
-import model.GameObject;
+import model.map.GameObject;
 import model.characters.Character;
 import model.items.Item;
 import view.MapView;
@@ -43,10 +42,10 @@ public class Keyboard implements KeyListener {
             case KeyEvent.VK_Q:
                 game.stop();
                 break;
-            case KeyEvent.VK_M:
+            case KeyEvent.VK_M: //to move an object
                 GameObject selected = game.getSelectedObject();
                 if(selected !=null){
-                    if(!(selected instanceof Character)){
+                    if(!(selected instanceof Character) && selected.getPos().getLocation() == Game.getInstance().getFamilyHouse()){
                         selected.removeFromMap();
                         game.setDraggedObject(selected);
                     }
@@ -58,7 +57,7 @@ public class Keyboard implements KeyListener {
                     Game.getInstance().getWindow().message("Select an object to move it.");
                 }
                 break;
-            case KeyEvent.VK_R:
+            case KeyEvent.VK_R://to remove an object
                 GameObject selected2 = game.getSelectedObject();
                 if(selected2 instanceof Item){
                     game.earnGold((int)(((Item)selected2).getPrice()*0.8));

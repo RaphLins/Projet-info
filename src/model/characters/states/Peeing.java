@@ -1,7 +1,7 @@
 package model.characters.states;
 
 import model.characters.Character;
-import model.map.Toilet;
+import model.map.mapObjects.Toilet;
 
 public class Peeing extends UsingItem {
     public Peeing(Character character, int groupID) {

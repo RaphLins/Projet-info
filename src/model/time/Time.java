@@ -1,10 +1,5 @@
-package model;
+package model.time;
 
-import model.characters.states.MovingTo;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -20,23 +15,9 @@ public class Time implements Serializable,Runnable {
 	private long lastAnimUpdate = 0;
 	volatile boolean running = true;
 
-	
+
 	public Time() {
-		//timer.start();
-		//animTimer.start();
 	}
-
-	/*private Timer timer = new Timer(waitTime, e -> {
-		for (TimeObserver o : timeObservers) {
-			o.timePassed();
-		}
-	});
-
-	private Timer animTimer = new Timer(waitTime/10, e -> {
-		for (Animation a:animations) {
-			a.animate();
-		}
-	});*/
 	
 	@Override
 	public void run() {

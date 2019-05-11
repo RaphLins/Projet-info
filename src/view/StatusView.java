@@ -1,13 +1,12 @@
 package view;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 import javax.swing.*;
 
 import model.Game;
-import model.GameObject;
-import model.ObjectHolder;
+import model.map.GameObject;
+import model.map.ObjectHolder;
 import model.characters.Character;
 import model.characters.Wizard;
 
@@ -36,14 +35,14 @@ public class StatusView extends JPanel {
             g.drawString(((Character)selected).getName(), 3, y);
         }
         else{
-            g.drawString(selected.ID, 3, y);
+            g.drawString(selected.getID(), 3, y);
         }
         y+=20;
         if(selected instanceof Character && Game.getInstance().getFamily().contains(selected)){
             Character character = (Character)selected;
             g.setColor(Color.BLUE);
             y+=10;
-            g.drawImage(textures.getAvatar(character.ID),80,y, AVATAR_SIZE, AVATAR_SIZE,null);
+            g.drawImage(textures.getAvatar(character.getID()),80,y, AVATAR_SIZE, AVATAR_SIZE,null);
 
             // bars
             y+=175;

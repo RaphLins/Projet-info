@@ -1,9 +1,8 @@
 package model.items;
 
 import model.Game;
-import model.GameObject;
-import model.ObjectHolder;
-import model.characters.Character;
+import model.map.GameObject;
+import model.map.ObjectHolder;
 import model.map.Tile;
 
 import java.util.ArrayList;

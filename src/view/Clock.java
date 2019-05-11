@@ -6,7 +6,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import model.Game;
-import model.TimeObserver;
+import model.time.TimeObserver;
 
 
 public class Clock extends JPanel implements TimeObserver{
@@ -56,7 +56,7 @@ public class Clock extends JPanel implements TimeObserver{
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		timeDisplay.setText("Time: "+convert(Game.getInstance().getTime().getMinutes())+ stateString);
+		timeDisplay.setText("time: "+convert(Game.getInstance().getTime().getMinutes())+ stateString);
 	}
 
 	public String convert(int i) {

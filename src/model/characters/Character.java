@@ -1,17 +1,16 @@
 package model.characters;
 
 import model.Game;
-import model.GameObject;
-import model.ObjectHolder;
-import model.ObjectWithActions;
-import model.TimeObserver;
+import model.map.GameObject;
+import model.map.ObjectHolder;
+import model.map.ObjectWithActions;
+import model.time.TimeObserver;
 import model.characters.states.*;
 import model.items.Food;
 import model.items.HoldableItem;
-import model.items.MagicBook;
 import model.items.Plate;
 import model.map.*;
-import model.map.Map;
+import model.map.mapObjects.*;
 import model.places.House;
 import model.places.Place;
 
@@ -335,7 +334,7 @@ public abstract class Character extends GameObject implements Directable, Object
 
 	public ArrayList<Tile> getAccessTiles(){
 		ArrayList<Tile> tiles = new ArrayList<>();
-		for(int i:accessDirections){
+		for(int i:getAccessDirections()){
 			Tile target2 = Game.getInstance().getMap().getTileNextTo(getPos(),i);
 			if(target2.isWalkable()) {
 				tiles.add(target2);

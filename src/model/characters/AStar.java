@@ -31,9 +31,9 @@ public class AStar {
 		endI = end.getX();
 		endJ = end.getY();
 
-		grid = new Cell[map.WIDTH][Map.HEIGHT];
+		grid = new Cell[map.getWidth()][map.getHeight()];
 
-        closed = new boolean[map.WIDTH][Map.HEIGHT];
+        closed = new boolean[map.getWidth()][map.getHeight()];
         open = new PriorityQueue<>((Object o1, Object o2) -> {
                 Cell c1 = (Cell)o1;
                 Cell c2 = (Cell)o2;
@@ -43,8 +43,8 @@ public class AStar {
 
         	});
 
-        for(int i=0;i<Map.WIDTH;++i){
-              for(int j=0;j<map.HEIGHT;++j){
+        for(int i=0;i<map.getWidth();++i){
+              for(int j=0;j<map.getHeight();++j){
                   if(map.getTileAt(i,j).isWalkable()){
                       grid[i][j] = new Cell(i, j);
                       grid[i][j].heuristicCost = Math.abs(i-endI)+Math.abs(j-endJ);

@@ -1,11 +1,7 @@
 package model.characters;
 
-import model.Game;
-import model.GameObject;
-import model.characters.states.Eating;
 import model.characters.states.State;
 import model.characters.states.Waiting;
-import model.map.Tile;
 
 public abstract class Baby extends Character {
 

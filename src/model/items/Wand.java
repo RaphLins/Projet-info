@@ -4,7 +4,7 @@ public class Wand extends HoldableItem {
 
     public Wand() {
         super();
-        ID = "Wand";
-        price = 50;
+        setID("Wand");
+        setPrice(50);
     }
 }

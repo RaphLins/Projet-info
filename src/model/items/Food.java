@@ -4,7 +4,7 @@ public class Food extends HoldableItem{
 	
     public Food() {
         super();
-        price = 20;
-        ID = "Food";
+        setID("Food");
+        setPrice(20);
     }
 }

@@ -1,10 +1,10 @@
 package model;
 
-import model.characters.AdultWizard;
-import model.characters.ChildWizard;
+import model.time.Time;
 import model.items.HoldableItem;
-import model.items.Wand;
+import model.map.GameObject;
 import model.map.Map;
+import model.map.ObjectHolder;
 import model.places.House;
 import view.Window;
 import model.characters.Character;
@@ -29,7 +29,7 @@ public class Game {
     private boolean itemToAdd = false;
 
     private Time time;
-    transient Thread gameTime;
+    private transient Thread gameTime;
 
     private Game() {
         time = new Time();
@@ -41,18 +41,8 @@ public class Game {
         itemToAdd = false;
         selectedObject = null;
         draggedObject = null;
+        family.clear();
         map = new Map("shared/res/map.csv");
-        //Time.getInstance().run();
-        //family.add(new AdultWizard("M"));
-        //family.get(0).setPos(map.getTileAt(10,10),map);
-        //family.add(new AdultWizard("F"));
-        //family.get(1).setPos(map.getTileAt(19,10),map);
-        //family.add(new ChildWizard("M"));
-        //family.get(2).setPos(map.getTileAt(15,30),map);
-        //family.add(new ChildWizard("F"));
-        //family.get(3).setPos(map.getTileAt(17,20),map);
-        //family.get(0).carryItem(new Wand());
-        //family.get(0).carryItem(new Wand());
         window.updateFamily();
         started = true;
         window.attachClock();
@@ -62,7 +52,7 @@ public class Game {
 
     public void stopTime(){
         if(gameTime!=null){
-            gameTime.stop();
+            time.pause();
         }
     }
     public void startTime(){

@@ -1,7 +1,7 @@
 package model.characters.states;
 
 import model.characters.Character;
-import model.map.Bed;
+import model.map.mapObjects.Bed;
 
 public class Sleeping extends UsingItem {
     public Sleeping(Character character, int groupID) {

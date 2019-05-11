@@ -1,7 +1,6 @@
 package model.map;
 
 import model.Game;
-import model.GameObject;
 import model.characters.AdultWizard;
 import model.characters.BabyWizard;
 import model.characters.Character;
@@ -9,10 +8,8 @@ import model.characters.ChildWizard;
 import model.items.Broom;
 import model.items.Food;
 import model.items.Plate;
-import model.places.House;
-import model.ObjectHolder;
+import model.map.mapObjects.*;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class ObjectFactory {

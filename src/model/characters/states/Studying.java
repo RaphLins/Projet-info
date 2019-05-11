@@ -1,12 +1,12 @@
 package model.characters.states;
 
 import model.Game;
-import model.GameObject;
 import model.characters.Child;
 import model.characters.Character;
 import model.characters.Wizard;
-import model.map.Bench;
+import model.map.GameObject;
 import model.map.Tile;
+import model.map.mapObjects.Bench;
 
 public class Studying extends State {
 	

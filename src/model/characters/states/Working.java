@@ -1,14 +1,14 @@
 package model.characters.states;
 
-import model.map.Stool;
-import model.map.Table;
+import model.map.GameObject;
 import model.map.Tile;
 import model.Game;
-import model.GameObject;
 import model.characters.Character;
 import model.items.Food;
 import model.items.Plate;
 import model.characters.Adult;
+import model.map.mapObjects.Stool;
+import model.map.mapObjects.Table;
 
 public class Working extends UsingItem{
 	

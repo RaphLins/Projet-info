@@ -4,7 +4,7 @@ import model.characters.states.FetchingItem;
 import model.characters.states.ReadingMagicBook;
 import model.characters.states.StoringItem;
 import model.items.MagicBook;
-import model.map.Bookshelf;
+import model.map.mapObjects.Bookshelf;
 
 public class ChildWizard extends Child implements Wizard {
 
@@ -12,7 +12,7 @@ public class ChildWizard extends Child implements Wizard {
 
 	public ChildWizard(String gender) {
 		super(gender);
-		ID = "Child Wizard ("+gender+")";
+		setID("Child Wizard (" + gender + ")");
 	}
 	@Override
 	public double getMagicPower() {

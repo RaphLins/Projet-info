@@ -1,16 +1,16 @@
-package model.map;
+package model.map.mapObjects;
 
-import model.Game;
 import model.characters.Character;
-import model.items.Item;
+import model.map.Obstacle;
+import model.map.UsableItem;
 
-public class Stool extends UsableItem implements Obstacle {
-    public Stool() {
+public class Bed extends UsableItem implements Obstacle {
+    public Bed() {
         super();
-        ID = "Stool";
-        price = 50;
+        setID("Bed");
+        setHeight(2);
+        setPrice(50);
     }
-
     @Override
     public boolean use(Character character) {
         boolean success = super.use(character);
@@ -20,5 +20,4 @@ public class Stool extends UsableItem implements Obstacle {
         }
         return success;
     }
-
 }

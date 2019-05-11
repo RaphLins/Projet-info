@@ -8,9 +8,8 @@ import java.awt.event.KeyListener;
 import javax.swing.*;
 
 import controller.Mouse;
-import model.GameObject;
-import model.ObjectWithActions;
-import model.Time;
+import model.map.GameObject;
+import model.map.ObjectWithActions;
 import model.characters.Character;
 
 public class Window extends JFrame {

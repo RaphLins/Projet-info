@@ -1,15 +1,18 @@
 package model.items;
 
-import model.GameObject;
-import model.map.Tile;
+import model.map.GameObject;
 
 public abstract class Item extends GameObject {
-	protected int price = 0;
+	private int price = 0;
 	public Item(){
 		super();
 	}
 
 	public int getPrice(){
 		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
 	}
 }

@@ -1,26 +1,24 @@
-package model.map;
+package model.map.mapObjects;
 
-import model.GameObject;
-import model.ObjectHolder;
-import model.items.Food;
+import model.map.GameObject;
+import model.map.ObjectHolder;
 import model.items.HoldableItem;
 import model.items.Item;
+import model.map.Obstacle;
 
 import java.util.ArrayList;
 
-public class Fridge extends Item implements Obstacle, ObjectHolder {
+public class Wardrobe extends Item implements Obstacle, ObjectHolder {
+
     private ArrayList<HoldableItem> inventory = new ArrayList<>();
-    public Fridge() {
+    public Wardrobe() {
         super();
-        ID = "Fridge";
-        price = 50;
-        accessDirections = new int[]{SOUTH};
+        setID("Wardrobe");
+        setPrice(50);
+        setAccessDirections(new int[]{SOUTH});
     }
     public void removeItem(GameObject item){
         inventory.remove(item);
-    }
-    public void addFood(Food food){
-        inventory.add(food);
     }
 
     @Override

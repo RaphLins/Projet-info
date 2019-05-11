@@ -1,7 +1,7 @@
 package model.characters.states;
 
 import model.characters.Character;
-import model.map.Bath;
+import model.map.mapObjects.Bath;
 
 public class Washing extends UsingItem {
     public Washing(Character character, int groupID) {

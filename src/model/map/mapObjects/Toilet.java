@@ -1,20 +1,14 @@
-package model.map;
+package model.map.mapObjects;
 
-import model.Game;
-import model.GameObject;
 import model.characters.Character;
-import model.items.Item;
 import model.map.Obstacle;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
+import model.map.UsableItem;
 
 public class Toilet extends UsableItem implements Obstacle {
     public Toilet() {
         super();
-        ID = "Toilet";
-        accessDirections = new int[]{SOUTH};
+        setID("Toilet");
+        setAccessDirections(new int[]{SOUTH});
     }
 
     @Override

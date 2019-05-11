@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-import model.GameObject;
+import model.map.GameObject;
 import model.Game;
 import model.characters.Character;
 import model.map.Tile;
@@ -37,7 +37,7 @@ public class SocializeView extends JPanel{
     }
     private JButton addButton(Character acquaintance){
         JButton button = new JButton(acquaintance.getName()+" (Relation level "+c.getRelationLevel(acquaintance)+")");
-        button.setIcon(new ImageIcon(textures.getAvatar(acquaintance.ID)));
+        button.setIcon(new ImageIcon(textures.getAvatar(acquaintance.getID())));
         button.setOpaque(false);
         button.setContentAreaFilled(false);
         button.setFocusable(false);

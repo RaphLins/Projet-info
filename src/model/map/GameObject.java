@@ -1,5 +1,6 @@
-package model;
+package model.map;
 
+import model.Game;
 import model.characters.Directable;
 import model.map.Map;
 import model.map.Tile;
@@ -17,17 +18,12 @@ public abstract class GameObject implements Serializable {
     public static final int WEST = 2;
     public static final int SOUTH = 3;
 
-    public int width;
-    public int height;
-    public String ID;
-    public int[] accessDirections = new int[]{EAST,WEST,SOUTH,NORTH};
+    private int width;
+    private int height;
+    private String ID;
+    private int[] accessDirections = new int[]{EAST,WEST,SOUTH,NORTH};
 
     public GameObject() {
-        ID = "";
-        width = 1;
-        height = 1;
-    }
-    public GameObject(Tile pos, Map map) {
         ID = "";
         width = 1;
         height = 1;
@@ -126,5 +122,29 @@ public abstract class GameObject implements Serializable {
             }
         }
         return tiles;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void setAccessDirections(int[] accessDirections) {
+        this.accessDirections = accessDirections;
+    }
+
+    public int[] getAccessDirections() {
+        return accessDirections;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public String getID() {
+        return ID;
     }
 }

@@ -9,8 +9,8 @@ import model.characters.states.MovingToObjectByType;
 import model.characters.states.Studying;
 import model.characters.states.Washing;
 import model.items.Food;
+import model.map.mapObjects.Bench;
 import model.places.School;
-import model.map.Bench;
 import model.map.Tile;
 
 public abstract class Child extends Character{
@@ -20,7 +20,7 @@ public abstract class Child extends Character{
 	}
 
 	public void goToSchool() {
-		getStateQueue().add(new MovingToObjectByType((Character)this,66,Bench.class,getClosestSchool(Game.getInstance().getMap().getSchools())));
+		getStateQueue().add(new MovingToObjectByType((Character)this,66, Bench.class,getClosestSchool(Game.getInstance().getMap().getSchools())));
     	getStateQueue().add(new Studying((Character)this,66));
 	}
 
