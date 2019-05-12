@@ -6,10 +6,13 @@ import model.Game;
 import model.characters.states.Eating;
 import model.characters.states.FetchingItem;
 import model.characters.states.MovingToObjectByType;
+import model.characters.states.StoringItem;
 import model.characters.states.Studying;
 import model.characters.states.Washing;
 import model.items.Food;
+import model.items.Plate;
 import model.map.mapObjects.Bench;
+import model.map.mapObjects.Wardrobe;
 import model.places.School;
 import model.map.Tile;
 
@@ -22,6 +25,7 @@ public abstract class Child extends Character{
 	public void goToSchool() {
 		if(!stateInQueue(Studying.class)){
 			School school = (School) Game.getInstance().getMap().getClosestPlace(getPos(),School.class);
+			getStateQueue().add(new StoringItem(this,66,Plate.class, Wardrobe.class));
 			getStateQueue().add(new MovingToObjectByType(this,66, Bench.class,school));
 			getStateQueue().add(new Studying(this,66,school));
 		}
@@ -47,7 +51,6 @@ public abstract class Child extends Character{
 		super.incrementHygiene(i);
 		if (getHygiene()<=67) {
 			if(!stateInQueue(Washing.class)){
-				System.out.println("wash");
 				wash();
 			}
 		}
@@ -59,7 +62,9 @@ public abstract class Child extends Character{
 		int hours = Game.getInstance().getTime().getHours();
 		if(hours>=7 && hours<=16){
 			if(!stateInQueue(Studying.class)){
-				goToSchool();
+				try{
+					goToSchool();
+				}catch(Exception e) {}
 			}
 		}
 	}

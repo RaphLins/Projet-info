@@ -43,7 +43,7 @@ public class Clock extends JPanel implements TimeObserver{
 			stateString = " (x2)";
 		});
 		addButton("<html>&#9197&#9197</html>").addActionListener(e -> {
-			Game.getInstance().getTime().setWaitTime(Time.DEFAULTWAITTIME/2);
+			Game.getInstance().getTime().setWaitTime(Time.DEFAULTWAITTIME/4);
 			Game.getInstance().getTime().start();
 			stateString = " (x4)";
 		});
