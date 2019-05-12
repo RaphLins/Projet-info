@@ -10,7 +10,7 @@ public class Sleeping extends UsingItem {
 
     @Override
     public void run() {
-        getCharacter().incrementEnergy(0.208);
+        getCharacter().incrementEnergy(0.13);
         if(getCharacter().getEnergy()==100){
             finish();
         }

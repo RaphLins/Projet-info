@@ -53,6 +53,7 @@ public class Window extends JFrame {
         selectShop.addActionListener(e -> {
             bottomPanel.remove(familyView);
             bottomPanel.add(shopView);
+            revalidate();
             repaint();
         });
 

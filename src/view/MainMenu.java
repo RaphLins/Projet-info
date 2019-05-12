@@ -32,7 +32,7 @@ public class MainMenu extends JPanel {
             window.setMainView(new RestoreSaveView(window));
         });
 
-        JToggleButton button = new JToggleButton("Allow to edit all map");
+        JToggleButton button = new JToggleButton("Toggle entire map editing");
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setOpaque(false);
         button.setFocusable(false);
