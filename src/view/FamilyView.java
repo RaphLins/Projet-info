@@ -12,7 +12,6 @@ public class FamilyView extends JPanel{
     TextureHashMap textures = new TextureHashMap();
 
     public FamilyView() {
-    	Map map = Game.getInstance().getMap();
         setPreferredSize(new Dimension(1660, 100));
         setOpaque(false);
         setLayout(new FlowLayout(FlowLayout.LEFT));

@@ -169,10 +169,11 @@ public class Game {
             save.add(time);
             save.add(family);
             save.add(familyGold);
+            save.add(familyHouse);
 
             objectOut.writeObject(save);
             objectOut.close();
-            System.out.println("Game saved");
+            Game.getInstance().getWindow().message("Game saved");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -191,6 +192,7 @@ public class Game {
         time = (Time) save.next();
         family = (ArrayList<Character>) save.next();
         familyGold = (int) save.next();
+        familyHouse = (House) save.next();
 
         selectedObject = null;
         draggedObject = null;

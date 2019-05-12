@@ -42,6 +42,7 @@ public class Working extends UsingItem{
 	 public void run() {
 		 getCharacter().incrementHappiness(-0.01);
 		 Game.getInstance().earnGold(1);
+		 getCharacter().incrementHunger(-0.05);
 		 if(getCharacter().getHygiene()<=70 || getCharacter().getEnergy()<=18 || Game.getInstance().getTime().getHours()>=19) {//stop working
 			 finish();
 			 getCharacter().pee();
@@ -50,7 +51,7 @@ public class Working extends UsingItem{
 			 super.cancel();
 			 ((Adult)getCharacter()).work();
 		 }
-		 else if(getCharacter().getHunger()<=35) {//pause working
+		 else if(getCharacter().getHunger()<=60) {//pause working
 			 super.cancel();
 			 ((Adult)getCharacter()).work();
 		 }

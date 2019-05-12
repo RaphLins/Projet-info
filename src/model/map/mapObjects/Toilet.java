@@ -8,6 +8,7 @@ public class Toilet extends UsableItem implements Obstacle {
     public Toilet() {
         super();
         setID("Toilet");
+        setPrice(50);
         setAccessDirections(new int[]{SOUTH});
     }
 
