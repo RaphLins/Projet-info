@@ -13,7 +13,7 @@ public class Wandering extends MovingTo {
     public Wandering(Character character, int groupID) {
         super(character, groupID, null);
         Place location = getCharacter().getPos().getLocation();
-        if(location == getCharacter().getHouse()){
+        if(location == getCharacter().getHouse()){//walks to a random tile nearby if already in the house
             ArrayList<Tile> tiles = new ArrayList<>(location.getArea());
             tiles.removeIf(tile->!tile.isWalkable());
             tiles.removeIf(tile->tile.distanceTo(getCharacter().getPos())>5);

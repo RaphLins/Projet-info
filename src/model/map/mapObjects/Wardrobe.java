@@ -17,9 +17,6 @@ public class Wardrobe extends Item implements Obstacle, ObjectHolder {
         setPrice(50);
         setAccessDirections(new int[]{SOUTH});
     }
-    public void removeItem(GameObject item){
-        inventory.remove(item);
-    }
 
     @Override
     public ArrayList<HoldableItem> getInventory() {

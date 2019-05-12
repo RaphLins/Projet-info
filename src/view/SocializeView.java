@@ -17,9 +17,9 @@ public class SocializeView extends JPanel{
         GameObject selected = Game.getInstance().getSelectedObject();
         if(selected instanceof Character && Game.getInstance().getFamily().contains(selected)) {
             c = (Character)selected;
-            setLayout(new GridLayout(6,1));
+            setLayout(new GridLayout(10,1));
             add(new JLabel("Who do you want to socialize with?"));
-            ArrayList<Tile> tilesAround = Game.getInstance().getMap().getNearbyTiles(c.getPos(),50);
+            ArrayList<Tile> tilesAround = Game.getInstance().getMap().getNearbyTiles(c.getPos(),25);
             ArrayList<Character> acquaintances = new ArrayList<>();
             for(Tile tile:tilesAround){
                 for(GameObject object:tile.getObjects()){

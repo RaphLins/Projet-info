@@ -12,10 +12,10 @@ public class Toilet extends UsableItem implements Obstacle {
     }
 
     @Override
-    public boolean use(Character character) {
-        boolean success = super.use(character);
+    public boolean use(Character user) {
+        boolean success = super.use(user);
         if(success){
-            character.setDirection(NORTH);
+            user.setDirection(NORTH);
         }
         return success;
     }

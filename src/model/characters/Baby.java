@@ -17,11 +17,6 @@ public abstract class Baby extends Character {
 	}
 
     @Override
-    public void reactToSound(String sound, SoundMaker source) {
-
-    }
-
-    @Override
     public void incrementHunger(double i) {
         super.incrementHunger(i);
         if (getHunger()<=70) {

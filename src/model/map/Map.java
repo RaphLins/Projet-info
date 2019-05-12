@@ -138,7 +138,7 @@ public class Map implements Serializable{
         return tilesAround;
     }
 
-    public ArrayList<GameObject> findObjectsByType(Class type, ArrayList<Tile> tiles){
+    private ArrayList<GameObject> findObjectsByType(Class type, ArrayList<Tile> tiles){
         ArrayList<GameObject> res = new ArrayList<>();
         for(Tile tile : tiles) {
             ArrayList<GameObject> objects = tile.getObjects();
@@ -173,7 +173,7 @@ public class Map implements Serializable{
         return getClosestTile(position, getAllAccessTiles(findObjectsByType(type,location.getArea())));
     }
 
-    public ArrayList<Tile> getAllAccessTiles(ArrayList<GameObject> objects){
+    private ArrayList<Tile> getAllAccessTiles(ArrayList<GameObject> objects){
         ArrayList<Tile> accessTiles =  new ArrayList<>();
         for(GameObject object:objects){
             accessTiles.addAll(object.getAccessTiles());

@@ -14,7 +14,7 @@ public class MovingToObject extends MovingTo {
     }
 
     @Override
-    public Tile getTarget() {
+    public Tile getTarget() {//return the closest object of given type
         return Game.getInstance().getMap().getClosestTile(getCharacter().getPos(),target.getAccessTiles());
     }
 }

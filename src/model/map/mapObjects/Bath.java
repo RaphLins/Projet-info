@@ -13,11 +13,11 @@ public class Bath extends UsableItem implements Obstacle {
     }
 
     @Override
-    public boolean use(Character character) {
-        boolean success = super.use(character);
+    public boolean use(Character user) {
+        boolean success = super.use(user);
         if(success){
-            character.setPos(getPos());
-            character.setDirection(SOUTH);
+            user.setPos(getPos());
+            user.setDirection(SOUTH);
         }
         return success;
     }

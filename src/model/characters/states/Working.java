@@ -21,7 +21,7 @@ public class Working extends UsingItem{
 	}
 	
 	 @Override
-	 public void init() {
+	 public void init() {//rotates to table after sitting
 		 super.init();
 		 getCharacter().setLocation(workablePlace);
 		 Table table = null;
@@ -44,15 +44,15 @@ public class Working extends UsingItem{
 	 public void run() {
 		 getCharacter().incrementHappiness(-0.01);
 		 Game.getInstance().earnGold(1);
-		 if(getCharacter().getHygiene()<=70 || getCharacter().getEnergy()<=18 || Game.getInstance().getTime().getHours()>=19) {
+		 if(getCharacter().getHygiene()<=70 || getCharacter().getEnergy()<=18 || Game.getInstance().getTime().getHours()>=19) {//stop working
 			 finish();
 			 getCharacter().pee();
 		 }
-		 else if(getCharacter().getBladder()<=20) {
+		 else if(getCharacter().getBladder()<=20) {//pause working
 			 super.cancel();
 			 ((Adult)getCharacter()).work();
 		 }
-		 else if(getCharacter().getHunger()<=35) {
+		 else if(getCharacter().getHunger()<=35) {//pause working
 			 super.cancel();
 			 ((Adult)getCharacter()).work();
 		 }

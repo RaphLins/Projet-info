@@ -53,6 +53,7 @@ public abstract class Adult extends Character {
 
     @Override
     public void reactToSound(String sound, SoundMaker source) {
+        super.reactToSound(sound, source);
         if(source instanceof Baby) {
             Baby baby = ((Baby)source);
             if(baby.getHouse()==getHouse() && sound.equals("I'm hungry!!")) {

@@ -20,7 +20,7 @@ public class FetchingItem extends MovingToObjectByType {
         if(getCharacter().getItem(getObjectType())!=null){//skip this state if the character already has the item
             super.finish();
         }
-        else if(getObjectType()== Food.class && getCharacter().getLocation() != getCharacter().getHouse()){
+        else if(getObjectType()== Food.class && getCharacter().getLocation() != getCharacter().getHouse()){//buy the food by himself if outside
             if(Game.getInstance().spendGold(10)){
                 new Food().storeIn(getCharacter());
             }

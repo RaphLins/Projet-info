@@ -17,7 +17,7 @@ public class Eating extends UsingItem {
     }
 
     @Override
-    public void init() {
+    public void init() {//rotates to table after sitting on the stool
         super.init();
         Table table = null;
         for(int i = 0;i<4;i++){
@@ -46,7 +46,7 @@ public class Eating extends UsingItem {
     }
 
     @Override
-    public void finish() {
+    public void finish() {//uses the food in inventory
         if(Game.getInstance().getFamily().contains(getCharacter())) {
             for(HoldableItem item : getCharacter().getInventory()) {
                 if(item instanceof Food) {

@@ -41,6 +41,7 @@ public abstract class Character extends GameObject implements Directable, Object
 	public Character(String gender) {
 		Game.getInstance().getTime().attach(this);
 
+		//create a random name from list in text file
 		String filename;
 		if(gender.equals("M")){
 			filename = "shared/res/maleNames.txt";
@@ -232,13 +233,6 @@ public abstract class Character extends GameObject implements Directable, Object
 		}
 	}
 
-	public boolean isDoingNothingImportant(){
-		//if(Game.getInstance().getSelectedObject() == this){
-		//	return false;
-		//}
-		return stateQueue.peek() == null;
-	}	//returns true if the stateQueue is empty, which also means that the character is doing nothing.
-
 	public Tile getTileInFront(){
 		return Game.getInstance().getMap().getTileNextTo(getPos(),direction);
 	}
@@ -369,6 +363,11 @@ public abstract class Character extends GameObject implements Directable, Object
 				}
 			}
 		}
+	}
+
+	@Override
+	public void reactToSound(String sound, SoundMaker source) {
+
 	}
 
 	public void stopMakingSound() {

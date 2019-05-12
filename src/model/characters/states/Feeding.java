@@ -32,7 +32,7 @@ public class Feeding extends State {
     }
 
     @Override
-    public void finish() {
+    public void finish() {//uses the food in inventory
         super.finish();
         if(Game.getInstance().getFamily().contains(getCharacter())) {
             for(HoldableItem item : getCharacter().getInventory()) {

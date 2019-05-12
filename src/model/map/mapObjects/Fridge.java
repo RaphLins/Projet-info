@@ -17,12 +17,6 @@ public class Fridge extends Item implements Obstacle, ObjectHolder {
         setPrice(50);
         setAccessDirections(new int[]{SOUTH});
     }
-    public void removeItem(GameObject item){
-        inventory.remove(item);
-    }
-    public void addFood(Food food){
-        inventory.add(food);
-    }
 
     @Override
     public ArrayList<HoldableItem> getInventory() {

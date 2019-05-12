@@ -28,15 +28,6 @@ public abstract class GameObject implements Serializable {
         width = 1;
         height = 1;
     }
-    public void offSetInDirection(float d, int direction){
-        switch (direction) {
-            case EAST : xOffset +=d; break;
-            case NORTH : yOffset -=d; break;
-            case WEST : xOffset -=d; break;
-            case SOUTH : yOffset +=d; break;
-        }
-        Game.getInstance().updateTile(pos.getX(),pos.getY());
-    }
 
     public void setOffsetInDirection(float d, int direction){
         switch (direction) {

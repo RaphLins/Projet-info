@@ -109,9 +109,6 @@ public class Game {
         return map;
     }
 
-    public void setMap(Map map) {
-        this.map = map;
-    }
     public void setFamilyHouse(House familyHouse) {
     	this.familyHouse = familyHouse;
     }

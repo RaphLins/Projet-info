@@ -33,7 +33,7 @@ public class MovingToObjectByType extends MovingToObject {
 
     @Override
     public Tile getTarget() {
-        if(location == null){
+        if(location == null){//search in current location if not set
             return Game.getInstance().getMap().getClosestTile(getCharacter().getPos(), objectType, 50);
         }
         else {

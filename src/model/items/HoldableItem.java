@@ -7,7 +7,7 @@ import model.map.Tile;
 
 import java.util.ArrayList;
 
-public class HoldableItem extends Item {// those items can be stored in inventories.
+public abstract class HoldableItem extends Item {// those items can be stored in inventories.
     private ObjectHolder container = null;
 
     @Override

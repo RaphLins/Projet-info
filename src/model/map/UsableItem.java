@@ -7,21 +7,21 @@ import java.util.ArrayList;
 import java.util.Random;
 
 abstract public class UsableItem extends Item {
-    private Character character = null;
+    private Character user = null;
 
-    public boolean use(Character character) {
-        synchronized (character){
-            if(this.character!=null){
+    public boolean use(Character user) {
+        synchronized (user){
+            if(this.user !=null){
                 return false; //return false if failed
             }
-            this.character = character;
+            this.user = user;
             return true;
         }
     }
 
     @Override
     public ArrayList<Tile> getAccessTiles() {
-        if(character!=null){
+        if(user !=null){
             return new ArrayList<>();//to prevent other using it
         }
         else {
@@ -32,12 +32,8 @@ abstract public class UsableItem extends Item {
     public void stopUsing() {
         ArrayList<Tile> tiles = super.getAccessTiles();
         if(tiles.size()!=0){
-            character.setPos(tiles.get(new Random().nextInt(tiles.size()))); //return random access tile
+            user.setPos(tiles.get(new Random().nextInt(tiles.size()))); //return random access tile
         }
-        character=null;
-    }
-
-    public Character getCharacter() {
-        return character;
+        user =null;
     }
 }
