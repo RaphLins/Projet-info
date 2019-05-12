@@ -1,10 +1,10 @@
 package controller;
 
 import model.Game;
-import model.map.GameObject;
 import model.characters.Character;
-import model.map.mapObjects.Decoration;
+import model.map.GameObject;
 import model.map.Tile;
+import model.map.mapObjects.Decoration;
 
 public class Mouse {
 
@@ -22,10 +22,11 @@ public class Mouse {
 	public void mapEventLeftClick(int x, int y) {//select an object
 		Game game = Game.getInstance();
 		GameObject dragged = game.getDraggedObject();
+		boolean mapEditable = game.isMapEditable();
 		if(dragged != null){
 			Tile target = game.getMap().getTileAt(x,y);
 			if(target.isWalkable()){
-				if(target.getLocation() == Game.getInstance().getFamilyHouse()){
+				if(target.getLocation() == Game.getInstance().getFamilyHouse() || mapEditable){
 					dragged.setPos(target);
 					game.setDraggedObject(null);
 				}

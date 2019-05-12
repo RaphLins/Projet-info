@@ -1,16 +1,15 @@
 package view;
 
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
-import javax.swing.*;
-
-import model.*;
+import model.Game;
 import model.characters.Character;
 import model.items.HoldableItem;
 import model.map.GameObject;
 import model.map.ObjectHolder;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 
 public class InventoryDisplay extends JPanel{

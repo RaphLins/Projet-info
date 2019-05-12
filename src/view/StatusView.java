@@ -1,14 +1,13 @@
 package view;
 
-import java.awt.*;
-
-import javax.swing.*;
-
 import model.Game;
-import model.map.GameObject;
-import model.map.ObjectHolder;
 import model.characters.Character;
 import model.characters.Wizard;
+import model.map.GameObject;
+import model.map.ObjectHolder;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class StatusView extends JPanel {
 	private int BAR_LENGTH = 215;

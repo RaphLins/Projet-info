@@ -18,9 +18,6 @@ public class ObjectFactory {
 
     public GameObject getInstance(String type){
         GameObject res = null;
-
-
-
         switch(type) {
                 case "X": res= new Wall(); break;
                 case "Fr": res = new Fridge(); break;

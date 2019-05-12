@@ -1,21 +1,18 @@
-import static org.junit.Assert.*;
-
 import model.Game;
 import model.characters.AdultWizard;
 import model.characters.Character;
 import model.map.GameObject;
 import model.map.Map;
-import model.map.Tile;
 import model.map.mapObjects.Bed;
 import model.map.mapObjects.Toilet;
 import org.junit.Test;
 import view.Window;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 
 public class UnitTests {

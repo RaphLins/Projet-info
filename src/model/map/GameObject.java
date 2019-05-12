@@ -1,9 +1,6 @@
 package model.map;
 
 import model.Game;
-import model.characters.Directable;
-import model.map.Map;
-import model.map.Tile;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -123,11 +120,11 @@ public abstract class GameObject implements Serializable {
         this.height = height;
     }
 
-    public void setAccessDirections(int[] accessDirections) {
+    protected void setAccessDirections(int[] accessDirections) {
         this.accessDirections = accessDirections;
     }
 
-    public int[] getAccessDirections() {
+    protected int[] getAccessDirections() {
         return accessDirections;
     }
 

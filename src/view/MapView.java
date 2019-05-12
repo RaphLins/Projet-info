@@ -2,22 +2,21 @@ package view;
 
 import controller.Mouse;
 import model.Game;
-import model.map.GameObject;
 import model.characters.Character;
+import model.characters.Directable;
 import model.characters.SoundListenner;
 import model.characters.SoundMaker;
+import model.map.GameObject;
 import model.map.Map;
-import model.characters.Directable;
 import model.map.Tile;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
-import javax.swing.*;
 
 public class MapView extends JPanel implements SoundListenner {
     public static final int TILE_WIDTH =  20;

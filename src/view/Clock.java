@@ -1,13 +1,12 @@
 package view;
 
-import java.awt.*;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-
 import model.Game;
 import model.time.Time;
 import model.time.TimeObserver;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 
 
 public class Clock extends JPanel implements TimeObserver{
@@ -29,7 +28,7 @@ public class Clock extends JPanel implements TimeObserver{
 		add(controlButtons, BorderLayout.PAGE_END);
 
 		addButton("<html>&#9205</html>  ").addActionListener(e -> {
-			Game.getInstance().getTime().setWaitTime(Time.DEFAULTWAITTIME);
+			Game.getInstance().getTime().setWaitTime(Time.DEFAULT_WAIT_TIME);
 			Game.getInstance().getTime().start();
 			stateString = "";
 		});
@@ -38,12 +37,12 @@ public class Clock extends JPanel implements TimeObserver{
 			stateString = " (paused)";
 		});
 		addButton("<html>&#9197</html>").addActionListener(e -> {
-			Game.getInstance().getTime().setWaitTime(Time.DEFAULTWAITTIME/2);
+			Game.getInstance().getTime().setWaitTime(Time.DEFAULT_WAIT_TIME /2);
 			Game.getInstance().getTime().start();
 			stateString = " (x2)";
 		});
 		addButton("<html>&#9197&#9197</html>").addActionListener(e -> {
-			Game.getInstance().getTime().setWaitTime(Time.DEFAULTWAITTIME/4);
+			Game.getInstance().getTime().setWaitTime(Time.DEFAULT_WAIT_TIME /4);
 			Game.getInstance().getTime().start();
 			stateString = " (x4)";
 		});

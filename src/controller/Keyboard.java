@@ -1,14 +1,14 @@
 package controller;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
 import model.Game;
-import model.map.GameObject;
 import model.characters.Character;
 import model.items.Item;
+import model.map.GameObject;
 import view.MapView;
 import view.Window;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class Keyboard implements KeyListener {
     private Window window;
@@ -44,10 +44,13 @@ public class Keyboard implements KeyListener {
                 break;
             case KeyEvent.VK_M: //to move an object
                 GameObject selected = game.getSelectedObject();
+                boolean mapEditable = game.isMapEditable();
                 if(selected !=null){
-                    if(!(selected instanceof Character) && selected.getPos().getLocation() == Game.getInstance().getFamilyHouse()){
-                        selected.removeFromMap();
-                        game.setDraggedObject(selected);
+                    if(!(selected instanceof Character)){
+                        if((selected.getPos().getLocation() == Game.getInstance().getFamilyHouse() || mapEditable)){
+                            selected.removeFromMap();
+                            game.setDraggedObject(selected);
+                        }
                     }
                     else {
                         Game.getInstance().getWindow().message("Can't move that.");
@@ -59,9 +62,12 @@ public class Keyboard implements KeyListener {
                 break;
             case KeyEvent.VK_R://to remove an object
                 GameObject selected2 = game.getSelectedObject();
+                boolean mapEditable2 = game.isMapEditable();
                 if(selected2 instanceof Item){
-                    game.earnGold((int)(((Item)selected2).getPrice()*0.8));
-                    selected2.removeFromMap();
+                    if(selected2.getPos().getLocation() == Game.getInstance().getFamilyHouse() || mapEditable2){
+                        game.earnGold((int)(((Item)selected2).getPrice()*0.8));
+                        selected2.removeFromMap();
+                    }
                 }
                 else {
                     Game.getInstance().getWindow().message("Can't sell that.");

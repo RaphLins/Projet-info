@@ -7,8 +7,6 @@ import model.map.Tile;
 import model.map.mapObjects.Wardrobe;
 
 public abstract class WorkablePlace extends Place {
-	
-	private int salary;
 
     public WorkablePlace(Tile pos, int height, int width, Map map) {
         super(pos, height, width, map);
@@ -20,9 +18,4 @@ public abstract class WorkablePlace extends Place {
 			}
 		}
     }
-
-    public void work(Character cha) {
-
-	}
-
 }

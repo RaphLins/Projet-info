@@ -1,12 +1,11 @@
 package view;
 
-import java.awt.*;
-
-import javax.swing.*;
-
 import model.Game;
 import model.characters.Character;
 import model.map.Map;
+
+import javax.swing.*;
+import java.awt.*;
 
 
 public class FamilyView extends JPanel{

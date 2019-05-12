@@ -1,16 +1,15 @@
 package view;
 
-import java.awt.*;
-import java.util.ArrayList;
-
-import javax.swing.*;
-
 import model.Game;
-import model.map.GameObject;
 import model.items.*;
-import model.map.*;
+import model.map.GameObject;
+import model.map.Tile;
 import model.map.mapObjects.*;
 import model.places.House;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
 
 
 public class ShopView extends JPanel{

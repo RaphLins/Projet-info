@@ -1,9 +1,7 @@
 package model.characters.states;
 
-import model.Game;
 import model.characters.Character;
 import model.map.Tile;
-import model.places.House;
 import model.places.Place;
 
 import java.util.ArrayList;

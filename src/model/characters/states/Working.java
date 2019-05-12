@@ -1,12 +1,10 @@
 package model.characters.states;
 
+import model.Game;
+import model.characters.Adult;
+import model.characters.Character;
 import model.map.GameObject;
 import model.map.Tile;
-import model.Game;
-import model.characters.Character;
-import model.items.Food;
-import model.items.Plate;
-import model.characters.Adult;
 import model.map.mapObjects.Stool;
 import model.map.mapObjects.Table;
 import model.places.WorkablePlace;

@@ -4,7 +4,6 @@ import model.Game;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 public class MainMenu extends JPanel {
     private Window window;
@@ -33,13 +32,15 @@ public class MainMenu extends JPanel {
             window.setMainView(new RestoreSaveView(window));
         });
 
-        JToggleButton button = new JToggleButton("ToggleButton Press Me");
+        JToggleButton button = new JToggleButton("Allow to edit all map");
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setOpaque(false);
         button.setFocusable(false);
+        button.setMinimumSize(new Dimension(400,40));
+        button.setMaximumSize(new Dimension(400,40));
 
         button.addActionListener(e->{
-            System.out.println("TEST");
+            Game.getInstance().toggleMapEditable();
         });
         add(button);
 
@@ -52,6 +53,8 @@ public class MainMenu extends JPanel {
         button.setContentAreaFilled(false);
         button.setFocusable(false);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setMinimumSize(new Dimension(400,40));
+        button.setMaximumSize(new Dimension(400,40));
         add(button);
         return button;
     }

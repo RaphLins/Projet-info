@@ -7,8 +7,8 @@ import java.util.ArrayList;
 public class Time implements Serializable,Runnable {
 
 	private int minutes = 480;
-	public final static int DEFAULTWAITTIME = 200;
-	private int waitTime = DEFAULTWAITTIME;
+	public final static int DEFAULT_WAIT_TIME = 200;
+	private int waitTime = DEFAULT_WAIT_TIME;
 	private int animWaitTime = 40;
 	private ArrayList<TimeObserver> timeObservers = new ArrayList<>();
 	private ArrayList<Animation> animations = new ArrayList<>();

@@ -1,8 +1,8 @@
 package model.map.mapObjects;
 
-import model.map.ObjectHolder;
 import model.items.HoldableItem;
 import model.items.Item;
+import model.map.ObjectHolder;
 import model.map.Obstacle;
 
 import java.util.ArrayList;

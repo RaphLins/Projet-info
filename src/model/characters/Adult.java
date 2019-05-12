@@ -3,13 +3,9 @@ package model.characters;
 import model.Game;
 import model.characters.states.*;
 import model.items.Food;
-import model.map.Tile;
 import model.map.mapObjects.Stool;
-import model.places.WorkablePlace;
 import model.places.MinistryOfMagic;
-import model.places.Place;
-import java.util.ArrayList;
-import model.characters.states.MovingToObjectByType;
+import model.places.WorkablePlace;
 public abstract class Adult extends Character {
 
 

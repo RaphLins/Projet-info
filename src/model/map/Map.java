@@ -1,6 +1,6 @@
 package model.map;
 
-import model.*;
+import model.Game;
 import model.characters.Character;
 import model.items.HoldableItem;
 import model.places.House;
@@ -8,7 +8,8 @@ import model.places.MinistryOfMagic;
 import model.places.Place;
 import model.places.School;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -205,9 +206,6 @@ public class Map implements Serializable{
             }
         }
         return res;
-    }
-    public ArrayList<Place> getPlaces(){
-    	return places;
     }
 
     public GameObject getClosestObject(Tile position, ArrayList<GameObject> possibleTargets) { //utilise les coordonnees des cases contenant l'objet qu'on cherche pour determiner celle qui est la plus proche a vol d'oiseau

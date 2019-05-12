@@ -1,13 +1,13 @@
 package model.characters.states;
 
-import model.time.Animation;
 import model.Game;
-import model.map.GameObject;
 import model.characters.AStar;
 import model.characters.Character;
 import model.characters.Wizard;
+import model.map.GameObject;
 import model.map.Map;
 import model.map.Tile;
+import model.time.Animation;
 
 public class MovingTo extends State implements Animation {
     private Tile target;

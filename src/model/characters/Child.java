@@ -1,20 +1,11 @@
 package model.characters;
 
-import java.util.ArrayList;
-
 import model.Game;
-import model.characters.states.Eating;
-import model.characters.states.FetchingItem;
-import model.characters.states.MovingToObjectByType;
-import model.characters.states.StoringItem;
-import model.characters.states.Studying;
-import model.characters.states.Washing;
-import model.items.Food;
+import model.characters.states.*;
 import model.items.Plate;
 import model.map.mapObjects.Bench;
 import model.map.mapObjects.Wardrobe;
 import model.places.School;
-import model.map.Tile;
 
 public abstract class Child extends Character{
 

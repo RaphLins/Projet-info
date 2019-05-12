@@ -1,19 +1,19 @@
 package view;
-import java.awt.*;
-import java.util.ArrayList;
 
-import javax.swing.*;
-
-import model.map.GameObject;
 import model.Game;
 import model.characters.Character;
+import model.map.GameObject;
 import model.map.Tile;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
 
 public class SocializeView extends JPanel{
     TextureHashMap textures = new TextureHashMap();
     Character c;
     public SocializeView() {
-        setPreferredSize(new Dimension(260, 50));
+        setPreferredSize(new Dimension(260, 400));
         GameObject selected = Game.getInstance().getSelectedObject();
         if(selected instanceof Character && Game.getInstance().getFamily().contains(selected)) {
             c = (Character)selected;

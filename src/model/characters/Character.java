@@ -1,23 +1,21 @@
 package model.characters;
 
 import model.Game;
-import model.map.GameObject;
-import model.map.ObjectHolder;
-import model.map.ObjectWithActions;
-import model.time.TimeObserver;
 import model.characters.states.*;
 import model.items.Food;
 import model.items.HoldableItem;
 import model.items.Plate;
-import model.map.*;
+import model.map.GameObject;
+import model.map.ObjectHolder;
+import model.map.ObjectWithActions;
+import model.map.Tile;
 import model.map.mapObjects.*;
 import model.places.House;
 import model.places.Place;
+import model.time.TimeObserver;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.Math;
-
 import java.util.*;
 
 public abstract class Character extends GameObject implements Directable, ObjectHolder, TimeObserver,ObjectWithActions, SoundListenner, SoundMaker{

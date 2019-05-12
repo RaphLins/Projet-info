@@ -3,7 +3,6 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.VolatileImage;
 
 public class ProjectileThread extends JPanel implements Runnable {
     private int delay = 15;

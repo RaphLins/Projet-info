@@ -1,13 +1,13 @@
 package model;
 
-import model.time.Time;
+import model.characters.Character;
 import model.items.HoldableItem;
 import model.map.GameObject;
 import model.map.Map;
 import model.map.ObjectHolder;
 import model.places.House;
+import model.time.Time;
 import view.Window;
-import model.characters.Character;
 
 import java.awt.event.WindowEvent;
 import java.io.*;
@@ -23,6 +23,7 @@ public class Game {
     private ArrayList<Character> family = new ArrayList<>();
     private int familyGold = 1000;
     private House familyHouse;
+    private boolean mapEditable = false;
 
     private Window window;
     private Map map;
@@ -200,6 +201,14 @@ public class Game {
         window.updateStatus();
         window.updateGold();
         window.updateFamily();
+    }
+
+    public void toggleMapEditable(){
+        mapEditable = !mapEditable;
+    }
+
+    public boolean isMapEditable(){
+        return mapEditable;
     }
 
 }

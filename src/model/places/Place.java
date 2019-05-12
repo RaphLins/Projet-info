@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 public abstract class Place implements Serializable {
 	private ArrayList<Tile> area = new ArrayList<>();
-	private ArrayList<Character> people = new ArrayList<>();
 	private Tile pos;
 	private int height;
 	private int width;

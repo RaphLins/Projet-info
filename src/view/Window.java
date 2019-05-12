@@ -1,16 +1,14 @@
 package view;
 
-import model.Game;
-
-import java.awt.*;
-import java.awt.event.KeyListener;
-
-import javax.swing.*;
-
 import controller.Mouse;
+import model.Game;
+import model.characters.Character;
 import model.map.GameObject;
 import model.map.ObjectWithActions;
-import model.characters.Character;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyListener;
 
 public class Window extends JFrame {
 	private MainMenu mainMenu = new MainMenu(this);

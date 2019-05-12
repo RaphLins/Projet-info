@@ -1,7 +1,6 @@
 package model.map.mapObjects;
 
 import model.characters.Character;
-import model.items.Item;
 import model.map.Obstacle;
 import model.map.UsableItem;
 

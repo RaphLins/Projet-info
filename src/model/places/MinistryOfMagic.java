@@ -2,9 +2,6 @@ package model.places;
 
 import model.map.Map;
 import model.map.Tile;
-import model.map.mapObjects.Wardrobe;
-import model.items.Plate;
-import model.map.GameObject;
 
 public class MinistryOfMagic extends WorkablePlace {
 
