@@ -4,6 +4,7 @@ import model.Game;
 import model.characters.Character;
 import model.map.GameObject;
 import model.map.Tile;
+import model.map.mapObjects.Bath;
 import model.places.Place;
 
 import java.util.ArrayList;
@@ -25,6 +26,10 @@ public class MovingToObjectByType extends MovingToObject {
 
     @Override
     public void init() {
+    	if(getCharacter().getLocation() != getCharacter().getHouse() && objectType==Bath.class) {
+    		cancel();
+    		return;
+    	}
         if(location==null){
             location=getCharacter().getLocation();
         }

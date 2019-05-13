@@ -26,7 +26,7 @@ public class Studying extends UsingItem {
 	 public void run() {
 		 getCharacter().incrementHappiness(-0.01);
 		 getCharacter().incrementHunger(-0.05);
-		 if(getCharacter().getHygiene()<=70 || getCharacter().getEnergy()<=18 || Game.getInstance().getTime().getHours()>=17) {
+		 if(getCharacter().getEnergy()<=18 || Game.getInstance().getTime().getHours()>=17) {
 			 finish();
 			 getCharacter().pee();
 		 }

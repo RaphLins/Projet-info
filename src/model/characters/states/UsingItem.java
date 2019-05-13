@@ -24,13 +24,14 @@ abstract public class UsingItem extends State {
             super.cancel();//if can't find any items
         }
         else {
-            item = (UsableItem) list.get(0);
-            synchronized (getCharacter()){
-                if(!item.use(getCharacter())){//try to use item
-                    item=null;
-                    super.cancel();//if the item was already in use by another character
-                }
+            for(GameObject object : list) {
+            	item=(UsableItem)object;
+            	if(item.use(getCharacter())) {
+            		return;
+            	}
             }
+            item = null;
+            super.cancel();
         }
     }
 
