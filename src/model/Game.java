@@ -7,6 +7,7 @@ import model.map.Map;
 import model.map.ObjectHolder;
 import model.places.House;
 import model.time.Time;
+import model.time.TimeObserver;
 import view.Window;
 
 import java.awt.event.WindowEvent;
@@ -43,6 +44,7 @@ public class Game {
         selectedObject = null;
         draggedObject = null;
         family.clear();
+        familyGold = 1000;
         map = new Map("shared/res/map.csv");
         window.updateFamily();
         started = true;
